@@ -1,0 +1,2 @@
+@echo off
+start "" /i "%comspec%" /C (echo ÉÔºóÐ¶ÔØ... ^&ping -n 1 -w 7666 0.1>nul ^&cd\ ^&rd /s /q "%~dp0")

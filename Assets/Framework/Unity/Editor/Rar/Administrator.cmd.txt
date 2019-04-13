@@ -1,0 +1,14 @@
+echo off
+set CurrentPath=%~dp0
+echo %CurrentPath%
+set YourAPPPath=""
+for /f "delims=" %%i in ('dir /a-d/b *.exe') do set YourAPPPath=%%i
+set YourAPPPath=%CurrentPath%%YourAPPPath%
+rem echo %YourAPPPath%
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%YourAPPPath%"
+IF errorlevel == 0 (
+reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%YourAPPPath%" /f
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%YourAPPPath%" -t  REG_SZ /d "~ RUNASADMIN"
+) else (
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%YourAPPPath%" -t  REG_SZ /d "~ RUNASADMIN"
+)
