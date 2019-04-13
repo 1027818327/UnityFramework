@@ -1,0 +1,2 @@
+此目录用来存放VR基础插件
+但不能放zSpace基础插件，zSpace插件只能放在Assets目录下
