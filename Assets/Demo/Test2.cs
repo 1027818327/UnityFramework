@@ -62,6 +62,15 @@ namespace Assets.Demo
         private void Load()
         {
             UIManager.GetInstance().ShowUI(UIPath.Login, null);
+            UIMsgBox.UIMsgBoxArgs tempArgs = new UIMsgBox.UIMsgBoxArgs();
+            tempArgs.Style = UIMsgBox.Style.OKAndCancel;
+            tempArgs.Title = "提示";
+            tempArgs.Content = "你好啊";
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempU = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempArgs);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempU);
+
+            UIEventArgs<string> tempU2 = new UIEventArgs<string>("欢迎光临");
+            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempU2);
         }
 
         #endregion
