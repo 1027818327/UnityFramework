@@ -2769,6 +2769,11 @@
             资源具体路径
             </summary>
         </member>
+        <member name="M:Framework.Unity.UI.UIBase.Close">
+            <summary>
+            关闭界面 ，不销毁
+            </summary>
+        </member>
         <member name="M:Framework.Unity.UI.UIBase.Display">
             <summary>
             显示状态
@@ -2956,6 +2961,113 @@
             构造方法
             </summary>
             <param name="varData"></param>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox">
+            <summary>
+            模态对话框弹框
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs">
+            <summary>
+            模态对话框参数
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.Content">
+            <summary>
+            内容
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.mBtnTexts">
+            <summary>
+            按钮上面的文字
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.Style">
+            <summary>
+            显示风格
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.CloseAction">
+            <summary>
+            关闭回调函数
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox.Style">
+            <summary>
+            显示风格
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Style.None">
+            <summary>
+            不显示按钮
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Style.OK">
+            <summary>
+            显示确定按钮
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Style.OKAndCancel">
+            <summary>
+            显示确定和取消按钮
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox.Result">
+            <summary>
+            关闭结果
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Result.OK">
+            <summary>
+            确定
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Result.Cancel">
+            <summary>
+            取消
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.mTitleText">
+            <summary>
+            标题文本
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.mContentText">
+            <summary>
+            内容文本
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.mButtons">
+            <summary>
+            所有按钮
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UI.UIMsgBox.InitOpenArgs(System.EventArgs)">
+            <summary>
+            重写InitOpenArgs
+            </summary>
+            <param name="varArgs"></param>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgTips">
+            <summary>
+            消息提示框
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgTips.ctlTextBar">
+            <summary>
+            文本控件的父物体
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UI.UIMsgTips.InitOpenArgs(System.EventArgs)">
+            <summary>
+            重写InitOpenArgs
+            </summary>
+            <param name="varArgs"></param>
         </member>
         <member name="T:Framework.Unity.UI.UISceneLoading">
             <summary>
@@ -3456,6 +3568,39 @@
             重写OnEndDrag
             </summary>
             <param name="eventData"></param>
+        </member>
+        <member name="T:Framework.Unity.UI.UIUtils">
+            <summary>
+            为UI操作提供基础封装，使UI操作更方便
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.SetActive(UnityEngine.EventSystems.UIBehaviour,System.Boolean)">
+            <summary>
+            设置一个UI元素是否可见
+            </summary>
+            <param name="ui"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.SetButtonText(UnityEngine.UI.Button,System.String)">
+            <summary>
+            设置按钮上的文字
+            </summary>
+            <param name="btn"></param>
+            <param name="text"></param>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.GetButtonText(UnityEngine.UI.Button)">
+            <summary>
+            获取按钮上的文字
+            </summary>
+            <param name="btn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.SetChildText(UnityEngine.EventSystems.UIBehaviour,System.String)">
+            <summary>
+            设置组件的文字
+            </summary>
+            <param name="ui"></param>
+            <param name="text"></param>
         </member>
         <member name="T:Framework.Version.SoftVersion">
             <summary>

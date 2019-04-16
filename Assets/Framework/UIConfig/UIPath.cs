@@ -17,6 +17,9 @@ namespace Framework.Unity.UI
     {
         #region Fields
         public const string SceneLoading = "SceneLoading";
+        public const string MsgBox = "GeneralUI/UIMsgBox";
+        public const string MsgTips = "GeneralUI/UIMsgTips";
+
         #endregion
 
         #region Properties
