@@ -3135,6 +3135,11 @@
             根节点
             </summary>
         </member>
+        <member name="F:Framework.Unity.UI.UIManager.mAwakeAction">
+            <summary>
+            唤醒事件
+            </summary>
+        </member>
         <member name="F:Framework.Unity.UI.UIManager.LoadingUI">
             <summary>
             loadingUI用于切换场景
