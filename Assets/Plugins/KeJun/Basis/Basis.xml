@@ -3135,7 +3135,7 @@
             根节点
             </summary>
         </member>
-        <member name="F:Framework.Unity.UI.UIManager.mStartAction">
+        <member name="F:Framework.Unity.UI.UIManager.mInitAction">
             <summary>
             唤醒事件
             </summary>
