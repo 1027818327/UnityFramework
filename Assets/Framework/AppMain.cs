@@ -36,8 +36,9 @@ namespace Framework.Unity
             tempUIConfig.DestroyOnLoad = true;
             tempUIConfig.RootHasCanvas = true;
             tempUIConfig.ShowMask = true;
-            tempUIConfig.CanvasRenderMode = RenderMode.ScreenSpaceCamera;
+            tempUIConfig.CanvasRenderMode = RenderMode.WorldSpace;
             UIManager.LoadingUI = UIPath.SceneLoading;
+            UIManager.mInitAction += ZSpaceEx.GraphicAdapter.AdjustUI;
         }
 
         private void OpenLog()

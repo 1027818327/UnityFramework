@@ -39,8 +39,8 @@ namespace Assets.Demo
         //
         void Start()
         {
-            //Invoke("Load", 1f);
-            Load();
+            Invoke("Load", 2f);
+            //Load();
         }
         //    
         //    void Update() 
