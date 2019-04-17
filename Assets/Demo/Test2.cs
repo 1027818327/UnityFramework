@@ -58,6 +58,10 @@ namespace Assets.Demo
         //
         //    }
 
+        #endregion
+
+        #region Private Methods
+
         [ContextMenu("Load")]
         private void Load()
         {
@@ -66,17 +70,29 @@ namespace Assets.Demo
             tempArgs.Style = UIMsgBox.Style.OKAndCancel;
             tempArgs.Title = "提示";
             tempArgs.Content = "你好啊";
+            tempArgs.CloseAction = CloseMsgBox;
             UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempU = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempArgs);
             UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempU);
-
-            UIEventArgs<string> tempU2 = new UIEventArgs<string>("欢迎光临");
-            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempU2);
         }
+        private void CloseMsgBox(UIMsgBox.Result varResult)
+        {
+            if (varResult == UIMsgBox.Result.OK)
+            {
+                string tempTips = "你点击了OK按钮";
+                Debug.Log(tempTips);
 
-        #endregion
+                UIEventArgs<string> tempU2 = new UIEventArgs<string>(tempTips);
+                UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempU2);
+            }
+            else if(varResult == UIMsgBox.Result.Cancel)
+            {
+                string tempTips = "你点击了Cancle按钮";
+                Debug.Log(tempTips);
 
-        #region Private Methods
-
+                UIEventArgs<string> tempU2 = new UIEventArgs<string>(tempTips);
+                UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempU2);
+            }
+        }
         #endregion
 
         #region Protected & Public Methods
