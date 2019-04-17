@@ -6,23 +6,20 @@
  * -----------------------------------------------------------
  *		描述: 
  *      创建者：陈伟超
- *      创建时间: 2019/04/09 19:24:45
+ *      创建时间: 2019/04/17 14:53:11
  *  
  */
 #endregion
 
 
-using Framework.Unity.Tools;
-using Framework.Unity.UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Demo
 {
-    public class Test : MonoBehaviour
+    public class Scene2 : MonoBehaviour
     {
         #region Fields
-        
+
         #endregion
 
         #region Properties
@@ -30,11 +27,10 @@ namespace Assets.Demo
         #endregion
 
         #region Unity Messages
-        void Awake()
-        {
-            
-            UIManager.GetInstance();
-        }
+        //    void Awake()
+        //    {
+        //
+        //    }
         //    void OnEnable()
         //    {
         //
@@ -42,9 +38,7 @@ namespace Assets.Demo
         //
         void Start()
         {
-            LoadScene();
-
-
+            SetCanvas();
         }
         //    
         //    void Update() 
@@ -65,9 +59,21 @@ namespace Assets.Demo
         #endregion
 
         #region Private Methods
-        private void LoadScene()
+        private void SetCanvas()
         {
-            UIManager.GetInstance().LoadScene("Scene2");
+            GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+
+            RectTransform tempRt = GetComponent<RectTransform>();
+
+            tempRt.anchoredPosition = Vector2.zero;
+            tempRt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1920);
+            tempRt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1080);
+            tempRt.anchorMin = Vector2.zero;
+            tempRt.anchorMax = Vector2.zero;
+            tempRt.pivot = 0.5f * Vector2.one;
+
+            tempRt.rotation = Quaternion.identity;
+            tempRt.localScale = Vector3.one;
         }
         #endregion
 
