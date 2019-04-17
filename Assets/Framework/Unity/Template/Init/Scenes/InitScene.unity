@@ -297,6 +297,11 @@ MonoBehaviour:
   m_Script: {fileID: -328240710, guid: 1418b8ebc03d3eb44b12e2c0a96779e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _CurrentUIType:
+    IsClearStack: 0
+    UIForms_Type: 0
+    UIForms_ShowMode: 0
+    UIForm_LucencyType: 0
   txtTitle: {fileID: 502006710}
   txtTips: {fileID: 502006709}
   progressBar: {fileID: 502006708}
