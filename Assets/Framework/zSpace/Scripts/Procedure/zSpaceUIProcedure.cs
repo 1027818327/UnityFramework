@@ -67,7 +67,7 @@ namespace Framework.zSpace.Procedure
         #region Protected & Public Methods
         public override void ProcedureBegin()
         {
-            UIConfig tempUIConfig = UIConfig.GetInstance();            tempUIConfig.DestroyOnLoad = true;            tempUIConfig.ShowMask = true;
+            UIConfig tempUIConfig = UIConfig.GetInstance();            tempUIConfig.DestroyOnLoad = true;            tempUIConfig.RootHasCanvas = true;            tempUIConfig.ShowMask = true;
             tempUIConfig.RootPath = "zSpaceCanvas";
             ProcedureEnd();
         }
