@@ -2550,16 +2550,6 @@
             </summary>
             <param name="eventData"></param>
         </member>
-        <member name="T:Framework.Unity.UI.CommonUIProcedure">
-            <summary>
-            通用UI配置流程
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.UI.CommonUIProcedure.ProcedureBegin">
-            <summary>
-            重写流程开始
-            </summary>
-        </member>
         <member name="T:Framework.Unity.UI.IUIManager">
             <summary>
             UI管理接口
@@ -2776,11 +2766,6 @@
         <member name="P:Framework.Unity.UI.UIConfig.CanvasRenderMode">
             <summary>
             单个Canvas的渲染模式
-            </summary>
-        </member>
-        <member name="P:Framework.Unity.UI.UIConfig.RootPath">
-            <summary>
-            UI加载的路径
             </summary>
         </member>
         <member name="M:Framework.Unity.UI.UIConfig.Init">
