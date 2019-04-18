@@ -96,7 +96,10 @@ namespace Assets.Demo
         #endregion
 
         #region Protected & Public Methods
-
+        public void JumpScene()
+        {
+            UIManager.GetInstance().LoadScene("Scene1");
+        }
         #endregion
     }
 }
