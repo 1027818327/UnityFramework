@@ -69,7 +69,7 @@ namespace Framework.zSpace.Procedure
         {
             UIConfig tempUIConfig = UIConfig.GetInstance();
             tempUIConfig.DestroyOnLoad = true;
-            tempUIConfig.RootHasCanvas = true;
+            tempUIConfig.RootHasCanvas = false;
             tempUIConfig.ShowMask = true;
             ProcedureEnd();
         }

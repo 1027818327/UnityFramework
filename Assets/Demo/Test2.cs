@@ -39,8 +39,8 @@ namespace Assets.Demo
         //
         void Start()
         {
-            Invoke("Load", 2f);
-            //Load();
+            //Invoke("Load", 1f);
+            Load();
         }
         //    
         //    void Update() 
@@ -96,7 +96,10 @@ namespace Assets.Demo
         #endregion
 
         #region Protected & Public Methods
-
+        public void JumpScene()
+        {
+            UIManager.GetInstance().LoadScene("Scene1");
+        }
         #endregion
     }
 }
