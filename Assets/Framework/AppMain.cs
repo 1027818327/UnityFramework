@@ -31,14 +31,6 @@ namespace Framework.Unity
             {
                 var tempInstance = MonoHelper.Instance;
             }
-
-            UIConfig tempUIConfig = UIConfig.GetInstance();
-            tempUIConfig.DestroyOnLoad = true;
-            tempUIConfig.RootHasCanvas = true;
-            tempUIConfig.ShowMask = true;
-            tempUIConfig.CanvasRenderMode = RenderMode.WorldSpace;
-            UIManager.LoadingUI = UIPath.SceneLoading;
-            UIManager.mInitAction += ZSpaceEx.GraphicAdapter.AdjustUI;
         }
 
         private void OpenLog()

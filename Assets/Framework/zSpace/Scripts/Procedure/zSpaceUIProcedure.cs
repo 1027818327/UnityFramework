@@ -6,21 +6,22 @@
  * -----------------------------------------------------------
  *		描述: 
  *      创建者：陈伟超
- *      创建时间: 2019/04/10 14:35:55
+ *      创建时间: 2019/04/18 17:56:06
  *  
  */
 #endregion
 
 
-using Framework.Procedure;
-using Framework.Unity.Tools;
+using Framework.Unity.Procedure;
+using Framework.Unity.UI;
+using UnityEngine;
 
-namespace Framework.Unity
+namespace Framework.zSpace.Procedure
 {
-    public class WaitProcedure : AbstractLoadProcedure
+    public class zSpaceUIProcedure : AbstractLoadProcedure
     {
         #region Fields
-        public float mWaitTime = 1f;
+
         #endregion
 
         #region Properties
@@ -64,12 +65,10 @@ namespace Framework.Unity
         #endregion
 
         #region Protected & Public Methods
-        /// <summary>
-        /// 流程开始
-        /// </summary>
         public override void ProcedureBegin()
         {
-            TimeManager.Instance.AddTask(mWaitTime, false, ProcedureEnd);
+            UIConfig.Instance.RootPath = "zSpaceCanvas";
+            ProcedureEnd();
         }
         #endregion
     }
