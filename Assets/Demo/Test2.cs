@@ -15,6 +15,7 @@
 using Framework.Unity.Tools;
 using Framework.Unity.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Demo
 {
@@ -71,7 +72,7 @@ namespace Assets.Demo
             UIMsgBox.UIMsgBoxArgs tempArgs = new UIMsgBox.UIMsgBoxArgs();
             tempArgs.Style = UIMsgBox.Style.OKAndCancel;
             tempArgs.Title = "提示";
-            tempArgs.Content = "你好啊";
+            tempArgs.Content = "当前场景是"+SceneManager.GetActiveScene().name;
             tempArgs.CloseAction = CloseMsgBox;
             UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempU = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempArgs);
             UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempU);
