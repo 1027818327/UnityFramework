@@ -1,0 +1,430 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetworkExt</name>
+    </assembly>
+    <members>
+        <member name="T:Framework.Network.Connection">
+            <summary>
+            网络链接
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.msgLength">
+            <summary>
+            沾包分包
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.proto">
+            <summary>
+            协议
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.lastTickTime">
+            <summary>
+            心跳时间
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.heartBeatTime">
+            <summary>
+            间隔多久发一次心跳包
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.msgDist">
+            <summary>
+            消息分发
+            </summary>
+        </member>
+        <member name="T:Framework.Network.Connection.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.Status.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.Status.Connected">
+            <summary>
+            连接状态
+            </summary>
+        </member>
+        <member name="F:Framework.Network.Connection.status">
+            <summary>
+            当前网络状态
+            </summary>
+        </member>
+        <member name="M:Framework.Network.Connection.Connect(System.String,System.Int32)">
+            <summary>
+            连接服务端
+            </summary>
+            <param name="host">ip</param>
+            <param name="port">端口</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.Connection.Close">
+            <summary>
+            关闭连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.Connection.ReceiveCb(System.IAsyncResult)">
+            <summary>
+            接收回调
+            </summary>
+            <param name="ar"></param>
+        </member>
+        <member name="M:Framework.Network.Connection.ProcessData">
+            <summary>
+            消息处理
+            </summary>
+        </member>
+        <member name="M:Framework.Network.Connection.SendHeatBeat">
+            <summary>
+            发送心跳包
+            </summary>
+        </member>
+        <member name="M:Framework.Network.Connection.Send(Framework.Network.ProtocolBase)">
+            <summary>
+            发送包
+            </summary>
+            <param name="protocol">协议</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.Connection.Send(Framework.Network.ProtocolBase,System.String,Framework.Network.MsgDistribution.Delegate)">
+            <summary>
+            发送包
+            </summary>
+            <param name="protocol">协议</param>
+            <param name="cbName">事件名字</param>
+            <param name="cb">委托</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.Connection.Send(Framework.Network.ProtocolBase,Framework.Network.MsgDistribution.Delegate)">
+            <summary>
+            发送包
+            </summary>
+            <param name="protocol">协议</param>
+            <param name="cb">委托</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.Connection.Update">
+            <summary>
+            定时
+            </summary>
+        </member>
+        <member name="T:Framework.Network.MsgDistribution">
+            <summary>
+            网络消息分发
+            </summary>
+        </member>
+        <member name="F:Framework.Network.MsgDistribution.num">
+            <summary>
+            每帧处理消息的数量
+            </summary>
+        </member>
+        <member name="F:Framework.Network.MsgDistribution.msgList">
+            <summary>
+            消息列表
+            </summary>
+        </member>
+        <member name="T:Framework.Network.MsgDistribution.Delegate">
+            <summary>
+            委托类型
+            </summary>
+            <param name="proto"></param>
+        </member>
+        <member name="F:Framework.Network.MsgDistribution.eventDict">
+            <summary>
+            事件监听表
+            </summary>
+        </member>
+        <member name="M:Framework.Network.MsgDistribution.Update">
+            <summary>
+            Update
+            </summary>
+        </member>
+        <member name="M:Framework.Network.MsgDistribution.DispatchMsgEvent(Framework.Network.ProtocolBase)">
+            <summary>
+            消息分发
+            </summary>
+            <param name="protocol"></param>
+        </member>
+        <member name="M:Framework.Network.MsgDistribution.AddListener(System.String,Framework.Network.MsgDistribution.Delegate)">
+            <summary>
+            添加事件监听
+            </summary>
+            <param name="name"></param>
+            <param name="cb"></param>
+        </member>
+        <member name="M:Framework.Network.MsgDistribution.AddOnceListener(System.String,Framework.Network.MsgDistribution.Delegate)">
+            <summary>
+            添加单次监听事件
+            </summary>
+            <param name="name">事件名字</param>
+            <param name="cb">委托</param>
+        </member>
+        <member name="M:Framework.Network.MsgDistribution.DelListener(System.String,Framework.Network.MsgDistribution.Delegate)">
+            <summary>
+            删除监听事件
+            </summary>
+            <param name="name"></param>
+            <param name="cb"></param>
+        </member>
+        <member name="M:Framework.Network.MsgDistribution.DelOnceListener(System.String,Framework.Network.MsgDistribution.Delegate)">
+            <summary>
+            删除单次监听事件
+            </summary>
+            <param name="name"></param>
+            <param name="cb"></param>
+        </member>
+        <member name="T:Framework.Network.NetMgr">
+            <summary>
+            网络管理
+            </summary>
+        </member>
+        <member name="F:Framework.Network.NetMgr.srvConn">
+            <summary>
+            连接
+            </summary>
+        </member>
+        <member name="M:Framework.Network.NetMgr.Update">
+            <summary>
+            定时更新
+            </summary>
+        </member>
+        <member name="M:Framework.Network.NetMgr.GetHeatBeatProtocol">
+            <summary>
+            获取心跳协议
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Network.ProtocolBase">
+            <summary>
+            协议基类
+            </summary>
+        </member>
+        <member name="M:Framework.Network.ProtocolBase.Decode(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            解码器，解码readbuff中从start开始的length字节
+            </summary>
+            <param name="readbuff"></param>
+            <param name="start"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBase.Encode">
+            <summary>
+            编码器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBase.GetName">
+            <summary>
+            协议名称，用于消息分发
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBase.GetDesc">
+            <summary>
+            描述
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Network.ProtocolBytes">
+            <summary>
+            字节流协议模型
+            </summary>
+        </member>
+        <member name="F:Framework.Network.ProtocolBytes.bytes">
+            <summary>
+            传输的字节流
+            </summary>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.Decode(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            解码器
+            </summary>
+            <param name="readbuff"></param>
+            <param name="start"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.Encode">
+            <summary>
+            编码器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetName">
+            <summary>
+            协议名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetDesc">
+            <summary>
+            描述
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.AddString(System.String)">
+            <summary>
+            添加字符串
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetString(System.Int32,System.Int32@)">
+            <summary>
+            从字节数组的start处开始读取字符串
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetString(System.Int32)">
+            <summary>
+            获取字符串
+            </summary>
+            <param name="start"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.AddInt(System.Int32)">
+            <summary>
+            添加整数
+            </summary>
+            <param name="num"></param>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetInt(System.Int32,System.Int32@)">
+            <summary>
+            获取整数
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetInt(System.Int32)">
+            <summary>
+            获取整数
+            </summary>
+            <param name="start"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.AddFloat(System.Single)">
+            <summary>
+            添加浮点型
+            </summary>
+            <param name="num"></param>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetFloat(System.Int32,System.Int32@)">
+            <summary>
+            获取浮点型
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolBytes.GetFloat(System.Int32)">
+            <summary>
+            获取浮点型
+            </summary>
+            <param name="start"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Network.ProtocolSimpleJson">
+            <summary>
+            Json协议模型
+            </summary>
+        </member>
+        <member name="F:Framework.Network.ProtocolSimpleJson.jsonStr">
+            <summary>
+            传输的json字符串
+            </summary>
+        </member>
+        <member name="F:Framework.Network.ProtocolSimpleJson.jsonData">
+            <summary>
+            jsonData
+            </summary>
+        </member>
+        <member name="P:Framework.Network.ProtocolSimpleJson.JsonStr">
+            <summary>
+            Json字符串
+            </summary>
+        </member>
+        <member name="P:Framework.Network.ProtocolSimpleJson.JsonData">
+            <summary>
+            Json数据
+            </summary>
+        </member>
+        <member name="M:Framework.Network.ProtocolSimpleJson.Decode(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            解码器，解码readbuff中从start开始的length字节
+            </summary>
+            <param name="readbuff"></param>
+            <param name="start"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolSimpleJson.Encode">
+            <summary>
+            编码器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolSimpleJson.GetName">
+            <summary>
+            协议名称，用于消息分发
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolSimpleJson.GetDesc">
+            <summary>
+            描述
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolSimpleJson.Deserialize(System.String)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="T:Framework.Network.ProtocolStr">
+            <summary>
+            字符串协议模型,  形式 名称,参数1,参数2,参数3
+            </summary>
+        </member>
+        <member name="F:Framework.Network.ProtocolStr.str">
+            <summary>
+            传输的字符串
+            </summary>
+        </member>
+        <member name="M:Framework.Network.ProtocolStr.Decode(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            解码器
+            </summary>
+            <param name="readbuff"></param>
+            <param name="start"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolStr.Encode">
+            <summary>
+            编码器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolStr.GetName">
+            <summary>
+            协议名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Network.ProtocolStr.GetDesc">
+            <summary>
+            协议描述
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
