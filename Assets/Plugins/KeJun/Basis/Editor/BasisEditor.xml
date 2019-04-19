@@ -31,6 +31,14 @@
             导出资源包辅助类
             </summary>
         </member>
+        <member name="M:Framework.Unity.Editor.ExportPackage.OneKeyExportPackage(System.String,UnityEditor.ExportPackageOptions,System.Collections.Generic.List{System.String})">
+            <summary>
+            一键导出资源包
+            </summary>
+            <param name="targetPackageName"></param>
+            <param name="flags"></param>
+            <param name="filterArr"></param>
+        </member>
         <member name="T:Framework.Unity.Editor.FindMissingScripts">
             <summary>
             查询丢失脚本的类
