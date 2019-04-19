@@ -69,8 +69,10 @@ namespace Framework.zSpace.Procedure
         {
             UIConfig tempUIConfig = UIConfig.GetInstance();
             tempUIConfig.DestroyOnLoad = true;
-            tempUIConfig.RootHasCanvas = false;
+            tempUIConfig.RootHasCanvas = true;
             tempUIConfig.ShowMask = true;
+            tempUIConfig.CanvasRenderMode = RenderMode.WorldSpace;
+            tempUIConfig.RootPath = "zSpaceCanvas";
             ProcedureEnd();
         }
         #endregion

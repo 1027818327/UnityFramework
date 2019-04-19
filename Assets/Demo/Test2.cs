@@ -12,6 +12,7 @@
 #endregion
 
 
+using Framework.Unity.Tools;
 using Framework.Unity.UI;
 using UnityEngine;
 
@@ -66,6 +67,7 @@ namespace Assets.Demo
         private void Load()
         {
             UIManager.GetInstance().ShowUI(UIPath.Login, null);
+            
             UIMsgBox.UIMsgBoxArgs tempArgs = new UIMsgBox.UIMsgBoxArgs();
             tempArgs.Style = UIMsgBox.Style.OKAndCancel;
             tempArgs.Title = "提示";
@@ -73,6 +75,7 @@ namespace Assets.Demo
             tempArgs.CloseAction = CloseMsgBox;
             UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempU = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempArgs);
             UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempU);
+            
         }
         private void CloseMsgBox(UIMsgBox.Result varResult)
         {
@@ -83,6 +86,8 @@ namespace Assets.Demo
 
                 UIEventArgs<string> tempU2 = new UIEventArgs<string>(tempTips);
                 UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempU2);
+
+                TimeManager.Instance.AddTask(1.5f, false, JumpScene1);
             }
             else if(varResult == UIMsgBox.Result.Cancel)
             {
@@ -91,14 +96,21 @@ namespace Assets.Demo
 
                 UIEventArgs<string> tempU2 = new UIEventArgs<string>(tempTips);
                 UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempU2);
+
+                TimeManager.Instance.AddTask(1.5f, false, JumpScene2);
             }
         }
         #endregion
 
         #region Protected & Public Methods
-        public void JumpScene()
+        public void JumpScene1()
         {
             UIManager.GetInstance().LoadScene("Scene1");
+        }
+
+        public void JumpScene2()
+        {
+            UIManager.GetInstance().LoadScene("Scene2");
         }
         #endregion
     }

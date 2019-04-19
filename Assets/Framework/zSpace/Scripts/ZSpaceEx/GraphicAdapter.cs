@@ -12,7 +12,6 @@
 #endregion
 
 
-using Framework.Unity.Tools;
 using UnityEngine;
 using zSpace.Core;
 using zSpace.SimsCommon;
@@ -86,7 +85,8 @@ namespace ZSpaceEx
             {
                 foreach (GameObject tempObj in mCtrlObjs)
                 {
-                    tempObj.SetActive(false);
+                    if (tempObj != null)
+                        tempObj.SetActive(false);
                 }
             }
         }
@@ -98,17 +98,10 @@ namespace ZSpaceEx
             {
                 foreach (GameObject tempObj in mCtrlObjs)
                 {
-                    tempObj.SetActive(true);
+                    if (tempObj != null)
+                        tempObj.SetActive(true);
                 }
             }
-        }
-
-        public static void AdjustUI(GameObject varObj)
-        {
-            // UI适配
-            GameObjectUtils.EnsureComponent<WorldAutosizerCanceler>(varObj);
-            GameObjectUtils.EnsureComponent<UICanvasAutosizer>(varObj);
-            GameObjectUtils.EnsureComponent<EventCameraAssigner>(varObj);
         }
         #endregion
     }

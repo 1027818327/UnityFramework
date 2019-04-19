@@ -2768,6 +2768,11 @@
             单个Canvas的渲染模式
             </summary>
         </member>
+        <member name="P:Framework.Unity.UI.UIConfig.RootPath">
+            <summary>
+            UI根节点加载的路径
+            </summary>
+        </member>
         <member name="M:Framework.Unity.UI.UIConfig.Init">
             <summary>
             覆盖基类方法
