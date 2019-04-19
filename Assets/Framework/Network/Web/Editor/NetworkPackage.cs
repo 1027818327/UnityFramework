@@ -16,7 +16,7 @@ using Framework.Unity.Editor;
 using System.Collections.Generic;
 using UnityEditor;
 
-namespace Framework.Network.Editor
+namespace Framework.Network.Web.Editor
 {
     public class NetworkPackage
     {

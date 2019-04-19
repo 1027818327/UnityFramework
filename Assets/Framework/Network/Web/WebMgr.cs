@@ -1,4 +1,4 @@
-﻿namespace Framework.Network
+﻿namespace Framework.Network.Web
 {
     /// <summary>
     /// 网络管理

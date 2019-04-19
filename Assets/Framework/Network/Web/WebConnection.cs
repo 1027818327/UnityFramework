@@ -4,7 +4,7 @@ using Framework.Debugger;
 using System;
 using System.Timers;
 
-namespace Framework.Network
+namespace Framework.Network.Web
 {
     //网络链接
     public class WebConnection

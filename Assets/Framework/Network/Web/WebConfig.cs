@@ -17,7 +17,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace Framework.Network
+namespace Framework.Network.Web
 {
     public class WebConfig
     {

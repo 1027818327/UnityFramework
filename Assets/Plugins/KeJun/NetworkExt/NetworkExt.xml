@@ -4,6 +4,16 @@
         <name>NetworkExt</name>
     </assembly>
     <members>
+        <member name="T:Framework.Network.MessageBase">
+            <summary>
+            消息基类
+            </summary>
+        </member>
+        <member name="F:Framework.Network.MessageBase.protocolName">
+            <summary>
+            协议名称
+            </summary>
+        </member>
         <member name="T:Framework.Network.Connection">
             <summary>
             网络链接
