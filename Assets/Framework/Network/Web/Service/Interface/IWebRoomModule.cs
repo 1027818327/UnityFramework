@@ -49,11 +49,6 @@ namespace Framework.Network.Web
         void RequestRoomList(string url, IDictionary<string, string> parameters, Action<string> response);
 
         /// <summary>
-        /// 连接广播服务器
-        /// </summary>
-        void ConnectBoardcastServer();
-
-        /// <summary>
         /// 请求获取房间信息
         /// </summary>
         /// <param name="id">用户id</param>

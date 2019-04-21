@@ -40,11 +40,6 @@ namespace Framework.Network.Web
             mHttp.SendPostAnsyc(url, parameters, response);
         }
 
-        public void ConnectBoardcastServer()
-        {
-            WebMgr.SrvConn.Connect(WebConfig.ConnectAddress);
-        }
-
         public void RequestGetRoomInfo(string id)
         {
             ProtocolJson tempPj = new ProtocolJson();
