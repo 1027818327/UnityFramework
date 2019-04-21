@@ -16,18 +16,77 @@ using System.Collections.Generic;
 
 namespace Framework.Network.Web
 {
-    public class WebLoginModule : IWebLoginModule
+    public class WebLoginModule : ILoginModule
     {
+        #region Fields
         private HttpUtils mHttp;
+        private string url;
+        private string account;
+        private string password;
+        #endregion
 
-        public WebLoginModule()
+        #region Properties
+        public string Account
+        {
+            get
+            {
+                return account;
+            }
+
+            set
+            {
+                account = value;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+
+            set
+            {
+                password = value;
+            }
+        }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
+
+        #region Protected & Public Methods
+        public WebLoginModule(string url, string account, string password)
         {
             mHttp = new HttpUtils();
+            this.url = url;
+            Account = account;
+            Password = password;
         }
 
-        public void RequestLogin(string url, IDictionary<string, string> parameters, Action<string> response)
+        public bool RequestLogin(Action<EventArgs> response)
         {
-            mHttp.SendPostAnsyc(url, parameters, response);
+            Dictionary<string, string> tempDic = new Dictionary<string, string>();
+            tempDic.Add("account", account);
+            tempDic.Add("password", password);
+
+            if (response == null)
+            {
+                return mHttp.SendPostAnsyc(url, tempDic, null);
+            }
+            else
+            {
+                Action<string> tempA = delegate (string result)
+                {
+                    NetworkEventArgs<string> tempArgs = new NetworkEventArgs<string>(result);
+                    response.Invoke(tempArgs);
+                };
+
+                return mHttp.SendPostAnsyc(url, tempDic, tempA);
+            }
         }
+        #endregion
     }
 }

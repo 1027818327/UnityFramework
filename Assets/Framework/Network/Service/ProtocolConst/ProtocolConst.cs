@@ -12,7 +12,7 @@
 
 
 
-namespace Framework.Network.Web
+namespace Framework.Network
 {
     public partial class ProtocolConst
     {

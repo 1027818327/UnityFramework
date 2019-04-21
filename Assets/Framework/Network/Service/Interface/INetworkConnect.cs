@@ -10,9 +10,9 @@
  */
 #endregion
 
-namespace Framework.Network.Web
+namespace Framework.Network
 {
-    public interface IWebConnect
+    public interface INetworkConnect
     {
         #region Protected & Public Methods
         /// <summary>

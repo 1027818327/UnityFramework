@@ -13,7 +13,7 @@
 
 namespace Framework.Network.Web
 {
-    public class WebConnect : IWebConnect
+    public class WebConnect : INetworkConnect
     {
         public void ConnectServer()
         {

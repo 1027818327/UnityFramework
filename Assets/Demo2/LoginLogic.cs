@@ -12,8 +12,10 @@
 #endregion
 
 
+using Framework.Network;
 using Framework.Network.Web;
 using Framework.Unity.UI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +24,7 @@ namespace Assets.Demo2
     public class LoginLogic : MonoBehaviour
     {
         #region Fields
-        private IWebLoginModule loginModule = new WebLoginModule();
+        private ILoginModule loginModule = new WebLoginModule("http://truck.kmax-arvr.com/truck.php/port/Index/login", "123", "123");
         #endregion
 
         #region Properties
@@ -41,11 +43,15 @@ namespace Assets.Demo2
         //
         void Start()
         {
-            string tempUrl = "http://truck.kmax-arvr.com/truck.php/port/Index/login";
-            Dictionary<string, string> tempDic = new Dictionary<string, string>();
-            tempDic.Add("account", "123");
-            tempDic.Add("password", "123");
-            loginModule.RequestLogin(tempUrl, tempDic, ResponseLogin);
+            bool tempConnect = loginModule.RequestLogin(ResponseLogin);
+            if (!tempConnect)
+            {
+                UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+                tempData.Title = "提示";
+                tempData.Content = "网络异常,请检查你的网络";
+                UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+                UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs);
+            }
         }
         //    
         //    void Update() 
@@ -66,8 +72,10 @@ namespace Assets.Demo2
         #endregion
 
         #region Private Methods
-        private void ResponseLogin(string result)
+        private void ResponseLogin(EventArgs args)
         {
+            NetworkEventArgs<string> tempArgs = args as NetworkEventArgs<string>;
+            string result = tempArgs.Data;
             Debug.Log(result);
             SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
             string tempTips = tempNode["text"];

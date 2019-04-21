@@ -10,9 +10,11 @@
  */
 #endregion
 
-namespace Framework.Network.Web
+
+
+namespace Framework.Network
 {
-    public class CS_GetRoomInfo : MessageBase
+    public class CS_StartFight : MessageBase
     {
         #region Fields
         public string id;

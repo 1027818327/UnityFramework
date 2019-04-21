@@ -209,6 +209,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Framework.Network.NetworkEventArgs`1">
+            <summary>
+            网络事件参数
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Framework.Network.NetworkEventArgs`1.Data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="M:Framework.Network.NetworkEventArgs`1.#ctor(`0)">
+            <summary>
+            构造方法
+            </summary>
+            <param name="varData"></param>
+        </member>
         <member name="T:Framework.Network.ProtocolBase">
             <summary>
             协议基类

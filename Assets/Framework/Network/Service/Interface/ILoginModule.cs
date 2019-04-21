@@ -1,5 +1,4 @@
-﻿
-#region 版权信息
+﻿#region 版权信息
 /*
  * -----------------------------------------------------------
  *  Copyright (c) KeJun All rights reserved.
@@ -12,12 +11,12 @@
 #endregion
 
 
-using System;
-using System.Collections.Generic;
 
-namespace Framework.Network.Web
+using System;
+
+namespace Framework.Network
 {
-    public interface IWebLoginModule
+    public interface ILoginModule
     {
         #region Properties
 
@@ -27,10 +26,9 @@ namespace Framework.Network.Web
         /// <summary>
         /// 请求登录
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="parameters"></param>
-        /// <param name="response"></param>
-        void RequestLogin(string url, IDictionary<string, string> parameters, Action<string> response);
+        /// <param name="response">响应</param>
+        /// <returns>false表示网络异常</returns>
+        bool RequestLogin(Action<EventArgs> response);
 
         #endregion
     }
