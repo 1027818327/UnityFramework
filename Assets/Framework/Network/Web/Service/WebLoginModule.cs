@@ -72,20 +72,62 @@ namespace Framework.Network.Web
             tempDic.Add("account", account);
             tempDic.Add("password", password);
 
-            if (response == null)
+            Action<string> tempA = delegate (string result)
             {
-                return mHttp.SendPostAnsyc(url, tempDic, null);
-            }
-            else
-            {
-                Action<string> tempA = delegate (string result)
+                SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
+                string tempS = tempNode["success"];
+                bool tempB = Convert.ToBoolean(tempS);
+
+                if (tempB)
+                {
+                    string selfId = tempNode["user"]["id"];
+                    string selfName = tempNode["user"]["name"];
+                    string tempRoleId = tempNode["user"]["role_id"];
+                    string sign = tempNode["user"]["sign"];
+
+                    Player tempSelf = new Player(selfName, selfId);
+                    tempSelf.RoleId = Convert.ToInt32(tempRoleId);
+
+                    PlayerManager.GetInstance().Player = tempSelf;
+                    PlayerManager.GetInstance().Sign = sign;
+
+                    string roomId = tempNode["room"]["id"];
+                    int tempRoomIdInt = Convert.ToInt32(roomId);
+                    if (tempRoomIdInt == 0)
+                    {
+                        PlayerManager.GetInstance().Room = null;
+                    }
+                    else
+                    {
+                        string tempMasterId = tempNode["room"]["user_id"];
+
+                        PlayerManager.GetInstance().Room = new Room(tempRoomIdInt);
+                        SimpleJSON.JSONArray tempRoomArray = tempNode["room"]["room_info"] as SimpleJSON.JSONArray;
+
+                        foreach (SimpleJSON.JSONNode element in tempRoomArray)
+                        {
+                            string userId = element["user_id"];
+                            string userName = element["name"];
+                            string roleId = element["role_id"];
+                            Player tempP = new Player(userId, userName);
+                            tempP.RoleId = Convert.ToInt32(roleId);
+                            if (userId.Equals(tempMasterId))
+                            {
+                                tempP.RoomIdentity = RoomIdentity.RoomMaster;
+                            }
+                            PlayerManager.GetInstance().Room.Enter(tempP);
+                        }
+                    }
+                }
+
+                if (response != null)
                 {
                     NetworkEventArgs<string> tempArgs = new NetworkEventArgs<string>(result);
                     response.Invoke(tempArgs);
-                };
+                }
+            };
 
-                return mHttp.SendPostAnsyc(url, tempDic, tempA);
-            }
+            return mHttp.SendPostAnsyc(url, tempDic, tempA);
         }
         #endregion
     }

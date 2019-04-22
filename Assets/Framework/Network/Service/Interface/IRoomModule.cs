@@ -34,9 +34,10 @@ namespace Framework.Network
         /// <summary>
         /// 请求加入房间
         /// </summary>
+        /// <param name="roomId">房号</param>
         /// <param name="response">响应</param>
         /// <returns>false表示网络异常</returns>
-        bool RequestJoin(Action<EventArgs> response);
+        bool RequestJoin(string roomId, Action<EventArgs> response);
 
         /// <summary>
         /// 请求查看房间列表

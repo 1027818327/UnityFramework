@@ -22,8 +22,15 @@ namespace Framework.Network
         private string mName;
         [SerializeField]
         private string mId;
+        /// <summary>
+        /// 所在房间身份
+        /// </summary>
         [SerializeField]
-        private PlayerIdentity mPlayerIdentity;
+        private RoomIdentity mRoomIdentity;
+        /// <summary>
+        /// 业务逻辑身份，应用里面的身份
+        /// </summary>
+        private int roleId;
 
         #endregion
 
@@ -54,18 +61,32 @@ namespace Framework.Network
             }
         }
 
-        public PlayerIdentity PlayerIdentity
+        public RoomIdentity RoomIdentity
         {
             get
             {
-                return mPlayerIdentity;
+                return mRoomIdentity;
             }
 
             set
             {
-                mPlayerIdentity = value;
+                mRoomIdentity = value;
             }
         }
+
+        public int RoleId
+        {
+            get
+            {
+                return roleId;
+            }
+
+            set
+            {
+                roleId = value;
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -83,7 +104,7 @@ namespace Framework.Network
         #endregion
     }
 
-    public enum PlayerIdentity
+    public enum RoomIdentity
     {
         /// <summary>
         /// 没有身份

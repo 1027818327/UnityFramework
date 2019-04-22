@@ -1,6 +1,7 @@
 ﻿using BestHTTP;
 using BestHTTP.WebSocket;
 using Framework.Debugger;
+using Framework.Unity.UI;
 using System;
 using System.Timers;
 
@@ -60,6 +61,8 @@ namespace Framework.Network.Web
             webSocket.Open();
 
             Debuger.Log("Opening Web Socket...");
+
+            StopReconnect();
 
             return true;
         }
@@ -132,7 +135,6 @@ namespace Framework.Network.Web
         void OnOpen(WebSocket ws)
         {
             Debuger.Log("WebSocket Open");
-            StopReconnect();
         }
 
         /// <summary>
@@ -181,13 +183,48 @@ namespace Framework.Network.Web
             webSocket = null;
             if (ex != null)
             {
-                // 直接将网络适配器关掉后发生
-                Debuger.LogError("网络关闭");
-                StartReconnect();
+                if (ex.Message.StartsWith("向一个无法连接的网络尝试了一个套接字操作"))
+                {
+                    // 直接将网络适配器关掉后发生
+                    Debuger.LogError("网络关闭");
+
+                    UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+                    tempData.Title = "提示";
+                    tempData.Content = "网络关闭";
+                    tempData.Style = UIMsgBox.Style.OK;
+                    tempData.mBtnTexts = new string[1] { "重连" };
+                    tempData.CloseAction = delegate (UIMsgBox.Result result)
+                    {
+                        StartReconnect();
+                    };
+                    UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+                    UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
+
+                    //StartReconnect();
+                }
+                else if (ex.Message.StartsWith("Connection timed out"))
+                {
+                    Debuger.LogError("连接超时");
+
+                    UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+                    tempData.Title = "提示";
+                    tempData.Content = "连接超时";
+                    tempData.Style = UIMsgBox.Style.OK;
+                    tempData.mBtnTexts = new string[1] { "重连" };
+                    tempData.CloseAction = delegate (UIMsgBox.Result result)
+                    {
+                        StartReconnect();
+                    };
+                    UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+                    UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
+                }
             }
         }
 
-        void StartReconnect()
+        /// <summary>
+        /// 开始重连
+        /// </summary>
+        public void StartReconnect()
         {
             if (mReconnectTimer == null)
             {
@@ -199,7 +236,10 @@ namespace Framework.Network.Web
             mReconnectTimer.Enabled = true;
         }
 
-        void StopReconnect()
+        /// <summary>
+        /// 结束重连
+        /// </summary>
+        public void StopReconnect()
         {
             if (mReconnectTimer != null)
             {

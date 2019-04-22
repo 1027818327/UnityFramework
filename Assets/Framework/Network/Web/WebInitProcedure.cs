@@ -61,6 +61,11 @@ namespace Framework.Network.Web
         //
         //    }
 
+        private void OnApplicationQuit()
+        {
+            WebMgr.SrvConn.StopReconnect();
+        }
+
         #endregion
 
         #region Private Methods

@@ -23,9 +23,9 @@ namespace Framework.Network
         private List<Player> mPlayerList = new List<Player>();
 
         /// <summary>
-        /// 最多5个玩家，第一个玩家是房主，2到4是操作者，第5个是观看者
+        /// 最多玩家数量
         /// </summary>
-        public const int MaxPlayerCount = 5;
+        public const int MaxPlayerCount = int.MaxValue;
         #endregion
 
         #region Properties
@@ -66,9 +66,9 @@ namespace Framework.Network
         public Room(int roomId, Player varMasterPlayer)
         {
             mRoomId = roomId;
-            if (varMasterPlayer.PlayerIdentity != PlayerIdentity.RoomMaster)
+            if (varMasterPlayer.RoomIdentity != RoomIdentity.RoomMaster)
             {
-                varMasterPlayer.PlayerIdentity = PlayerIdentity.RoomMaster;
+                varMasterPlayer.RoomIdentity = RoomIdentity.RoomMaster;
             }
             Enter(varMasterPlayer);
         }

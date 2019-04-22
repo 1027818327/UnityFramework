@@ -19,7 +19,7 @@ namespace Framework.Network
     /// <summary>
     /// 玩家管理
     /// </summary>
-    public class PlayerManager : Singleton<PlayerManager>
+    public partial class PlayerManager : Singleton<PlayerManager>
     {
         #region Fields
         /// <summary>
@@ -99,13 +99,13 @@ namespace Framework.Network
         /// 获取自己的身份
         /// </summary>
         /// <returns></returns>
-        public PlayerIdentity GetPlayerIdentity()
+        public RoomIdentity GetPlayerIdentity()
         {
             if (mPlayer == null)
             {
-                return PlayerIdentity.None;
+                return RoomIdentity.None;
             }
-            return mPlayer.PlayerIdentity;
+            return mPlayer.RoomIdentity;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Framework.Network
         {
             if (mPlayer != null)
             {
-                mPlayer.PlayerIdentity = PlayerIdentity.None;
+                mPlayer.RoomIdentity = RoomIdentity.None;
             }
         }
         #endregion
