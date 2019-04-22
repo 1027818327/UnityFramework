@@ -55,7 +55,9 @@ namespace Assets.Demo2
 
         private ILoginModule loginModule = new WebLoginModule("http://truck.kmax-arvr.com/truck.php/port/Index/login", "truck", "123456");
 
-        private IRoomModule roomModule;
+        private IRoomModule roomModule = new WebRoomModule("http://truck.kmax-arvr.com/truck.php/port/Room/create_room",
+            "http://truck.kmax-arvr.com/truck.php/port/Room/join_room",
+            "http://truck.kmax-arvr.com/truck.php/port/Room/index");
         #endregion
 
         #region Properties
@@ -100,58 +102,28 @@ namespace Assets.Demo2
         {
             ((WebLoginModule)loginModule).Account = account;
 
-            bool tempConnect = loginModule.RequestLogin(ResponseLogin);
-            if (!tempConnect)
-            {
-                UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
-                tempData.Title = "提示";
-                tempData.Content = "网络异常,请检查你的网络";
-                tempData.Style = UIMsgBox.Style.OK;
-                UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
-                UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs);
-            }
+            loginModule.RequestLogin(OnLoginSuccess, OnLoginFail);
         }
 
-        private void ResponseLogin(EventArgs args)
+        private void OnLoginSuccess(ResponseBase varData)
         {
-            NetworkEventArgs<string> tempArgs = args as NetworkEventArgs<string>;
-            string result = tempArgs.Data;
-            Debug.Log(result);
+            SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(varData.result);
+            id = PlayerManager.GetInstance().Player.Id;
+            sign = PlayerManager.GetInstance().Sign;
+        }
 
-            SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
-            string tempS = tempNode["success"];
-            bool tempB = Convert.ToBoolean(tempS);
-
-            string tempTips = tempNode["text"];
-            if (!tempB)
-            {
-                UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
-                tempData.Title = "提示";
-                tempData.Content = tempTips;
-                tempData.Style = UIMsgBox.Style.OKAndCancel;
-                UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
-                UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
-            }
-            else
-            {
-                UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
-                tempData.Title = "提示";
-                tempData.Content = tempTips;
-                tempData.Style = UIMsgBox.Style.OKAndCancel;
-                UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
-                UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
-
-                id = tempNode["id"];
-                sign = tempNode["sign"];
-
-                roomModule = new WebRoomModule("http://truck.kmax-arvr.com/truck.php/port/Room/create_room",
-            "http://truck.kmax-arvr.com/truck.php/port/Room/join_room",
-            "http://truck.kmax-arvr.com/truck.php/port/Room/index");
-            }
+        private void OnLoginFail(ResponseBase varData)
+        {
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.result;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
         }
 
         [ContextMenu("注册")]
-        private void RequestReigst()
+        private void RequestRegist()
         {
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             tempDic.Add("user_id", id);
@@ -175,41 +147,51 @@ namespace Assets.Demo2
         [ContextMenu("创建房间")]
         private void RequestCreate()
         {
-            roomModule.RequestCreate(ResponseCreate);
+            roomModule.RequestCreate(OnCreateRoomSuccess, OnCreateRoomFail);
+        }
+
+        private void OnCreateRoomSuccess(ResponseBase varData)
+        {
+            Debug.Log(varData.result);
+        }
+
+        private void OnCreateRoomFail(ResponseBase varData)
+        {
+            Debug.Log(varData.result);
         }
 
         [ContextMenu("加入房间")]
         private void RequestJoin()
         {
-            roomModule.RequestJoin(roomId, ResponseJoin);
+            roomModule.RequestJoin(roomId, OnJoinRoomSuccess, OnJoinRoomFail);
+        }
+
+        private void OnJoinRoomSuccess(ResponseBase varData)
+        {
+            Debug.Log(varData.result);
+        }
+
+        private void OnJoinRoomFail(ResponseBase varData)
+        {
+            Debug.Log(varData.result);
         }
 
         [ContextMenu("房间列表")]
         private void RequestRoomList()
         {
-            roomModule.RequestRoomList(ResponseRoomList);
+            roomModule.RequestRoomList(OnRoomListSuccess, OnRoomListFail);
         }
 
-        private void ResponseCreate(EventArgs args)
+        private void OnRoomListSuccess(ResponseBase varData)
         {
-            NetworkEventArgs<string> tempArgs = args as NetworkEventArgs<string>;
-            string result = tempArgs.Data;
-            Debug.Log(result);
+            Debug.Log(varData.result);
         }
 
-        private void ResponseJoin(EventArgs args)
+        private void OnRoomListFail(ResponseBase varData)
         {
-            NetworkEventArgs<string> tempArgs = args as NetworkEventArgs<string>;
-            string result = tempArgs.Data;
-            Debug.Log(result);
+            Debug.Log(varData.result);
         }
 
-        private void ResponseRoomList(EventArgs args)
-        {
-            NetworkEventArgs<string> tempArgs = args as NetworkEventArgs<string>;
-            string result = tempArgs.Data;
-            Debug.Log(result);
-        }
 
         [ContextMenu("TestConnect")]
         private void TestConnect()

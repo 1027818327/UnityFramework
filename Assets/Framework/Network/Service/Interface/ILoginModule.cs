@@ -26,9 +26,9 @@ namespace Framework.Network
         /// <summary>
         /// 请求登录
         /// </summary>
-        /// <param name="response">响应</param>
-        /// <returns>false表示网络异常</returns>
-        bool RequestLogin(Action<EventArgs> response);
+        /// <param name="onSuccess">成功回调</param>
+        /// <param name="onFail">失败回调</param>
+        void RequestLogin(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail);
 
         #endregion
     }

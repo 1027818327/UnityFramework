@@ -66,7 +66,7 @@ namespace Framework.Network.Web
             Password = password;
         }
 
-        public bool RequestLogin(Action<EventArgs> response)
+        public void RequestLogin(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
         {
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             tempDic.Add("account", account);
@@ -120,14 +120,36 @@ namespace Framework.Network.Web
                     }
                 }
 
-                if (response != null)
+                if (tempB)
                 {
-                    NetworkEventArgs<string> tempArgs = new NetworkEventArgs<string>(result);
-                    response.Invoke(tempArgs);
+                    if (onSuccess != null)
+                    {
+                        ResponseBase rb = new ResponseBase();
+                        rb.result = result;
+                        onSuccess.Invoke(rb);
+                    }
+                }
+                else
+                {
+                    if (onFail != null)
+                    {
+                        ResponseBase rb = new ResponseBase();
+                        rb.result = tempNode["text"];
+                        onFail.Invoke(rb);
+                    }
                 }
             };
 
-            return mHttp.SendPostAnsyc(url, tempDic, tempA);
+            bool tempConnect = mHttp.SendPostAnsyc(url, tempDic, tempA);
+            if (!tempConnect)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.result = "网络异常";
+                    onFail.Invoke(rb);
+                }
+            }
         }
         #endregion
     }

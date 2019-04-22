@@ -27,24 +27,23 @@ namespace Framework.Network
         /// <summary>
         /// 请求创建房间
         /// </summary>
-        /// <param name="response">响应</param>
-        /// <returns>false表示网络异常</returns>
-        bool RequestCreate(Action<EventArgs> response);
+        /// <param name="onSuccess">成功回调</param>
+        /// <param name="onFail">失败回调</param>
+        void RequestCreate(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail);
 
         /// <summary>
         /// 请求加入房间
         /// </summary>
-        /// <param name="roomId">房号</param>
-        /// <param name="response">响应</param>
-        /// <returns>false表示网络异常</returns>
-        bool RequestJoin(string roomId, Action<EventArgs> response);
+        /// <param name="onSuccess">成功回调</param>
+        /// <param name="onFail">失败回调</param>
+        void RequestJoin(string roomId, Action<ResponseBase> onSuccess, Action<ResponseBase> onFail);
 
         /// <summary>
         /// 请求查看房间列表
         /// </summary>
-        /// <param name="response">响应</param>
-        /// <returns>false表示网络异常</returns>
-        bool RequestRoomList(Action<EventArgs> response);
+        /// <param name="onSuccess">成功回调</param>
+        /// <param name="onFail">失败回调</param>
+        void RequestRoomList(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail);
 
         /// <summary>
         /// 请求获取房间信息
