@@ -19,6 +19,9 @@ namespace Framework.Network
     public interface ILoginModule
     {
         #region Properties
+        string Account { get; set; }
+
+        string Password { get; set; }
 
         #endregion
 

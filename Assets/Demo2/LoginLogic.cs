@@ -53,7 +53,7 @@ namespace Assets.Demo2
         /// </summary>
         public string roomId;
 
-        private ILoginModule loginModule = new WebLoginModule("http://truck.kmax-arvr.com/truck.php/port/Index/login", "truck", "123456");
+        private ILoginModule loginModule = new WebLoginModule("http://truck.kmax-arvr.com/truck.php/port/Index/login");
 
         private IRoomModule roomModule = new WebRoomModule("http://truck.kmax-arvr.com/truck.php/port/Room/create_room",
             "http://truck.kmax-arvr.com/truck.php/port/Room/join_room",
@@ -100,7 +100,8 @@ namespace Assets.Demo2
         [ContextMenu("登录")]
         private void Login()
         {
-            ((WebLoginModule)loginModule).Account = account;
+            loginModule.Account = account;
+            loginModule.Password = "123456";
 
             loginModule.RequestLogin(OnLoginSuccess, OnLoginFail);
         }

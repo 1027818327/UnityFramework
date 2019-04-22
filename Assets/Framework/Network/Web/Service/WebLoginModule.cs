@@ -58,12 +58,10 @@ namespace Framework.Network.Web
         #endregion
 
         #region Protected & Public Methods
-        public WebLoginModule(string url, string account, string password)
+        public WebLoginModule(string url)
         {
             mHttp = new HttpUtils();
             this.url = url;
-            Account = account;
-            Password = password;
         }
 
         public void RequestLogin(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
