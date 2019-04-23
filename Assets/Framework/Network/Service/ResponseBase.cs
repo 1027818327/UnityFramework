@@ -19,6 +19,10 @@ namespace Framework.Network
         /// </summary>
         public int stateCode;
         /// <summary>
+        /// 提示
+        /// </summary>
+        public string tips;
+        /// <summary>
         /// 结果
         /// </summary>
         public string result;

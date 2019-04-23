@@ -10,6 +10,7 @@
  */
 #endregion
 
+using Framework.Debugger;
 using Framework.Http;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,7 @@ namespace Framework.Network.Web
 
             Action<string> tempA = delegate (string result)
             {
+                Debuger.Log(result);
                 SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
                 string tempS = tempNode["success"];
                 bool tempB = Convert.ToBoolean(tempS);
@@ -123,6 +125,7 @@ namespace Framework.Network.Web
                     if (onSuccess != null)
                     {
                         ResponseBase rb = new ResponseBase();
+                        rb.tips = tempNode["text"];
                         rb.result = result;
                         onSuccess.Invoke(rb);
                     }
@@ -132,7 +135,8 @@ namespace Framework.Network.Web
                     if (onFail != null)
                     {
                         ResponseBase rb = new ResponseBase();
-                        rb.result = tempNode["text"];
+                        rb.tips = tempNode["text"];
+                        rb.result = result;
                         onFail.Invoke(rb);
                     }
                 }
@@ -144,7 +148,7 @@ namespace Framework.Network.Web
                 if (onFail != null)
                 {
                     ResponseBase rb = new ResponseBase();
-                    rb.result = "网络异常";
+                    rb.tips = "网络异常";
                     onFail.Invoke(rb);
                 }
             }

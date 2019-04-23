@@ -22,15 +22,6 @@ using UnityEngine;
 
 namespace Assets.Demo2
 {
-    public class JsonLogin
-    {
-        public bool success;
-        public string text;
-        public string id;
-        public string sign;
-        public string role_id;
-    }
-
     public class LoginLogic : MonoBehaviour
     {
         #region Fields
@@ -108,7 +99,9 @@ namespace Assets.Demo2
 
         private void OnLoginSuccess(ResponseBase varData)
         {
-            SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(varData.result);
+            UIEventArgs<string> tempArgs2 = new UIEventArgs<string>(varData.tips);
+            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
+
             id = PlayerManager.GetInstance().Player.Id;
             sign = PlayerManager.GetInstance().Sign;
         }

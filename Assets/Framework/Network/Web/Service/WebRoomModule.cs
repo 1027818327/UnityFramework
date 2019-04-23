@@ -10,6 +10,7 @@
  */
 #endregion
 
+using Framework.Debugger;
 using Framework.Http;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace Framework.Network.Web
 
             Action<string> tempA = delegate (string result)
             {
+                Debuger.Log(result);
                 SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
                 string tempS = tempNode["success"];
                 bool tempB = Convert.ToBoolean(tempS);
@@ -73,6 +75,7 @@ namespace Framework.Network.Web
                     if (onSuccess != null)
                     {
                         ResponseBase rb = new ResponseBase();
+                        rb.tips = "创建房间成功";
                         rb.result = result;
                         onSuccess.Invoke(rb);
                     }
@@ -82,7 +85,8 @@ namespace Framework.Network.Web
                     if (onFail != null)
                     {
                         ResponseBase rb = new ResponseBase();
-                        rb.result = tempNode["text"];
+                        rb.tips = tempNode["text"];
+                        rb.result = result;
                         onFail.Invoke(rb);
                     }
                 }
@@ -94,7 +98,7 @@ namespace Framework.Network.Web
                 if (onFail != null)
                 {
                     ResponseBase rb = new ResponseBase();
-                    rb.result = "网络异常";
+                    rb.tips = "网络异常";
                     onFail.Invoke(rb);
                 }
             }
@@ -111,6 +115,7 @@ namespace Framework.Network.Web
 
             Action<string> tempA = delegate (string result)
             {
+                Debuger.Log(result);
                 SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
 
                 var tempRoomNode = tempNode["info"];
@@ -146,6 +151,7 @@ namespace Framework.Network.Web
                     if (onSuccess != null)
                     {
                         ResponseBase rb = new ResponseBase();
+                        rb.tips = tempNode["text"];
                         rb.result = result;
                         onSuccess.Invoke(rb);
                     }
@@ -155,8 +161,9 @@ namespace Framework.Network.Web
                     if (onFail != null)
                     {
                         ResponseBase rb = new ResponseBase();
-                        rb.result = tempNode["text"];
-                        onSuccess.Invoke(rb);
+                        rb.tips = tempNode["text"];
+                        rb.result = result;
+                        onFail.Invoke(rb);
                     }
                 }
             };
@@ -167,7 +174,7 @@ namespace Framework.Network.Web
                 if (onFail != null)
                 {
                     ResponseBase rb = new ResponseBase();
-                    rb.result = "网络异常";
+                    rb.tips = "网络异常";
                     onSuccess.Invoke(rb);
                 }
             }
@@ -183,8 +190,30 @@ namespace Framework.Network.Web
 
             Action<string> tempA = delegate (string result)
             {
+                Debuger.Log(result);
                 SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
-                
+                string tempS = tempNode["success"];
+                bool tempB = Convert.ToBoolean(tempS);
+                if (tempB)
+                {
+                    if (onSuccess != null)
+                    {
+                        ResponseBase rb = new ResponseBase();
+                        rb.tips = "请求房间列表成功";
+                        rb.result = result;
+                        onSuccess.Invoke(rb);
+                    }
+                }
+                else
+                {
+                    if (onFail != null)
+                    {
+                        ResponseBase rb = new ResponseBase();
+                        rb.tips = "请求房间列表失败";
+                        rb.result = result;
+                        onFail.Invoke(rb);
+                    }
+                }
             };
 
             bool tempConnect = mHttp.SendPostAnsyc(getRoomListUrl, tempDic, tempA);
@@ -193,7 +222,7 @@ namespace Framework.Network.Web
                 if (onFail != null)
                 {
                     ResponseBase rb = new ResponseBase();
-                    rb.result = "网络异常";
+                    rb.tips = "网络异常";
                     onFail.Invoke(rb);
                 }
             }
