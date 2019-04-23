@@ -11,10 +11,26 @@
 #endregion
 
 
+using Framework.Event;
+
 namespace Framework.Network.Web
 {
     public class WebConnect : INetworkConnect
     {
+        #region Properties
+        public IMessageHandle MessageHandle
+        {
+            get;
+            set;
+        }
+        #endregion
+
+        #region Protected & Public Methods
+        public WebConnect()
+        {
+            MessageHandle = new WebMessageHandle();
+        }
+
         public void ConnectServer()
         {
             WebMgr.SrvConn.Connect(WebConfig.ConnectAddress);
@@ -24,5 +40,26 @@ namespace Framework.Network.Web
         {
             WebMgr.SrvConn.Close();
         }
+
+        public bool IsConnect()
+        {
+            WebConnection.Status tempStatus = WebMgr.SrvConn.GetStatus();
+            if (tempStatus == WebConnection.Status.None)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void AddConnectListener(OnNotificationDelegate varDelegate)
+        {
+            EventManager.GetInstance().AddEventListener(WebConfig.WebSocketOpen, varDelegate);
+        }
+
+        public void RemoveConnectListener(OnNotificationDelegate varDelegate)
+        {
+            EventManager.GetInstance().RemoveEventListener(WebConfig.WebSocketOpen, varDelegate);
+        }
+        #endregion
     }
 }

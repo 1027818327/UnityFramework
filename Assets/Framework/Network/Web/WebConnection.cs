@@ -1,6 +1,7 @@
 ﻿using BestHTTP;
 using BestHTTP.WebSocket;
 using Framework.Debugger;
+using Framework.Event;
 using Framework.Unity.UI;
 using System;
 using System.Timers;
@@ -116,7 +117,11 @@ namespace Framework.Network.Web
         {
             if (GetStatus() != Status.Connected)
                 return false;
-            msgDist.AddOnceListener(cbName, cb);
+            if (cb != null)
+            {
+                msgDist.AddOnceListener(cbName, cb);
+            }
+            
             return Send(protocol);
         }
 
@@ -135,6 +140,7 @@ namespace Framework.Network.Web
         void OnOpen(WebSocket ws)
         {
             Debuger.Log("WebSocket Open");
+            EventManager.GetInstance().DispatchEvent(WebConfig.WebSocketOpen);
         }
 
         /// <summary>

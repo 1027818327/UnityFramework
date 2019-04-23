@@ -22,9 +22,16 @@ namespace Framework.Network.Web
     public class WebConfig
     {
         #region Fields
+        #region 地址
         public const string ServerAddress = "ws://47.105.101.118:3389";
         public const string LocalAddress = "ws://172.16.12.244:8181";
         public static string ConnectAddress = ServerAddress;
+        #endregion
+
+        #region 网络事件常量
+        public const string WebSocketOpen = "WebSocket Open";
+        #endregion
+
         #endregion
 
         #region Properties

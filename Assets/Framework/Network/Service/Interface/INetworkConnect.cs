@@ -10,10 +10,16 @@
  */
 #endregion
 
+using Framework.Event;
+
 namespace Framework.Network
 {
     public interface INetworkConnect
     {
+        #region Properties
+        IMessageHandle MessageHandle { get; set; }
+        #endregion
+
         #region Protected & Public Methods
         /// <summary>
         /// 连接服务器
@@ -24,6 +30,16 @@ namespace Framework.Network
         /// 断开服务器
         /// </summary>
         void DisconnectServer();
+
+        /// <summary>
+        /// 是否连上服务器
+        /// </summary>
+        /// <returns></returns>
+        bool IsConnect();
+
+        void AddConnectListener(OnNotificationDelegate varDelegate);
+
+        void RemoveConnectListener(OnNotificationDelegate varDelegate);
         #endregion
     }
 }

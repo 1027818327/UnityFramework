@@ -31,6 +31,11 @@ namespace Framework.Network
         /// </summary>
         private Room mRoom;
 
+        private ILoginModule loginModule;
+        private IRoomModule roomModule;
+        private INetworkConnect networkConnect;
+
+
         #endregion
 
         #region Properties
@@ -57,6 +62,45 @@ namespace Framework.Network
             set
             {
                 mRoom = value;
+            }
+        }
+
+        public ILoginModule LoginModule
+        {
+            get
+            {
+                return loginModule;
+            }
+
+            set
+            {
+                loginModule = value;
+            }
+        }
+
+        public IRoomModule RoomModule
+        {
+            get
+            {
+                return roomModule;
+            }
+
+            set
+            {
+                roomModule = value;
+            }
+        }
+
+        public INetworkConnect NetworkConnect
+        {
+            get
+            {
+                return networkConnect;
+            }
+
+            set
+            {
+                networkConnect = value;
             }
         }
 

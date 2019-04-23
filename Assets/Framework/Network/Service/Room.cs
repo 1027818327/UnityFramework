@@ -29,6 +29,14 @@ namespace Framework.Network
         #endregion
 
         #region Properties
+        public int RoomId
+        {
+            get
+            {
+                return mRoomId;
+            }
+        }
+
         public List<Player> PlayerList
         {
             get

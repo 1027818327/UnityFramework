@@ -16,6 +16,7 @@ namespace Framework.Network
     {
         #region Fields
         public string id;
+        public string room_id;
         #endregion
     }
 }

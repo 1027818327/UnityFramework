@@ -12,6 +12,7 @@
 #endregion
 
 
+using Framework.Event;
 using Framework.Http;
 using Framework.Network;
 using Framework.Network.Web;
@@ -49,6 +50,8 @@ namespace Assets.Demo2
         private IRoomModule roomModule = new WebRoomModule("http://truck.kmax-arvr.com/truck.php/port/Room/create_room",
             "http://truck.kmax-arvr.com/truck.php/port/Room/join_room",
             "http://truck.kmax-arvr.com/truck.php/port/Room/index");
+        private INetworkConnect networkConnect = new WebConnect();
+
         #endregion
 
         #region Properties
@@ -67,7 +70,9 @@ namespace Assets.Demo2
         //
         void Start()
         {
-
+            PlayerManager.GetInstance().LoginModule = loginModule;
+            PlayerManager.GetInstance().RoomModule = roomModule;
+            PlayerManager.GetInstance().NetworkConnect = networkConnect;
         }
         //    
         //    void Update() 
@@ -146,12 +151,22 @@ namespace Assets.Demo2
 
         private void OnCreateRoomSuccess(ResponseBase varData)
         {
-            Debug.Log(varData.result);
+            UIEventArgs<string> tempArgs2 = new UIEventArgs<string>(varData.tips);
+            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
+
+            networkConnect.RemoveConnectListener(OnConnected);
+            networkConnect.AddConnectListener(OnConnected);
+            networkConnect.ConnectServer();
         }
 
         private void OnCreateRoomFail(ResponseBase varData)
         {
-            Debug.Log(varData.result);
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.tips;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
         }
 
         [ContextMenu("加入房间")]
@@ -186,12 +201,44 @@ namespace Assets.Demo2
             Debug.Log(varData.result);
         }
 
+        #region WebSocket服务器
 
-        [ContextMenu("TestConnect")]
-        private void TestConnect()
+        /// <summary>
+        /// 当连上服务器时
+        /// </summary>
+        /// <param name="varData"></param>
+        private void OnConnected(EventData varData)
         {
-            WebMgr.SrvConn.Connect(WebConfig.ConnectAddress);
+            // 请求房间数据
+            networkConnect.MessageHandle.AddListener(ProtocolConst.GetRoomInfo, ResponseGetRoomInfo);
+            roomModule.RequestGetRoomInfo();
         }
+
+        private void ResponseGetRoomInfo(ProtocolBase proto)
+        {
+            ProtocolJson tempJson = proto as ProtocolJson;
+            SC_GetRoomInfo tempInfo = tempJson.Deserialize<SC_GetRoomInfo>();
+            if (tempInfo != null)
+            {
+                Room tempRoom = PlayerManager.GetInstance().Room;
+
+                foreach (SC_Player tempP in tempInfo.text)
+                {
+                    Player tempPlayer = tempRoom.GetPlayer(tempP.id.ToString());
+                    if(tempPlayer == null)
+                    {
+                        tempPlayer = new Player(tempP.name, tempP.id.ToString());
+                        tempPlayer.RoleId = tempP.role_id;
+                        PlayerManager.GetInstance().Room.Enter(tempPlayer);
+                        continue;
+                    }
+                    tempPlayer.Name = tempP.name;
+                    tempPlayer.RoleId = tempP.role_id;
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
 

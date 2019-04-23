@@ -23,12 +23,11 @@ namespace Framework.Network.Web
         private string createRoomUrl;
         private string joinRoomUrl;
         private string getRoomListUrl;
-        private INetworkConnect webConnect;
+        private IMessageHandle messageHandle;
 
         public WebRoomModule(string createRoomUrl, string joinRoomUrl, string getRoomListUrl)
         {
             mHttp = new HttpUtils();
-            webConnect = new WebConnect();
 
             this.createRoomUrl = createRoomUrl;
             this.joinRoomUrl = joinRoomUrl;
@@ -66,8 +65,6 @@ namespace Framework.Network.Web
 
                         PlayerManager.GetInstance().Room.Enter(tempP);
                     }
-
-                    webConnect.ConnectServer();
                 }
 
                 if (tempB)
@@ -142,8 +139,6 @@ namespace Framework.Network.Web
                         }
                         PlayerManager.GetInstance().Room.Enter(tempP);
                     }
-
-                    webConnect.ConnectServer();
                 }
 
                 if (tempRoomNode != null)
@@ -230,46 +225,64 @@ namespace Framework.Network.Web
 
         public void RequestGetRoomInfo()
         {
+            if (messageHandle == null)
+            {
+                messageHandle = new WebMessageHandle();
+            }
             ProtocolJson tempPj = new ProtocolJson();
             CS_GetRoomInfo tempData = new CS_GetRoomInfo();
             tempData.protocolName = ProtocolConst.GetRoomInfo;
             string id = PlayerManager.GetInstance().GetPlayerId();
             tempData.id = id;
+            tempData.room_id = PlayerManager.GetInstance().Room.RoomId.ToString();
+
             tempPj.Serialize(tempData);
-            WebMgr.SrvConn.Send(tempPj);
+            messageHandle.SendPacket(tempPj, null);
         }
 
         public void RequestLeaveRoom()
         {
+            if (messageHandle == null)
+            {
+                messageHandle = new WebMessageHandle();
+            }
             ProtocolJson tempPj = new ProtocolJson();
             CS_LeaveRoom tempData = new CS_LeaveRoom();
             tempData.protocolName = ProtocolConst.LeaveRoom;
             string id = PlayerManager.GetInstance().GetPlayerId();
             tempData.id = id;
             tempPj.Serialize(tempData);
-            WebMgr.SrvConn.Send(tempPj);
+            messageHandle.SendPacket(tempPj, null);
         }
 
         public void RequestDissolveRoom()
         {
+            if (messageHandle == null)
+            {
+                messageHandle = new WebMessageHandle();
+            }
             ProtocolJson tempPj = new ProtocolJson();
             CS_DissolveRoom tempData = new CS_DissolveRoom();
             tempData.protocolName = ProtocolConst.DissolveRoom;
             string id = PlayerManager.GetInstance().GetPlayerId();
             tempData.id = id;
             tempPj.Serialize(tempData);
-            WebMgr.SrvConn.Send(tempPj);
+            messageHandle.SendPacket(tempPj, null);
         }
 
         public void RequestFight()
         {
+            if (messageHandle == null)
+            {
+                messageHandle = new WebMessageHandle();
+            }
             ProtocolJson tempPj = new ProtocolJson();
             CS_StartFight tempData = new CS_StartFight();
             tempData.protocolName = ProtocolConst.StartFight;
             string id = PlayerManager.GetInstance().GetPlayerId();
             tempData.id = id;
             tempPj.Serialize(tempData);
-            WebMgr.SrvConn.Send(tempPj);
+            messageHandle.SendPacket(tempPj, null);
         }
     }
 }
