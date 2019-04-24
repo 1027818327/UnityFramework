@@ -2,6 +2,16 @@
 {
     public class WebMessageHandle : IMessageHandle
     {
+        #region Protected & Public Methods
+        /// <summary>
+        /// 发送数据包无回调
+        /// </summary>
+        /// <param name="protocol">协议数据</param>
+        public void SendPacket(ProtocolBase protocol)
+        {
+            WebMgr.SrvConn.Send(protocol);
+        }
+
         /// <summary>
         /// 发送数据包
         /// </summary>
@@ -31,5 +41,7 @@
         {
             WebMgr.SrvConn.msgDist.DelOnceListener(name, varDelegate);
         }
+
+        #endregion
     }
 }

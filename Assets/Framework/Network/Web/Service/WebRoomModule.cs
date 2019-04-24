@@ -12,6 +12,7 @@
 
 using Framework.Debugger;
 using Framework.Http;
+using Framework.Unity.UI;
 using System;
 using System.Collections.Generic;
 
@@ -20,27 +21,57 @@ namespace Framework.Network.Web
     public class WebRoomModule : IRoomModule
     { 
         private HttpUtils mHttp;
-        private string createRoomUrl;
-        private string joinRoomUrl;
-        private string getRoomListUrl;
-        private IMessageHandle messageHandle;
+        private RoomUrl mRoomUrl;
 
-        public WebRoomModule(string createRoomUrl, string joinRoomUrl, string getRoomListUrl)
+        public struct RoomUrl
+        {
+            public string createRoomUrl;
+            public string joinRoomUrl;
+            public string getRoomListUrl;
+            public string leaveRoomUrl;
+            public string dissolveRoomUrl;
+            public string startFightUrl;
+        }
+
+        public WebRoomModule(RoomUrl roomUrl)
         {
             mHttp = new HttpUtils();
+            mRoomUrl = roomUrl;
 
-            this.createRoomUrl = createRoomUrl;
-            this.joinRoomUrl = joinRoomUrl;
-            this.getRoomListUrl = getRoomListUrl;
+            IMessageHandle tempMh = null;
+            INetworkConnect tempNC = PlayerManager.GetInstance().NetworkConnect;
+            if (tempNC == null || tempNC.MessageHandle as WebMessageHandle == null)
+            {
+                tempMh = new WebMessageHandle();
+            }
+            else
+            {
+                tempMh = tempNC.MessageHandle;
+            }
+
+            tempMh.AddListener(ProtocolConst.LeaveRoom, ResponseLeaveRoom);
+            tempMh.AddListener(ProtocolConst.DissolveRoom, ResponseDissolveRoom);
         }
 
         public void RequestCreate(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
         {
+            if (IsLogin() == false) return;
+
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
             string sign = PlayerManager.GetInstance().Sign;
             tempDic.Add("user_id", id);
             tempDic.Add("sign", sign);
+
+            Room tempRoom = PlayerManager.GetInstance().Room;
+            if (tempRoom != null)
+            {
+                tempDic.Add("room_id", tempRoom.RoomId.ToString());
+            }
+            else
+            {
+                tempDic.Add("room_id", "0");
+            }
 
             Action<string> tempA = delegate (string result)
             {
@@ -89,7 +120,7 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(createRoomUrl, tempDic, tempA);
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.createRoomUrl, tempDic, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -103,6 +134,8 @@ namespace Framework.Network.Web
 
         public void RequestJoin(string roomId, Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
         {
+            if (IsLogin() == false) return;
+
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
             string sign = PlayerManager.GetInstance().Sign;
@@ -163,7 +196,7 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(joinRoomUrl, tempDic, tempA);
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.joinRoomUrl, tempDic, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -177,6 +210,8 @@ namespace Framework.Network.Web
 
         public void RequestRoomList(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
         {
+            if (IsLogin() == false) return;
+
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
             string sign = PlayerManager.GetInstance().Sign;
@@ -211,7 +246,7 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(getRoomListUrl, tempDic, tempA);
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.getRoomListUrl, tempDic, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -225,10 +260,20 @@ namespace Framework.Network.Web
 
         public void RequestGetRoomInfo()
         {
-            if (messageHandle == null)
+            if (IsLogin() == false) return;
+            if (IsInRoom() == false) return;
+
+            IMessageHandle tempMh = null;
+            INetworkConnect tempConnect = PlayerManager.GetInstance().NetworkConnect;
+            if (tempConnect == null || (tempConnect.MessageHandle as WebMessageHandle) == null)
             {
-                messageHandle = new WebMessageHandle();
+                tempMh = new WebMessageHandle();
             }
+            else
+            {
+                tempMh = tempConnect.MessageHandle;
+            }
+
             ProtocolJson tempPj = new ProtocolJson();
             CS_GetRoomInfo tempData = new CS_GetRoomInfo();
             tempData.protocolName = ProtocolConst.GetRoomInfo;
@@ -237,52 +282,151 @@ namespace Framework.Network.Web
             tempData.room_id = PlayerManager.GetInstance().Room.RoomId.ToString();
 
             tempPj.Serialize(tempData);
-            messageHandle.SendPacket(tempPj, null);
+            tempMh.SendPacket(tempPj);
         }
 
         public void RequestLeaveRoom()
         {
-            if (messageHandle == null)
-            {
-                messageHandle = new WebMessageHandle();
-            }
-            ProtocolJson tempPj = new ProtocolJson();
-            CS_LeaveRoom tempData = new CS_LeaveRoom();
-            tempData.protocolName = ProtocolConst.LeaveRoom;
+            if (IsLogin() == false) return;
+            if (IsInRoom() == false) return;
+
+            Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
-            tempData.id = id;
-            tempPj.Serialize(tempData);
-            messageHandle.SendPacket(tempPj, null);
+            string sign = PlayerManager.GetInstance().Sign;
+            string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
+
+            tempDic.Add("user_id", id);
+            tempDic.Add("sign", sign);
+            tempDic.Add("room_id", roomId);
+
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log(result);
+            };
+            mHttp.SendPostAnsyc(mRoomUrl.leaveRoomUrl, tempDic, tempA);
         }
 
         public void RequestDissolveRoom()
         {
-            if (messageHandle == null)
-            {
-                messageHandle = new WebMessageHandle();
-            }
-            ProtocolJson tempPj = new ProtocolJson();
-            CS_DissolveRoom tempData = new CS_DissolveRoom();
-            tempData.protocolName = ProtocolConst.DissolveRoom;
+            if (IsLogin() == false) return;
+            if (IsInRoom() == false) return;
+            if (IsMaster() == false) return;
+
+            Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
-            tempData.id = id;
-            tempPj.Serialize(tempData);
-            messageHandle.SendPacket(tempPj, null);
+            string sign = PlayerManager.GetInstance().Sign;
+            string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
+
+            tempDic.Add("user_id", id);
+            tempDic.Add("sign", sign);
+            tempDic.Add("room_id", roomId);
+
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log(result);
+            };
+            mHttp.SendPostAnsyc(mRoomUrl.dissolveRoomUrl, tempDic, tempA);
         }
 
         public void RequestFight()
         {
-            if (messageHandle == null)
-            {
-                messageHandle = new WebMessageHandle();
-            }
-            ProtocolJson tempPj = new ProtocolJson();
-            CS_StartFight tempData = new CS_StartFight();
-            tempData.protocolName = ProtocolConst.StartFight;
+            if (IsLogin() == false) return;
+            if (IsInRoom() == false) return;
+            if (IsMaster() == false) return;
+
+            Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
-            tempData.id = id;
-            tempPj.Serialize(tempData);
-            messageHandle.SendPacket(tempPj, null);
+            string sign = PlayerManager.GetInstance().Sign;
+            string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
+
+            tempDic.Add("user_id", id);
+            tempDic.Add("sign", sign);
+            tempDic.Add("room_id", roomId);
+
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log(result);
+            };
+            mHttp.SendPostAnsyc(mRoomUrl.startFightUrl, tempDic, tempA);
         }
+
+        #region 效验
+        private bool IsLogin()
+        {
+            Player tempP = PlayerManager.GetInstance().Player;
+            if (tempP == null || string.IsNullOrEmpty(tempP.Id))
+            {
+                UIEventArgs<string> tempArgs2 = new UIEventArgs<string>("请先登录");
+                UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 是否在房间
+        /// </summary>
+        /// <returns></returns>
+        private bool IsInRoom()
+        {
+            if (PlayerManager.GetInstance().Room == null)
+            {
+                UIEventArgs<string> tempArgs2 = new UIEventArgs<string>("请先创建或加入房间");
+                UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 是否是房主
+        /// </summary>
+        /// <returns></returns>
+        private bool IsMaster()
+        {
+            Player tempP = PlayerManager.GetInstance().Player;
+            if (tempP != null && !string.IsNullOrEmpty(tempP.Id) && tempP.RoomIdentity == RoomIdentity.RoomMaster)
+            {
+                return true;
+            }
+            UIEventArgs<string> tempArgs2 = new UIEventArgs<string>("你不是房主，无权限操作");
+            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
+            return false;
+        }
+
+        #endregion
+
+        #region Response
+        private void ResponseLeaveRoom(ProtocolBase protocol)
+        {
+            ProtocolJson tempJson = protocol as ProtocolJson;
+            string id = tempJson.JsonData["id"].ToString();
+            if (PlayerManager.GetInstance().IsSelf(id))
+            {
+                /// 如果是自己离开则清空房间数据
+                PlayerManager.GetInstance().Room = null;
+                PlayerManager.GetInstance().NetworkConnect.DisconnectServer();
+            }
+        }
+
+        private void ResponseDissolveRoom(ProtocolBase protocol)
+        {
+            ProtocolJson tempJson = protocol as ProtocolJson;
+            string id = tempJson.JsonData["id"].ToString();
+            Room tempRoom = PlayerManager.GetInstance().Room;
+            if (tempRoom == null)
+            {
+                Debuger.LogError("房间不存在");
+                return;
+            }
+            Player tempP = tempRoom.GetPlayer(id);
+            if (tempP != null && tempP.RoomIdentity == RoomIdentity.RoomMaster)
+            {
+                /// 如果是房主解散房间则清空房间数据
+                PlayerManager.GetInstance().Room = null;
+                PlayerManager.GetInstance().NetworkConnect.DisconnectServer();
+            }
+        }
+        #endregion
     }
 }

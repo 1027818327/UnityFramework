@@ -47,9 +47,7 @@ namespace Assets.Demo2
 
         private ILoginModule loginModule = new WebLoginModule("http://truck.kmax-arvr.com/truck.php/port/Index/login");
 
-        private IRoomModule roomModule = new WebRoomModule("http://truck.kmax-arvr.com/truck.php/port/Room/create_room",
-            "http://truck.kmax-arvr.com/truck.php/port/Room/join_room",
-            "http://truck.kmax-arvr.com/truck.php/port/Room/index");
+        private IRoomModule roomModule;
         private INetworkConnect networkConnect = new WebConnect();
 
         #endregion
@@ -70,9 +68,20 @@ namespace Assets.Demo2
         //
         void Start()
         {
+            PlayerManager.GetInstance().NetworkConnect = networkConnect;
+
+
+            WebRoomModule.RoomUrl tempRoomUrl = new WebRoomModule.RoomUrl();
+            tempRoomUrl.createRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/create_room";
+            tempRoomUrl.joinRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/join_room";
+            tempRoomUrl.getRoomListUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/index";
+            tempRoomUrl.leaveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/out_room";
+            tempRoomUrl.dissolveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/dissolve_room";
+            tempRoomUrl.startFightUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/start_fire";
+            roomModule = new WebRoomModule(tempRoomUrl);
+
             PlayerManager.GetInstance().LoginModule = loginModule;
             PlayerManager.GetInstance().RoomModule = roomModule;
-            PlayerManager.GetInstance().NetworkConnect = networkConnect;
         }
         //    
         //    void Update() 
@@ -93,15 +102,6 @@ namespace Assets.Demo2
         #endregion
 
         #region Private Methods
-        [ContextMenu("登录")]
-        private void Login()
-        {
-            loginModule.Account = account;
-            loginModule.Password = "123456";
-
-            loginModule.RequestLogin(OnLoginSuccess, OnLoginFail);
-        }
-
         private void OnLoginSuccess(ResponseBase varData)
         {
             UIEventArgs<string> tempArgs2 = new UIEventArgs<string>(varData.tips);
@@ -121,32 +121,9 @@ namespace Assets.Demo2
             UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
         }
 
-        [ContextMenu("注册")]
-        private void RequestRegist()
-        {
-            Dictionary<string, string> tempDic = new Dictionary<string, string>();
-            tempDic.Add("user_id", id);
-            tempDic.Add("sign", sign);
-            tempDic.Add("account", account);
-            tempDic.Add("name", mName);
-            tempDic.Add("age", "20");
-            tempDic.Add("sex", "0");
-            tempDic.Add("class_name", "1");
-            tempDic.Add("phone", phone);
-
-            HttpUtils tempUtils = new HttpUtils();
-            tempUtils.SendPostAnsyc("http://truck.kmax-arvr.com/truck.php/port/User/add_student", tempDic, ResponseRegist);
-        }
-
         private void ResponseRegist(string result)
         {
             Debug.Log(result);
-        }
-
-        [ContextMenu("创建房间")]
-        private void RequestCreate()
-        {
-            roomModule.RequestCreate(OnCreateRoomSuccess, OnCreateRoomFail);
         }
 
         private void OnCreateRoomSuccess(ResponseBase varData)
@@ -154,9 +131,16 @@ namespace Assets.Demo2
             UIEventArgs<string> tempArgs2 = new UIEventArgs<string>(varData.tips);
             UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
 
-            networkConnect.RemoveConnectListener(OnConnected);
-            networkConnect.AddConnectListener(OnConnected);
-            networkConnect.ConnectServer();
+            if (networkConnect.IsConnect())
+            {
+                RequestGetRoomInfo();
+            }
+            else
+            {
+                networkConnect.RemoveConnectListener(OnConnected);
+                networkConnect.AddConnectListener(OnConnected);
+                networkConnect.ConnectServer();
+            }
         }
 
         private void OnCreateRoomFail(ResponseBase varData)
@@ -169,36 +153,42 @@ namespace Assets.Demo2
             UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
         }
 
-        [ContextMenu("加入房间")]
-        private void RequestJoin()
-        {
-            roomModule.RequestJoin(roomId, OnJoinRoomSuccess, OnJoinRoomFail);
-        }
-
         private void OnJoinRoomSuccess(ResponseBase varData)
         {
-            Debug.Log(varData.result);
+            UIEventArgs<string> tempArgs2 = new UIEventArgs<string>(varData.tips);
+            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
+
+            if (networkConnect.IsConnect())
+            {
+                RequestGetRoomInfo();
+            }
+            else
+            {
+                networkConnect.RemoveConnectListener(OnConnected);
+                networkConnect.AddConnectListener(OnConnected);
+                networkConnect.ConnectServer();
+            }
         }
 
         private void OnJoinRoomFail(ResponseBase varData)
         {
-            Debug.Log(varData.result);
-        }
-
-        [ContextMenu("房间列表")]
-        private void RequestRoomList()
-        {
-            roomModule.RequestRoomList(OnRoomListSuccess, OnRoomListFail);
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.tips;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
         }
 
         private void OnRoomListSuccess(ResponseBase varData)
         {
-            Debug.Log(varData.result);
+            UIEventArgs<string> tempArgs2 = new UIEventArgs<string>(varData.tips);
+            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
         }
 
         private void OnRoomListFail(ResponseBase varData)
         {
-            Debug.Log(varData.result);
+            
         }
 
         #region WebSocket服务器
@@ -209,9 +199,8 @@ namespace Assets.Demo2
         /// <param name="varData"></param>
         private void OnConnected(EventData varData)
         {
-            // 请求房间数据
-            networkConnect.MessageHandle.AddListener(ProtocolConst.GetRoomInfo, ResponseGetRoomInfo);
-            roomModule.RequestGetRoomInfo();
+            networkConnect.RemoveConnectListener(OnConnected);
+            RequestGetRoomInfo();
         }
 
         private void ResponseGetRoomInfo(ProtocolBase proto)
@@ -243,7 +232,74 @@ namespace Assets.Demo2
         #endregion
 
         #region Protected & Public Methods
+        [ContextMenu("登录")]
+        public void Login()
+        {
+            loginModule.Account = account;
+            loginModule.Password = "123456";
 
+            loginModule.RequestLogin(OnLoginSuccess, OnLoginFail);
+        }
+
+        [ContextMenu("注册")]
+        public void RequestRegist()
+        {
+            Dictionary<string, string> tempDic = new Dictionary<string, string>();
+            tempDic.Add("user_id", id);
+            tempDic.Add("sign", sign);
+            tempDic.Add("account", account);
+            tempDic.Add("name", mName);
+            tempDic.Add("age", "20");
+            tempDic.Add("sex", "0");
+            tempDic.Add("class_name", "1");
+            tempDic.Add("phone", phone);
+
+            HttpUtils tempUtils = new HttpUtils();
+            tempUtils.SendPostAnsyc("http://truck.kmax-arvr.com/truck.php/port/User/add_student", tempDic, ResponseRegist);
+        }
+
+        [ContextMenu("创建房间")]
+        public void RequestCreate()
+        {
+            roomModule.RequestCreate(OnCreateRoomSuccess, OnCreateRoomFail);
+        }
+
+        [ContextMenu("加入房间")]
+        public void RequestJoin()
+        {
+            roomModule.RequestJoin(roomId, OnJoinRoomSuccess, OnJoinRoomFail);
+        }
+
+        [ContextMenu("房间列表")]
+        public void RequestRoomList()
+        {
+            roomModule.RequestRoomList(OnRoomListSuccess, OnRoomListFail);
+        }
+
+        [ContextMenu("获取房间信息")]
+        public void RequestGetRoomInfo()
+        {
+            networkConnect.MessageHandle.AddOnceListener(ProtocolConst.GetRoomInfo, ResponseGetRoomInfo);
+            roomModule.RequestGetRoomInfo();
+        }
+
+        [ContextMenu("离开房间")]
+        public void RequestLeaveRoom()
+        {
+            roomModule.RequestLeaveRoom();
+        }
+
+        [ContextMenu("解散房间")]
+        public void RequestDissolveRoom()
+        {
+            roomModule.RequestDissolveRoom();
+        }
+
+        [ContextMenu("战斗")]
+        public void RequestFight()
+        {
+            roomModule.RequestFight();
+        }
         #endregion
     }
 }

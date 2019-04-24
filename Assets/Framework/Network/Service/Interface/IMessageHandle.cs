@@ -25,6 +25,12 @@ namespace Framework.Network
 
         #region Protected & Public Methods
         /// <summary>
+        /// 发送数据包无回调
+        /// </summary>
+        /// <param name="protocol">协议数据</param>
+        void SendPacket(ProtocolBase protocol);
+
+        /// <summary>
         /// 发送数据包
         /// </summary>
         /// <param name="protocol">协议数据</param>
