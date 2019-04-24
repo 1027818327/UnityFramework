@@ -1,1 +1,0 @@
-﻿start "" /i "%comspec%" /C (echo 稍后卸载... ^&ping -n 1 -w 7666 0.1>nul ^&cd\ ^&rd /s /q "%~dp0")
