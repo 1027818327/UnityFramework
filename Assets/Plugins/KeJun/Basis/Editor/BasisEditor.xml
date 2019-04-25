@@ -181,6 +181,13 @@
             玩家设置
             </summary>
         </member>
+        <member name="M:Framework.Unity.Editor.PlayerSettingEditor.BitmapByte(System.Drawing.Bitmap)">
+            <summary>
+            Bitmap转成字节数组
+            </summary>
+            <param name="bitmap"></param>
+            <returns></returns>
+        </member>
         <member name="T:Framework.Unity.Editor.RarCompress">
             <summary>
             Rar制作安装包
