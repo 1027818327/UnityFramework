@@ -290,6 +290,25 @@ namespace Framework.Network.Web
             if (IsLogin() == false) return;
             if (IsInRoom() == false) return;
 
+            IMessageHandle tempMh = null;
+            INetworkConnect tempNC = PlayerManager.GetInstance().NetworkConnect;
+            if (tempNC == null || tempNC.MessageHandle as WebMessageHandle == null)
+            {
+                tempMh = new WebMessageHandle();
+            }
+            else
+            {
+                tempMh = tempNC.MessageHandle;
+            }
+            ProtocolJson tempJson = new ProtocolJson();
+            CS_LeaveRoom tempData = new CS_LeaveRoom();
+            tempData.protocolName = ProtocolConst.LeaveRoom;
+            tempData.id = PlayerManager.GetInstance().GetPlayerId();
+            tempData.room_id = PlayerManager.GetInstance().Room.RoomId.ToString();
+            tempJson.Serialize(tempData);
+            tempMh.SendPacket(tempJson);
+
+            /*
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
             string sign = PlayerManager.GetInstance().Sign;
@@ -304,6 +323,7 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
             };
             mHttp.SendPostAnsyc(mRoomUrl.leaveRoomUrl, tempDic, tempA);
+            */
         }
 
         public void RequestDissolveRoom()
@@ -312,6 +332,25 @@ namespace Framework.Network.Web
             if (IsInRoom() == false) return;
             if (IsMaster() == false) return;
 
+            IMessageHandle tempMh = null;
+            INetworkConnect tempNC = PlayerManager.GetInstance().NetworkConnect;
+            if (tempNC == null || tempNC.MessageHandle as WebMessageHandle == null)
+            {
+                tempMh = new WebMessageHandle();
+            }
+            else
+            {
+                tempMh = tempNC.MessageHandle;
+            }
+            ProtocolJson tempJson = new ProtocolJson();
+            CS_DissolveRoom tempData = new CS_DissolveRoom();
+            tempData.protocolName = ProtocolConst.DissolveRoom;
+            tempData.id = PlayerManager.GetInstance().GetPlayerId();
+            tempData.room_id = PlayerManager.GetInstance().Room.RoomId.ToString();
+            tempJson.Serialize(tempData);
+            tempMh.SendPacket(tempJson);
+
+            /*
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
             string sign = PlayerManager.GetInstance().Sign;
@@ -326,6 +365,7 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
             };
             mHttp.SendPostAnsyc(mRoomUrl.dissolveRoomUrl, tempDic, tempA);
+            */
         }
 
         public void RequestFight()
@@ -334,6 +374,25 @@ namespace Framework.Network.Web
             if (IsInRoom() == false) return;
             if (IsMaster() == false) return;
 
+            IMessageHandle tempMh = null;
+            INetworkConnect tempNC = PlayerManager.GetInstance().NetworkConnect;
+            if (tempNC == null || tempNC.MessageHandle as WebMessageHandle == null)
+            {
+                tempMh = new WebMessageHandle();
+            }
+            else
+            {
+                tempMh = tempNC.MessageHandle;
+            }
+            ProtocolJson tempJson = new ProtocolJson();
+            CS_StartFight tempData = new CS_StartFight();
+            tempData.protocolName = ProtocolConst.StartFight;
+            tempData.id = PlayerManager.GetInstance().GetPlayerId();
+            tempData.room_id = PlayerManager.GetInstance().Room.RoomId.ToString();
+            tempJson.Serialize(tempData);
+            tempMh.SendPacket(tempJson);
+
+            /*
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
             string sign = PlayerManager.GetInstance().Sign;
@@ -348,6 +407,7 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
             };
             mHttp.SendPostAnsyc(mRoomUrl.startFightUrl, tempDic, tempA);
+            */
         }
 
         #region 效验

@@ -76,9 +76,9 @@ namespace Assets.Demo2
             tempRoomUrl.createRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/create_room";
             tempRoomUrl.joinRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/join_room";
             tempRoomUrl.getRoomListUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/index";
-            tempRoomUrl.leaveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/out_room";
-            tempRoomUrl.dissolveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/dissolve_room";
-            tempRoomUrl.startFightUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/start_fire";
+            //tempRoomUrl.leaveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/out_room";
+            //tempRoomUrl.dissolveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/dissolve_room";
+            //tempRoomUrl.startFightUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/start_fire";
             roomModule = new WebRoomModule(tempRoomUrl);
 
             PlayerManager.GetInstance().LoginModule = loginModule;
@@ -302,10 +302,18 @@ namespace Assets.Demo2
             roomModule.RequestFight();
         }
 
-        public void ChangeAccount(string value)
+        public void ChangeAccount()
         {
-            account = value;
+            account = mAccountInput.text;
         }
+
+        public void ChangeRoomId()
+        {
+            roomId = mRoomIdInput.text;
+        }
+
+        public InputField mAccountInput;
+        public InputField mRoomIdInput;
         #endregion
     }
 }
