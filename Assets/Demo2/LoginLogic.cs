@@ -20,6 +20,7 @@ using Framework.Unity.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Demo2
 {
@@ -299,6 +300,11 @@ namespace Assets.Demo2
         public void RequestFight()
         {
             roomModule.RequestFight();
+        }
+
+        public void ChangeAccount(string value)
+        {
+            account = value;
         }
         #endregion
     }
