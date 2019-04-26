@@ -49,6 +49,7 @@ namespace Framework.Network.Web
                 tempMh = tempNC.MessageHandle;
             }
 
+            tempMh.AddListener(ProtocolConst.GetRoomInfo, ResponseGetRoomInfo);
             tempMh.AddListener(ProtocolConst.LeaveRoom, ResponseLeaveRoom);
             tempMh.AddListener(ProtocolConst.DissolveRoom, ResponseDissolveRoom);
         }
@@ -457,6 +458,49 @@ namespace Framework.Network.Web
         #endregion
 
         #region Response
+        private void ResponseGetRoomInfo(ProtocolBase proto)
+        {
+            ProtocolJson tempJson = proto as ProtocolJson;
+            SC_GetRoomInfo tempInfo = tempJson.Deserialize<SC_GetRoomInfo>();
+            if (tempInfo != null)
+            {
+                Room tempRoom = PlayerManager.GetInstance().Room;
+                List<string> tempList = new List<string>();
+                for (int j = 0; j < tempInfo.text.Length; j++)
+                {
+                    string tempId = tempInfo.text[j].id.ToString();
+                    tempList.Add(tempId);
+                }
+
+                for (int i = 0; i < tempRoom.PlayerList.Count;)
+                {
+                    string tempId = tempRoom.PlayerList[i].Id;
+                    if (tempList.Contains(tempId))
+                    {
+                        i++;
+                        continue;
+                    }
+                    tempRoom.PlayerList.RemoveAt(i);
+                }
+
+                foreach (SC_Player tempP in tempInfo.text)
+                {
+                    Player tempPlayer = tempRoom.GetPlayer(tempP.id.ToString());
+                    if (tempPlayer == null)
+                    {
+                        tempPlayer = new Player(tempP.name, tempP.id.ToString());
+                        tempPlayer.RoleId = tempP.role_id;
+                        PlayerManager.GetInstance().Room.Enter(tempPlayer);
+                    }
+                    else
+                    {
+                        tempPlayer.Name = tempP.name;
+                        tempPlayer.RoleId = tempP.role_id;
+                    }
+                }
+            }
+        }
+
         private void ResponseLeaveRoom(ProtocolBase protocol)
         {
             ProtocolJson tempJson = protocol as ProtocolJson;

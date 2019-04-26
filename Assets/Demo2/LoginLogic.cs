@@ -206,26 +206,7 @@ namespace Assets.Demo2
 
         private void ResponseGetRoomInfo(ProtocolBase proto)
         {
-            ProtocolJson tempJson = proto as ProtocolJson;
-            SC_GetRoomInfo tempInfo = tempJson.Deserialize<SC_GetRoomInfo>();
-            if (tempInfo != null)
-            {
-                Room tempRoom = PlayerManager.GetInstance().Room;
 
-                foreach (SC_Player tempP in tempInfo.text)
-                {
-                    Player tempPlayer = tempRoom.GetPlayer(tempP.id.ToString());
-                    if(tempPlayer == null)
-                    {
-                        tempPlayer = new Player(tempP.name, tempP.id.ToString());
-                        tempPlayer.RoleId = tempP.role_id;
-                        PlayerManager.GetInstance().Room.Enter(tempPlayer);
-                        continue;
-                    }
-                    tempPlayer.Name = tempP.name;
-                    tempPlayer.RoleId = tempP.role_id;
-                }
-            }
         }
 
         #endregion
