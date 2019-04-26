@@ -4,6 +4,27 @@
         <name>BasisEditor</name>
     </assembly>
     <members>
+        <member name="T:Framework.Unity.Editor.Atlas">
+             <summary>
+            1.遍历“Atlas”下的每个文件夹，。 
+            2.创建一个go，添加AtlasMap脚本，把文件夹下所有的Sprite都添加到go上, 
+             3.将go创建为对应预设，并放置到“Resources/Texture2D”下的对应文件夹处，预设名字为“文件夹名”，然后将go删除。
+             </summary>
+        </member>
+        <member name="M:Framework.Unity.Editor.Atlas.MakeOnePrefab(System.IO.DirectoryInfo,System.IO.DirectoryInfo)">
+            <summary>
+            遍历文件夹下所有图片进行节点生成
+            </summary>
+            <param name="dirInfo">文件夹</param>
+            <param name="fromDirInfo">起始文件夹</param>
+        </member>
+        <member name="M:Framework.Unity.Editor.Atlas.GetDirectoryName(UnityEngine.Object[])">
+            <summary>
+            获取所选文件夹的名字
+            </summary>
+            <param name="objects"></param>
+            <returns></returns>
+        </member>
         <member name="T:Framework.Unity.Editor.AutoBuilder">
             <summary>
             自动构建脚本
@@ -14,6 +35,11 @@
             获取项目名字
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Framework.Unity.Editor.AutoSetTextureUISprite">
+            <summary>
+            导入图片资源到Unity时，自动修改为UI 2D Sprite，自动设置打包tag 为文件夹名字;
+            </summary>
         </member>
         <member name="T:Framework.Unity.Editor.DefineManager">
             Editor Wizard for easily managing global defines in Unity
