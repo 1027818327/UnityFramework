@@ -18,6 +18,7 @@ using Framework.Unity.MultiLanguage;
 using Framework.Unity.Tools;
 using Framework.Unity.UI;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Framework.Unity
@@ -27,6 +28,11 @@ namespace Framework.Unity
         #region Fields
         public MonoBehaviour[] mLoadProcedures;
         public UISimpleLoading initLoading;
+
+        /// <summary>
+        /// 结束事件
+        /// </summary>
+        public UnityEvent mEndEvent;
 
         /// <summary>
         /// 初始化流程列表
@@ -140,6 +146,10 @@ namespace Framework.Unity
                 }
                 mProcedureList[0].ProcedureBegin();
             }
+            else
+            {
+                ProcedureEnd();
+            }
         }
 
         public void ProcedureEnd()
@@ -148,9 +158,11 @@ namespace Framework.Unity
             {
                 initLoading.gameObject.SetActive(false);
             }
-            
-            Scene tempS = SceneManager.GetActiveScene();
-            UIManager.GetInstance().LoadScene(tempS.buildIndex + 1);
+
+            if (mEndEvent != null)
+            {
+                mEndEvent.Invoke();
+            }
         }
 
         public void RegisterEndCallback(Action action)
@@ -159,6 +171,12 @@ namespace Framework.Unity
 
         public void UnRegisterEndCallback(Action action)
         {
+        }
+
+        public void JumpNextScene()
+        {
+            Scene tempS = SceneManager.GetActiveScene();
+            UIManager.GetInstance().LoadScene(tempS.buildIndex + 1);
         }
     }
 }
