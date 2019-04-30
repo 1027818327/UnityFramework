@@ -481,7 +481,7 @@ MonoBehaviour:
     IsClearStack: 0
     UIForms_Type: 2
     UIForms_ShowMode: 0
-    UIForm_LucencyType: 0
+    UIForm_LucencyType: 2
   mTitleText: {fileID: 114792228173061990}
   mContentText: {fileID: 114494981051278822}
   mButtons:

@@ -1,7 +1,6 @@
 ﻿using Framework.Debugger;
 using Framework.Runtime;
 using Framework.Unity.Tools;
-using Framework.Unity.UI;
 using UnityEngine;
 
 namespace Framework.Unity
