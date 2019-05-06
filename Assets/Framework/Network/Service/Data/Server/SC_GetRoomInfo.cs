@@ -30,10 +30,26 @@ namespace Framework.Network
         public int role_id;
     }
 
+    public class SC_Room
+    {
+        /// <summary>
+        /// 房号
+        /// </summary>
+        public int id;
+        /// <summary>
+        /// 是否已开始战斗
+        /// </summary>
+        public bool is_start_text;
+        /// <summary>
+        /// 玩家列表
+        /// </summary>
+        public SC_Player[] room_info;
+    }
+
     public class SC_GetRoomInfo : MessageBase
     {
         #region Fields
-        public SC_Player[] text;
+        public SC_Room room;
         #endregion
 
         #region Properties

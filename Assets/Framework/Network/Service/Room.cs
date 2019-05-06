@@ -20,6 +20,10 @@ namespace Framework.Network
     {
         #region Fields
         private int mRoomId;
+        /// <summary>
+        /// 会话id
+        /// </summary>
+        private string client_id;
         private List<Player> mPlayerList = new List<Player>();
 
         /// <summary>
@@ -47,6 +51,19 @@ namespace Framework.Network
             private set
             {
                 mPlayerList = value;
+            }
+        }
+
+        public string Client_id
+        {
+            get
+            {
+                return client_id;
+            }
+
+            set
+            {
+                client_id = value;
             }
         }
 

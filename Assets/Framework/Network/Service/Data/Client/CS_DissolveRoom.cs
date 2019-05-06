@@ -17,8 +17,9 @@ namespace Framework.Network
     public class CS_DissolveRoom : MessageBase
     {
         #region Fields
-        public string id;
+        public string user_id;
         public string room_id;
+        public string client_id;
         #endregion
     }
 }

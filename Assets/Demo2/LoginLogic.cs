@@ -76,9 +76,10 @@ namespace Assets.Demo2
             tempRoomUrl.createRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/create_room";
             tempRoomUrl.joinRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/join_room";
             tempRoomUrl.getRoomListUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/index";
-            //tempRoomUrl.leaveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/out_room";
-            //tempRoomUrl.dissolveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/dissolve_room";
-            //tempRoomUrl.startFightUrl = "http://truck.kmax-arvr.com/truck.php/port/Room/start_fire";
+            tempRoomUrl.getRoomInfoUrl = "http://truck.kmax-arvr.com/truck.php/port/Protocol/GetRoomInfo";
+            tempRoomUrl.leaveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Protocol/LeaveRoom";
+            tempRoomUrl.dissolveRoomUrl = "http://truck.kmax-arvr.com/truck.php/port/Protocol/DissolveRoom";
+            tempRoomUrl.startFightUrl = "http://truck.kmax-arvr.com/truck.php/port/Protocol/StartFight";
             roomModule = new WebRoomModule(tempRoomUrl);
 
             PlayerManager.GetInstance().LoginModule = loginModule;
