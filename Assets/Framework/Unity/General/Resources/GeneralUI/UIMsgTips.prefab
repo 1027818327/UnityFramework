@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CurrentUIType:
     IsClearStack: 0
-    UIForms_Type: 2
+    UIForms_Type: 3
     UIForms_ShowMode: 0
     UIForm_LucencyType: 3
   ctlTextBar: {fileID: 114829687470297066}
