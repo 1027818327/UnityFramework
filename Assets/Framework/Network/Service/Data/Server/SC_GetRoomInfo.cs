@@ -36,6 +36,11 @@ namespace Framework.Network
         /// 房号
         /// </summary>
         public int id;
+
+        /// <summary>
+        /// 房主id
+        /// </summary>
+        public int user_id;
         /// <summary>
         /// 是否已开始战斗
         /// </summary>

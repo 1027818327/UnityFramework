@@ -139,8 +139,7 @@ namespace Assets.Demo2
             }
             else
             {
-                networkConnect.RemoveConnectListener(OnConnected);
-                networkConnect.AddConnectListener(OnConnected);
+                networkConnect.MessageHandle.AddOnceListener(ProtocolConst.CreateSession, OnCreateSession);
                 networkConnect.ConnectServer();
             }
         }
@@ -166,8 +165,7 @@ namespace Assets.Demo2
             }
             else
             {
-                networkConnect.RemoveConnectListener(OnConnected);
-                networkConnect.AddConnectListener(OnConnected);
+                networkConnect.MessageHandle.AddOnceListener(ProtocolConst.CreateSession, OnCreateSession);
                 networkConnect.ConnectServer();
             }
         }
@@ -195,13 +193,8 @@ namespace Assets.Demo2
 
         #region WebSocket服务器
 
-        /// <summary>
-        /// 当连上服务器时
-        /// </summary>
-        /// <param name="varData"></param>
-        private void OnConnected(EventData varData)
+        private void OnCreateSession(ProtocolBase protocol)
         {
-            networkConnect.RemoveConnectListener(OnConnected);
             RequestGetRoomInfo();
         }
 

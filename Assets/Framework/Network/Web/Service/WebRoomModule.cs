@@ -153,34 +153,19 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
                 SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
 
-                var tempRoomNode = tempNode["info"];
-                if (tempRoomNode != null)
+                bool tempSuccess = tempNode["success"].AsBool;
+                int tempStatus = tempNode["status"].AsInt;
+
+                if (tempSuccess || tempStatus == (int)JoinRoomStatus.InRoom || tempStatus == (int)JoinRoomStatus.Success)
                 {
-                    // 加入房间成功
-                    string tempRoomId = tempRoomNode["id"];
-                    int tempRoomIdInt = Convert.ToInt32(tempRoomId);
-                    PlayerManager.GetInstance().Room = new Room(tempRoomIdInt);
-                    SimpleJSON.JSONArray tempRoomArray = tempRoomNode["room_info"] as SimpleJSON.JSONArray;
-
-                    string tempMasterId = tempRoomNode["user_id"];
-
-                    foreach (SimpleJSON.JSONNode element in tempRoomArray)
+                    int tempRoomId = 0;
+                    int.TryParse(roomId, out tempRoomId);
+                    if (tempRoomId == 0)
                     {
-                        string userId = element["user_id"];
-                        string userName = element["name"];
-                        string roleId = element["role_id"];
-                        Player tempP = new Player(userId, userName);
-                        tempP.RoleId = Convert.ToInt32(roleId);
-                        if (userId.Equals(tempMasterId))
-                        {
-                            tempP.RoomIdentity = RoomIdentity.RoomMaster;
-                        }
-                        PlayerManager.GetInstance().Room.Enter(tempP);
+                        Debuger.LogError("加入的房号错误");
                     }
-                }
+                    PlayerManager.GetInstance().Room = new Room(tempRoomId);
 
-                if (tempRoomNode != null)
-                {
                     if (onSuccess != null)
                     {
                         ResponseBase rb = new ResponseBase();
@@ -273,7 +258,7 @@ namespace Framework.Network.Web
             string protocolName = ProtocolConst.GetRoomInfo;
             string id = PlayerManager.GetInstance().GetPlayerId();
             string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
-            string client_id = PlayerManager.GetInstance().Room.Client_id;
+            string client_id = PlayerManager.GetInstance().Client_id;
             string sign = PlayerManager.GetInstance().Sign;
 
             tempDic.Add("protocolName", protocolName);
@@ -281,6 +266,8 @@ namespace Framework.Network.Web
             tempDic.Add("room_id", roomId);
             tempDic.Add("client_id", client_id);
             tempDic.Add("sign", sign);
+
+            //Debuger.Log(client_id);
 
             bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.getRoomInfoUrl, tempDic, null);
             if (!tempConnect)
@@ -298,7 +285,7 @@ namespace Framework.Network.Web
             string protocolName = ProtocolConst.LeaveRoom;
             string id = PlayerManager.GetInstance().GetPlayerId();
             string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
-            string client_id = PlayerManager.GetInstance().Room.Client_id;
+            string client_id = PlayerManager.GetInstance().Client_id;
             string sign = PlayerManager.GetInstance().Sign;
 
             tempDic.Add("protocolName", protocolName);
@@ -324,7 +311,7 @@ namespace Framework.Network.Web
             string protocolName = ProtocolConst.DissolveRoom;
             string id = PlayerManager.GetInstance().GetPlayerId();
             string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
-            string client_id = PlayerManager.GetInstance().Room.Client_id;
+            string client_id = PlayerManager.GetInstance().Client_id;
             string sign = PlayerManager.GetInstance().Sign;
 
             tempDic.Add("protocolName", protocolName);
@@ -350,7 +337,7 @@ namespace Framework.Network.Web
             string protocolName = ProtocolConst.StartFight;
             string id = PlayerManager.GetInstance().GetPlayerId();
             string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
-            string client_id = PlayerManager.GetInstance().Room.Client_id;
+            string client_id = PlayerManager.GetInstance().Client_id;
             string sign = PlayerManager.GetInstance().Sign;
 
             tempDic.Add("protocolName", protocolName);
@@ -432,6 +419,11 @@ namespace Framework.Network.Web
                 SC_Player[] tempPlayers = tempInfo.room.room_info;
 
                 Room tempRoom = PlayerManager.GetInstance().Room;
+                if (tempRoom == null)
+                {
+                    tempRoom = new Room(tempInfo.room.id);
+                }
+
                 List<string> tempList = new List<string>();
 
                 for (int j = 0; j < tempPlayers.Length; j++)
@@ -451,6 +443,7 @@ namespace Framework.Network.Web
                     tempRoom.PlayerList.RemoveAt(i);
                 }
 
+                string tempRoomMasterId = tempInfo.room.user_id.ToString();
                 foreach (SC_Player tempP in tempPlayers)
                 {
                     Player tempPlayer = tempRoom.GetPlayer(tempP.id.ToString());
@@ -465,6 +458,15 @@ namespace Framework.Network.Web
                         tempPlayer.Name = tempP.name;
                         tempPlayer.RoleId = tempP.role_id;
                     }
+
+                    if (tempPlayer.Id.Equals(tempRoomMasterId))
+                    {
+                        tempPlayer.RoomIdentity = RoomIdentity.RoomMaster;
+                    }
+                    else
+                    {
+                        tempPlayer.RoomIdentity = RoomIdentity.Operator;
+                    }
                 }
             }
         }
@@ -478,6 +480,7 @@ namespace Framework.Network.Web
                 /// 如果是自己离开则清空房间数据
                 PlayerManager.GetInstance().Room = null;
                 PlayerManager.GetInstance().NetworkConnect.DisconnectServer();
+                PlayerManager.GetInstance().Client_id = null;
             }
         }
 
@@ -498,6 +501,7 @@ namespace Framework.Network.Web
             {
                 PlayerManager.GetInstance().Room = null;
                 PlayerManager.GetInstance().NetworkConnect.DisconnectServer();
+                PlayerManager.GetInstance().Client_id = null;
             }
         }
 
@@ -505,15 +509,12 @@ namespace Framework.Network.Web
         {
             ProtocolJson tempJson = protocol as ProtocolJson;
             string client_id = tempJson.JsonData["client_id"].ToString();
+            PlayerManager.GetInstance().Client_id = client_id;
+
             if (PlayerManager.GetInstance().Room == null)
             {
-                Debuger.LogError("房间未初始化，程序异常");
+                Debuger.LogError("房间未初始化，等待初始化");
             }
-            else
-            {
-                PlayerManager.GetInstance().Room.Client_id = client_id;
-            }
-            
         }
         #endregion
     }

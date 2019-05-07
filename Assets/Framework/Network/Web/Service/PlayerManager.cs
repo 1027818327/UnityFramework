@@ -18,6 +18,10 @@ namespace Framework.Network
         /// 签名
         /// </summary>
         private string sign;
+        /// <summary>
+        /// 会话id
+        /// </summary>
+        private string client_id;
 
         public string Sign
         {
@@ -29,6 +33,19 @@ namespace Framework.Network
             set
             {
                 sign = value;
+            }
+        }
+
+        public string Client_id
+        {
+            get
+            {
+                return client_id;
+            }
+
+            set
+            {
+                client_id = value;
             }
         }
     }
