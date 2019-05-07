@@ -19,7 +19,7 @@ namespace Framework.Unity.UI
         public const string SceneLoading = "SceneLoading";
         public const string MsgBox = "GeneralUI/UIMsgBox";
         public const string MsgTips = "GeneralUI/UIMsgTips";
-
+        public const string EasyLoading = "GeneralUI/EasyLoading";
         #endregion
 
         #region Properties

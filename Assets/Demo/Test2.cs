@@ -41,8 +41,8 @@ namespace Assets.Demo
         //
         void Start()
         {
-            //Invoke("Load", 1f);
-            Load();
+            //Load();
+            TestLoading();
         }
         //    
         //    void Update() 
@@ -100,6 +100,11 @@ namespace Assets.Demo
 
                 TimeManager.Instance.AddTask(1.5f, false, JumpScene2);
             }
+        }
+
+        private void TestLoading()
+        {
+            UIManager.GetInstance().ShowUI(UIPath.EasyLoading, null);
         }
         #endregion
 
