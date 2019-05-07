@@ -256,25 +256,25 @@ namespace Assets.Demo2
         public void RequestGetRoomInfo()
         {
             networkConnect.MessageHandle.AddOnceListener(ProtocolConst.GetRoomInfo, ResponseGetRoomInfo);
-            roomModule.RequestGetRoomInfo();
+            roomModule.RequestGetRoomInfo(null);
         }
 
         [ContextMenu("离开房间")]
         public void RequestLeaveRoom()
         {
-            roomModule.RequestLeaveRoom();
+            roomModule.RequestLeaveRoom(null);
         }
 
         [ContextMenu("解散房间")]
         public void RequestDissolveRoom()
         {
-            roomModule.RequestDissolveRoom();
+            roomModule.RequestDissolveRoom(null);
         }
 
         [ContextMenu("战斗")]
         public void RequestFight()
         {
-            roomModule.RequestFight();
+            roomModule.RequestFight(null);
         }
 
         public void ChangeAccount()

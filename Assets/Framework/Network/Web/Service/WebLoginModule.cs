@@ -109,8 +109,19 @@ namespace Framework.Network.Web
                             string userId = element["user_id"];
                             string userName = element["name"];
                             string roleId = element["role_id"];
-                            Player tempP = new Player(userId, userName);
-                            tempP.RoleId = Convert.ToInt32(roleId);
+
+                            Player tempP = null;
+                            bool tempIsSelf = PlayerManager.GetInstance().IsSelf(userId);
+                            if (tempIsSelf)
+                            {
+                                tempP = tempSelf;
+                            }
+                            else
+                            {
+                                tempP = new Player(userId, userName);
+                                tempP.RoleId = Convert.ToInt32(roleId);
+                            }
+
                             if (userId.Equals(tempMasterId))
                             {
                                 tempP.RoomIdentity = RoomIdentity.RoomMaster;

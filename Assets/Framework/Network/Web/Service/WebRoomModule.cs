@@ -249,7 +249,7 @@ namespace Framework.Network.Web
             }
         }
 
-        public void RequestGetRoomInfo()
+        public void RequestGetRoomInfo(Action<ResponseBase> onFail)
         {
             if (IsLogin() == false) return;
             if (IsInRoom() == false) return;
@@ -269,14 +269,25 @@ namespace Framework.Network.Web
 
             //Debuger.Log(client_id);
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.getRoomInfoUrl, tempDic, null);
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log("服务端返回房间信息结果");
+                Debuger.Log(result);
+            };
+
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.getRoomInfoUrl, tempDic, tempA);
             if (!tempConnect)
             {
-                NetworkException();
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "网络异常";
+                    onFail.Invoke(rb);
+                }
             }
         }
 
-        public void RequestLeaveRoom()
+        public void RequestLeaveRoom(Action<ResponseBase> onFail)
         {
             if (IsLogin() == false) return;
             if (IsInRoom() == false) return;
@@ -294,14 +305,25 @@ namespace Framework.Network.Web
             tempDic.Add("client_id", client_id);
             tempDic.Add("sign", sign);
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.leaveRoomUrl, tempDic, null);
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log("服务端返回离开房间结果");
+                Debuger.Log(result);
+            };
+
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.leaveRoomUrl, tempDic, tempA);
             if (!tempConnect)
             {
-                NetworkException();
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "网络异常";
+                    onFail.Invoke(rb);
+                }
             }
         }
 
-        public void RequestDissolveRoom()
+        public void RequestDissolveRoom(Action<ResponseBase> onFail)
         {
             if (IsLogin() == false) return;
             if (IsInRoom() == false) return;
@@ -320,14 +342,25 @@ namespace Framework.Network.Web
             tempDic.Add("client_id", client_id);
             tempDic.Add("sign", sign);
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.dissolveRoomUrl, tempDic, null);
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log("服务端返回解散房间结果");
+                Debuger.Log(result);
+            };
+
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.dissolveRoomUrl, tempDic, tempA);
             if (!tempConnect)
             {
-                NetworkException();
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "网络异常";
+                    onFail.Invoke(rb);
+                }
             }
         }
 
-        public void RequestFight()
+        public void RequestFight(Action<ResponseBase> onFail)
         {
             if (IsLogin() == false) return;
             if (IsInRoom() == false) return;
@@ -346,10 +379,21 @@ namespace Framework.Network.Web
             tempDic.Add("client_id", client_id);
             tempDic.Add("sign", sign);
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.startFightUrl, tempDic, null);
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log("服务端返回开始战斗结果");
+                Debuger.Log(result);
+            };
+
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.startFightUrl, tempDic, tempA);
             if (!tempConnect)
             {
-                NetworkException();
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "网络异常";
+                    onFail.Invoke(rb);
+                }
             }
         }
 
@@ -395,16 +439,6 @@ namespace Framework.Network.Web
             UIEventArgs<string> tempArgs2 = new UIEventArgs<string>("你不是房主，无权限操作");
             UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
             return false;
-        }
-
-        private void NetworkException()
-        {
-            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
-            tempData.Title = "提示";
-            tempData.Content = "网络异常";
-            tempData.Style = UIMsgBox.Style.OKAndCancel;
-            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
-            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
         }
 
         #endregion

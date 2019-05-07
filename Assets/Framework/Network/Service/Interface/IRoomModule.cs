@@ -48,22 +48,26 @@ namespace Framework.Network
         /// <summary>
         /// 请求获取房间信息
         /// </summary>
-        void RequestGetRoomInfo();
+        /// <param name="onFail">失败回调</param>
+        void RequestGetRoomInfo(Action<ResponseBase> onFail);
 
         /// <summary>
         /// 请求离开房间
         /// </summary>
-        void RequestLeaveRoom();
+        /// <param name="onFail">失败回调</param>
+        void RequestLeaveRoom(Action<ResponseBase> onFail);
 
         /// <summary>
         /// 请求解散房间
         /// </summary>
-        void RequestDissolveRoom();
+        /// <param name="onFail">失败回调</param>
+        void RequestDissolveRoom(Action<ResponseBase> onFail);
 
         /// <summary>
         /// 请求战斗
         /// </summary>
-        void RequestFight();
+        /// <param name="onFail">失败回调</param>
+        void RequestFight(Action<ResponseBase> onFail);
         #endregion
     }
 }
