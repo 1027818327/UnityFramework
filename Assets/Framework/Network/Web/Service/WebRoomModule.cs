@@ -58,7 +58,17 @@ namespace Framework.Network.Web
 
         public void RequestCreate(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
         {
-            if (IsLogin() == false) return;
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+            
 
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
@@ -138,7 +148,16 @@ namespace Framework.Network.Web
 
         public void RequestJoin(string roomId, Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
         {
-            if (IsLogin() == false) return;
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
 
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
@@ -200,7 +219,16 @@ namespace Framework.Network.Web
 
         public void RequestRoomList(Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
         {
-            if (IsLogin() == false) return;
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
 
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string id = PlayerManager.GetInstance().GetPlayerId();
@@ -251,8 +279,26 @@ namespace Framework.Network.Web
 
         public void RequestGetRoomInfo(Action<ResponseBase> onFail)
         {
-            if (IsLogin() == false) return;
-            if (IsInRoom() == false) return;
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+            if (IsInRoom() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先创建或加入房间";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
 
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string protocolName = ProtocolConst.GetRoomInfo;
@@ -289,8 +335,26 @@ namespace Framework.Network.Web
 
         public void RequestLeaveRoom(Action<ResponseBase> onFail)
         {
-            if (IsLogin() == false) return;
-            if (IsInRoom() == false) return;
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+            if (IsInRoom() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先创建或加入房间";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
 
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string protocolName = ProtocolConst.LeaveRoom;
@@ -325,9 +389,36 @@ namespace Framework.Network.Web
 
         public void RequestDissolveRoom(Action<ResponseBase> onFail)
         {
-            if (IsLogin() == false) return;
-            if (IsInRoom() == false) return;
-            if (IsMaster() == false) return;
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+            if (IsInRoom() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先创建或加入房间";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+            if (IsMaster() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "你不是房主，无权限操作";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
 
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string protocolName = ProtocolConst.DissolveRoom;
@@ -362,9 +453,36 @@ namespace Framework.Network.Web
 
         public void RequestFight(Action<ResponseBase> onFail)
         {
-            if (IsLogin() == false) return;
-            if (IsInRoom() == false) return;
-            if (IsMaster() == false) return;
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+            if (IsInRoom() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先创建或加入房间";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+            if (IsMaster() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "你不是房主，无权限操作";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
 
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
             string protocolName = ProtocolConst.StartFight;
@@ -403,8 +521,6 @@ namespace Framework.Network.Web
             Player tempP = PlayerManager.GetInstance().Player;
             if (tempP == null || string.IsNullOrEmpty(tempP.Id))
             {
-                UIEventArgs<string> tempArgs2 = new UIEventArgs<string>("请先登录");
-                UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
                 return false;
             }
             return true;
@@ -418,8 +534,6 @@ namespace Framework.Network.Web
         {
             if (PlayerManager.GetInstance().Room == null)
             {
-                UIEventArgs<string> tempArgs2 = new UIEventArgs<string>("请先创建或加入房间");
-                UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
                 return false;
             }
             return true;
@@ -436,8 +550,6 @@ namespace Framework.Network.Web
             {
                 return true;
             }
-            UIEventArgs<string> tempArgs2 = new UIEventArgs<string>("你不是房主，无权限操作");
-            UIManager.GetInstance().ShowUI(UIPath.MsgTips, tempArgs2);
             return false;
         }
 

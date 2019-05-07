@@ -188,7 +188,52 @@ namespace Assets.Demo2
 
         private void OnRoomListFail(ResponseBase varData)
         {
-            
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.tips;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
+        }
+
+        private void OnGetRoomInfoFail(ResponseBase varData)
+        {
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.tips;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
+        }
+
+        private void OnLeaveRoomFail(ResponseBase varData)
+        {
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.tips;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
+        }
+
+        private void OnDissolveRoomFail(ResponseBase varData)
+        {
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.tips;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
+        }
+
+        private void OnFightFail(ResponseBase varData)
+        {
+            UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
+            tempData.Title = "提示";
+            tempData.Content = varData.tips;
+            tempData.Style = UIMsgBox.Style.OKAndCancel;
+            UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
+            UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
         }
 
         #region WebSocket服务器
@@ -256,25 +301,25 @@ namespace Assets.Demo2
         public void RequestGetRoomInfo()
         {
             networkConnect.MessageHandle.AddOnceListener(ProtocolConst.GetRoomInfo, ResponseGetRoomInfo);
-            roomModule.RequestGetRoomInfo(null);
+            roomModule.RequestGetRoomInfo(OnGetRoomInfoFail);
         }
 
         [ContextMenu("离开房间")]
         public void RequestLeaveRoom()
         {
-            roomModule.RequestLeaveRoom(null);
+            roomModule.RequestLeaveRoom(OnLeaveRoomFail);
         }
 
         [ContextMenu("解散房间")]
         public void RequestDissolveRoom()
         {
-            roomModule.RequestDissolveRoom(null);
+            roomModule.RequestDissolveRoom(OnDissolveRoomFail);
         }
 
         [ContextMenu("战斗")]
         public void RequestFight()
         {
-            roomModule.RequestFight(null);
+            roomModule.RequestFight(OnFightFail);
         }
 
         public void ChangeAccount()
