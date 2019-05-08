@@ -104,5 +104,42 @@ namespace Vive
                 }
             }
         }
+
+        #region Protected & Public Methods
+        public void InteractGrabAnim(GameObject varObj)
+        {
+            if (varObj == null)
+            {
+                return;
+            }
+
+            var tempHai = varObj.GetComponent<HandAniIdx>();
+            if (tempHai != null)
+            {
+                m_AniType = tempHai.m_handAni;
+            }
+
+            if (mAnimator == null)
+            {
+                mAnimator = GetComponent<Animator>();
+            }
+            
+            PlayHandAnim();
+        }
+
+        public void ReleaseHandAnim()
+        {
+            if (mAnimator == null)
+            {
+                mAnimator = GetComponent<Animator>();
+            }
+
+            if (mAnimator != null)
+            {
+                mAnimator.SetBool(m_AniType.ToString(), false);
+            }
+            m_AniType = EnHandAni.Type0;
+        }
+        #endregion
     }
 }
