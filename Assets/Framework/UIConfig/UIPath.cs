@@ -16,10 +16,10 @@ namespace Framework.Unity.UI
     public partial class UIPath
     {
         #region Fields
-        public const string SceneLoading = "SceneLoading";
-        public const string MsgBox = "GeneralUI/UIMsgBox";
-        public const string MsgTips = "GeneralUI/UIMsgTips";
-        public const string EasyLoading = "GeneralUI/EasyLoading";
+        public static string SceneLoading = "SceneLoading";
+        public static string MsgBox = "GeneralUI/UIMsgBox";
+        public static string MsgTips = "GeneralUI/UIMsgTips";
+        public static string EasyLoading = "GeneralUI/EasyLoading";
         #endregion
 
         #region Properties
