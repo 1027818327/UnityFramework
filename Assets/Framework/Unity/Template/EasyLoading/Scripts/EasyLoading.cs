@@ -6,21 +6,21 @@
  * -----------------------------------------------------------
  *		描述: 
  *      创建者：陈伟超
- *      创建时间: 2019/04/10 14:35:55
+ *      创建时间: 2019/05/07 17:35:06
  *  
  */
 #endregion
 
 
-using Framework.Procedure;
-using Framework.Unity.Tools;
+using Framework.Unity.UI;
+using System;
 
-namespace Framework.Unity
+namespace Framework.Unity.Template
 {
-    public class WaitProcedure : AbstractLoadProcedure
+    public class EasyLoading : UIBase
     {
         #region Fields
-        public float mWaitTime = 1f;
+
         #endregion
 
         #region Properties
@@ -64,12 +64,9 @@ namespace Framework.Unity
         #endregion
 
         #region Protected & Public Methods
-        /// <summary>
-        /// 流程开始
-        /// </summary>
-        public override void ProcedureBegin()
+        public override void InitOpenArgs(EventArgs varArgs)
         {
-            TimeManager.Instance.AddTask(mWaitTime, false, ProcedureEnd);
+            
         }
         #endregion
     }

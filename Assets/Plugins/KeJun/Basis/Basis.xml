@@ -478,219 +478,47 @@
             <param name="application">命令程序路径</param>
             <returns>执行结果</returns>
         </member>
-        <member name="T:Framework.Procedure.AbstractLoadProcedure">
+        <member name="T:Framework.Unity.Procedure.AbstractLoadProcedure">
             <summary>
             抽象加载流程类
             </summary>
         </member>
-        <member name="M:Framework.Procedure.AbstractLoadProcedure.ProcedureBegin">
+        <member name="M:Framework.Unity.Procedure.AbstractLoadProcedure.ProcedureBegin">
             <summary>
             流程开始
             </summary>
         </member>
-        <member name="M:Framework.Procedure.AbstractLoadProcedure.ProcedureEnd">
+        <member name="M:Framework.Unity.Procedure.AbstractLoadProcedure.ProcedureEnd">
             <summary>
             流程结束
             </summary>
         </member>
-        <member name="M:Framework.Procedure.AbstractLoadProcedure.RegisterEndCallback(System.Action)">
+        <member name="M:Framework.Unity.Procedure.AbstractLoadProcedure.RegisterEndCallback(System.Action)">
             <summary>
             注册流程结束回调
             </summary>
             <param name="action"></param>
         </member>
-        <member name="M:Framework.Procedure.AbstractLoadProcedure.UnRegisterEndCallback(System.Action)">
+        <member name="M:Framework.Unity.Procedure.AbstractLoadProcedure.UnRegisterEndCallback(System.Action)">
             <summary>
             解注册流程结束回调
             </summary>
             <param name="action"></param>
         </member>
-        <member name="T:Framework.Procedure.ILoadProcedure">
+        <member name="T:Framework.Unity.Procedure.WaitProcedure">
             <summary>
-            数据加载流程
+            等待流程
             </summary>
         </member>
-        <member name="T:Framework.Procedure.IProcedure">
+        <member name="F:Framework.Unity.Procedure.WaitProcedure.mWaitTime">
             <summary>
-            流程接口
+            
             </summary>
         </member>
-        <member name="M:Framework.Procedure.IProcedure.ProcedureBegin">
+        <member name="M:Framework.Unity.Procedure.WaitProcedure.ProcedureBegin">
             <summary>
             流程开始
             </summary>
-        </member>
-        <member name="M:Framework.Procedure.IProcedure.ProcedureEnd">
-            <summary>
-            流程结束
-            </summary>
-        </member>
-        <member name="M:Framework.Procedure.IProcedure.RegisterEndCallback(System.Action)">
-            <summary>
-            注册结束回调
-            </summary>
-            <param name="action"></param>
-        </member>
-        <member name="M:Framework.Procedure.IProcedure.UnRegisterEndCallback(System.Action)">
-            <summary>
-            解注册结束回调
-            </summary>
-            <param name="action"></param>
-        </member>
-        <member name="T:Framework.Registry.RegistryUtils">
-            <summary>
-            注册表辅助类, 只用于PC环境
-            </summary>
-        </member>
-        <member name="M:Framework.Registry.RegistryUtils.Get(Microsoft.Win32.RegistryKey,System.String)">
-            <summary>
-            获取注册表
-            </summary>
-            <param name="varRk">从指定注册表搜索，Registry.ClassesRoot或者Registry.CurrentUser或者Registry.LocalMachine或者Registry.Users或者Registry.CurrentConfig</param>
-            <param name="varPath">从指定路径下查找，以/分隔</param>
-            <returns>返回所有子项</returns>
-        </member>
-        <member name="M:Framework.Registry.RegistryUtils.GetRegistryKey(Microsoft.Win32.RegistryKey,System.String)">
-            <summary>
-            获取注册表
-            </summary>
-            <param name="varRk">从指定注册表搜索，Registry.ClassesRoot或者Registry.CurrentUser或者Registry.LocalMachine或者Registry.Users或者Registry.CurrentConfig</param>
-            <param name="varPath">从指定路径下查找，以/分隔</param>
-            <returns>返回注册项</returns>
-        </member>
-        <member name="T:Framework.Security.DES">
-            <summary>
-            DES加密类
-            </summary>
-        </member>
-        <member name="P:Framework.Security.DES.Iv">
-            <summary>
-            DES加密偏移量，必须是>=8位长的字符串
-            </summary>
-        </member>
-        <member name="P:Framework.Security.DES.Key">
-            <summary>
-            DES加密的私钥，必须是8位长的字符串
-            </summary>
-        </member>
-        <member name="M:Framework.Security.DES.DESEncrypt(System.String)">
-            <summary>
-            对字符串进行DES加密
-            </summary>
-            <param name="sourceString">待加密的字符串</param>
-            <returns>加密后的BASE64编码的字符串</returns>
-        </member>
-        <member name="M:Framework.Security.DES.DESDecrypt(System.String)">
-            <summary>
-            对DES加密后的字符串进行解密
-            </summary>
-            <param name="encryptedString">待解密的字符串</param>
-            <returns>解密后的字符串</returns>
-        </member>
-        <member name="T:Framework.Security.MD5">
-            <summary>
-            MD5加密不可逆，不需要加密向量
-            </summary>
-        </member>
-        <member name="M:Framework.Security.MD5.MD5Encrypt(System.String)">
-            <summary>
-            加密
-            </summary>
-            <param name="normalTxt"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Framework.Security.RSA">
-            <summary>
-            RSA加密类
-            </summary>
-        </member>
-        <member name="M:Framework.Security.RSA.RSAEncrypt(System.String)">
-            <summary>
-            加密
-            </summary>
-            <param name="normaltxt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Security.RSA.RSADecrypt(System.String)">
-            <summary>
-            解密
-            </summary>
-            <param name="securityTxt"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Framework.Serialize.SerializeHelper">
-            <summary>
-            C#序列化帮助类
-            </summary>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.ConvertToString(System.Byte[])">
-            <summary>
-            使用UTF8编码将byte数组转成字符串
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.ConvertToString(System.Byte[],System.Text.Encoding)">
-            <summary>
-            使用指定字符编码将byte数组转成字符串
-            </summary>
-            <param name="data"></param>
-            <param name="encoding"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.ConvertToByte(System.String)">
-            <summary>
-            使用UTF8编码将字符串转成byte数组
-            </summary>
-            <param name="str"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.ConvertToByte(System.String,System.Text.Encoding)">
-            <summary>
-            使用指定字符编码将字符串转成byte数组
-            </summary>
-            <param name="str"></param>
-            <param name="encoding"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.SerializeToBinary(System.Object)">
-            <summary>
-            将对象序列化为二进制数据 
-            </summary>
-            <param name="obj"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.SerializeObject(System.Object,System.Byte[]@,System.Int32)">
-            <summary>
-            将object序列化到数组
-            </summary>
-            <param name="obj">object</param>
-            <param name="buff">数组</param>
-            <param name="offset"></param>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.DeserializeWithBinary(System.Byte[])">
-            <summary>
-            将二进制数据反序列化
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.DeserializeWithBinary(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            数组反序列化
-            </summary>
-            <param name="buff"></param>
-            <param name="index"></param>
-            <param name="count"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Framework.Serialize.SerializeHelper.DeserializeWithBinary``1(System.Byte[])">
-            <summary>
-            将二进制数据反序列化为指定类型对象
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="data"></param>
-            <returns></returns>
         </member>
         <member name="T:Framework.Unity.Event.LocalEventManager">
             <summary>
@@ -2647,6 +2475,32 @@
             <param name="otherStrings">An array of strings to check the provided str against</param>
             <returns>True if it is unique, false if it is not</returns>
         </member>
+        <member name="T:Framework.Unity.UGUI_Expand.AtlasMap">
+            <summary>
+            用于存储制作好的动态图预设上的sprite信息
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.AtlasMap.GetSpriteByName(System.String)">
+            <summary>
+            从指定路径获取精灵
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.AtlasMap.AddSprite(UnityEngine.Sprite)">
+            <summary>
+            添加精灵到SpriteRenderer
+            </summary>
+            <param name="sp"></param>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.AtlasMap.GetSpriteByTypeAndName(System.String,System.String)">
+            <summary>
+            根据文件和路径名，找到对应sprite，
+            </summary>
+            <param name="prefab">对应存放节点的预制</param>
+            <param name="spriteName"> 名字</param>
+            <returns>返回搜索到的精灵</returns>
+        </member>
         <member name="T:Framework.Unity.UGUI_Expand.NotScroll">
             <summary>
             UI不滑动类
@@ -2767,6 +2621,11 @@
         <member name="P:Framework.Unity.UI.UIBase.UIFormPath">
             <summary>
             资源具体路径
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UI.UIBase.Close">
+            <summary>
+            关闭界面 ，不销毁
             </summary>
         </member>
         <member name="M:Framework.Unity.UI.UIBase.Display">
@@ -2935,6 +2794,11 @@
             单个Canvas的渲染模式
             </summary>
         </member>
+        <member name="P:Framework.Unity.UI.UIConfig.RootPath">
+            <summary>
+            UI根节点加载的路径
+            </summary>
+        </member>
         <member name="M:Framework.Unity.UI.UIConfig.Init">
             <summary>
             覆盖基类方法
@@ -2942,7 +2806,7 @@
         </member>
         <member name="T:Framework.Unity.UI.UIEventArgs`1">
             <summary>
-            
+            UI事件参数
             </summary>
             <typeparam name="T"></typeparam>
         </member>
@@ -2956,6 +2820,113 @@
             构造方法
             </summary>
             <param name="varData"></param>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox">
+            <summary>
+            模态对话框弹框
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs">
+            <summary>
+            模态对话框参数
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.Content">
+            <summary>
+            内容
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.mBtnTexts">
+            <summary>
+            按钮上面的文字
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.Style">
+            <summary>
+            显示风格
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UI.UIMsgBox.UIMsgBoxArgs.CloseAction">
+            <summary>
+            关闭回调函数
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox.Style">
+            <summary>
+            显示风格
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Style.None">
+            <summary>
+            不显示按钮
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Style.OK">
+            <summary>
+            显示确定按钮
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Style.OKAndCancel">
+            <summary>
+            显示确定和取消按钮
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgBox.Result">
+            <summary>
+            关闭结果
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Result.OK">
+            <summary>
+            确定
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.Result.Cancel">
+            <summary>
+            取消
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.mTitleText">
+            <summary>
+            标题文本
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.mContentText">
+            <summary>
+            内容文本
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgBox.mButtons">
+            <summary>
+            所有按钮
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UI.UIMsgBox.InitOpenArgs(System.EventArgs)">
+            <summary>
+            重写InitOpenArgs
+            </summary>
+            <param name="varArgs"></param>
+        </member>
+        <member name="T:Framework.Unity.UI.UIMsgTips">
+            <summary>
+            消息提示框
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIMsgTips.ctlTextBar">
+            <summary>
+            文本控件的父物体
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UI.UIMsgTips.InitOpenArgs(System.EventArgs)">
+            <summary>
+            重写InitOpenArgs
+            </summary>
+            <param name="varArgs"></param>
         </member>
         <member name="T:Framework.Unity.UI.UISceneLoading">
             <summary>
@@ -3021,6 +2992,11 @@
         <member name="F:Framework.Unity.UI.UIManager._TranRoot">
             <summary>
             根节点
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UI.UIManager.mInitAction">
+            <summary>
+            唤醒事件
             </summary>
         </member>
         <member name="F:Framework.Unity.UI.UIManager.LoadingUI">
@@ -3387,14 +3363,14 @@
             <summary>
             如果物体没有UIEventTrigger脚本就添加UIEventTrigger脚本
             </summary>
-            <param name="transform"></param>
+            <param name="varTrans"></param>
             <returns></returns>
         </member>
         <member name="M:Framework.Unity.UI.UIEventTrigger.HasExistOn(UnityEngine.Transform)">
             <summary>
             物体是否有UIEventTrigger脚本
             </summary>
-            <param name="transform"></param>
+            <param name="varTrans"></param>
             <returns></returns>
         </member>
         <member name="M:Framework.Unity.UI.UIEventTrigger.OnPointerClick(UnityEngine.EventSystems.PointerEventData)">
@@ -3456,6 +3432,226 @@
             重写OnEndDrag
             </summary>
             <param name="eventData"></param>
+        </member>
+        <member name="T:Framework.Unity.UI.UIUtils">
+            <summary>
+            为UI操作提供基础封装，使UI操作更方便
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.SetActive(UnityEngine.EventSystems.UIBehaviour,System.Boolean)">
+            <summary>
+            设置一个UI元素是否可见
+            </summary>
+            <param name="ui"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.SetButtonText(UnityEngine.UI.Button,System.String)">
+            <summary>
+            设置按钮上的文字
+            </summary>
+            <param name="btn"></param>
+            <param name="text"></param>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.GetButtonText(UnityEngine.UI.Button)">
+            <summary>
+            获取按钮上的文字
+            </summary>
+            <param name="btn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Unity.UI.UIUtils.SetChildText(UnityEngine.EventSystems.UIBehaviour,System.String)">
+            <summary>
+            设置组件的文字
+            </summary>
+            <param name="ui"></param>
+            <param name="text"></param>
+        </member>
+        <member name="T:Framework.Procedure.ILoadProcedure">
+            <summary>
+            数据加载流程
+            </summary>
+        </member>
+        <member name="T:Framework.Procedure.IProcedure">
+            <summary>
+            流程接口
+            </summary>
+        </member>
+        <member name="M:Framework.Procedure.IProcedure.ProcedureBegin">
+            <summary>
+            流程开始
+            </summary>
+        </member>
+        <member name="M:Framework.Procedure.IProcedure.ProcedureEnd">
+            <summary>
+            流程结束
+            </summary>
+        </member>
+        <member name="M:Framework.Procedure.IProcedure.RegisterEndCallback(System.Action)">
+            <summary>
+            注册结束回调
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:Framework.Procedure.IProcedure.UnRegisterEndCallback(System.Action)">
+            <summary>
+            解注册结束回调
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="T:Framework.Registry.RegistryUtils">
+            <summary>
+            注册表辅助类, 只用于PC环境
+            </summary>
+        </member>
+        <member name="M:Framework.Registry.RegistryUtils.Get(Microsoft.Win32.RegistryKey,System.String)">
+            <summary>
+            获取注册表
+            </summary>
+            <param name="varRk">从指定注册表搜索，Registry.ClassesRoot或者Registry.CurrentUser或者Registry.LocalMachine或者Registry.Users或者Registry.CurrentConfig</param>
+            <param name="varPath">从指定路径下查找，以/分隔</param>
+            <returns>返回所有子项</returns>
+        </member>
+        <member name="M:Framework.Registry.RegistryUtils.GetRegistryKey(Microsoft.Win32.RegistryKey,System.String)">
+            <summary>
+            获取注册表
+            </summary>
+            <param name="varRk">从指定注册表搜索，Registry.ClassesRoot或者Registry.CurrentUser或者Registry.LocalMachine或者Registry.Users或者Registry.CurrentConfig</param>
+            <param name="varPath">从指定路径下查找，以/分隔</param>
+            <returns>返回注册项</returns>
+        </member>
+        <member name="T:Framework.Security.DES">
+            <summary>
+            DES加密类
+            </summary>
+        </member>
+        <member name="P:Framework.Security.DES.Iv">
+            <summary>
+            DES加密偏移量，必须是>=8位长的字符串
+            </summary>
+        </member>
+        <member name="P:Framework.Security.DES.Key">
+            <summary>
+            DES加密的私钥，必须是8位长的字符串
+            </summary>
+        </member>
+        <member name="M:Framework.Security.DES.DESEncrypt(System.String)">
+            <summary>
+            对字符串进行DES加密
+            </summary>
+            <param name="sourceString">待加密的字符串</param>
+            <returns>加密后的BASE64编码的字符串</returns>
+        </member>
+        <member name="M:Framework.Security.DES.DESDecrypt(System.String)">
+            <summary>
+            对DES加密后的字符串进行解密
+            </summary>
+            <param name="encryptedString">待解密的字符串</param>
+            <returns>解密后的字符串</returns>
+        </member>
+        <member name="T:Framework.Security.MD5">
+            <summary>
+            MD5加密不可逆，不需要加密向量
+            </summary>
+        </member>
+        <member name="M:Framework.Security.MD5.MD5Encrypt(System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="normalTxt"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Security.RSA">
+            <summary>
+            RSA加密类
+            </summary>
+        </member>
+        <member name="M:Framework.Security.RSA.RSAEncrypt(System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="normaltxt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Security.RSA.RSADecrypt(System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="securityTxt"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Serialize.SerializeHelper">
+            <summary>
+            C#序列化帮助类
+            </summary>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.ConvertToString(System.Byte[])">
+            <summary>
+            使用UTF8编码将byte数组转成字符串
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.ConvertToString(System.Byte[],System.Text.Encoding)">
+            <summary>
+            使用指定字符编码将byte数组转成字符串
+            </summary>
+            <param name="data"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.ConvertToByte(System.String)">
+            <summary>
+            使用UTF8编码将字符串转成byte数组
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.ConvertToByte(System.String,System.Text.Encoding)">
+            <summary>
+            使用指定字符编码将字符串转成byte数组
+            </summary>
+            <param name="str"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.SerializeToBinary(System.Object)">
+            <summary>
+            将对象序列化为二进制数据 
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.SerializeObject(System.Object,System.Byte[]@,System.Int32)">
+            <summary>
+            将object序列化到数组
+            </summary>
+            <param name="obj">object</param>
+            <param name="buff">数组</param>
+            <param name="offset"></param>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.DeserializeWithBinary(System.Byte[])">
+            <summary>
+            将二进制数据反序列化
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.DeserializeWithBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            数组反序列化
+            </summary>
+            <param name="buff"></param>
+            <param name="index"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Serialize.SerializeHelper.DeserializeWithBinary``1(System.Byte[])">
+            <summary>
+            将二进制数据反序列化为指定类型对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
         </member>
         <member name="T:Framework.Version.SoftVersion">
             <summary>

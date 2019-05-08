@@ -31,6 +31,39 @@
         /// 右手柄触发器取消点击
         /// </summary>
         public const uint RightTriggerUnClick = 7;
+        /// <summary>
+        /// 左手柄触摸板键触摸开始
+        /// </summary>
+        public const uint StartTouchLeftTouchpad = 8;
+        /// <summary>
+        /// 右手柄触摸板键触摸开始
+        /// </summary>
+        public const uint StartTouchRightTouchpad = 9;
+        /// <summary>
+        /// 左手柄触摸板键触摸结束
+        /// </summary>
+        public const uint EndTouchLeftTouchpad = 10;
+        /// <summary>
+        /// 右手柄触摸板键触摸结束
+        /// </summary>
+        public const uint EndTouchRightTouchpad = 11;
+        /// <summary>
+        /// 左手柄触摸板键按下
+        /// </summary>
+        public const uint PressLeftTouchpad = 12;
+        /// <summary>
+        /// 右手柄触摸板键按下
+        /// </summary>
+        public const uint PressRightTouchpad = 13;
+        /// <summary>
+        /// 左手柄触摸板键抬起
+        /// </summary>
+        public const uint ReleaseLeftTouchpad = 14;
+        /// <summary>
+        /// 右手柄触摸板键抬起
+        /// </summary>
+        public const uint ReleaseRightTouchpad = 15;
+
 
         /// <summary>
         /// 从Vive系统菜单返回事件

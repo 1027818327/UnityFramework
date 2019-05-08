@@ -1,7 +1,6 @@
 ﻿using Framework.Debugger;
 using Framework.Runtime;
 using Framework.Unity.Tools;
-using Framework.Unity.UI;
 using UnityEngine;
 
 namespace Framework.Unity
@@ -31,13 +30,6 @@ namespace Framework.Unity
             {
                 var tempInstance = MonoHelper.Instance;
             }
-
-            UIConfig tempUIConfig = UIConfig.GetInstance();
-            tempUIConfig.DestroyOnLoad = true;
-            tempUIConfig.RootHasCanvas = true;
-            tempUIConfig.ShowMask = true;
-            tempUIConfig.CanvasRenderMode = RenderMode.ScreenSpaceCamera;
-            UIManager.LoadingUI = UIPath.SceneLoading;
         }
 
         private void OpenLog()

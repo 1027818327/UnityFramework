@@ -347,6 +347,16 @@ namespace Vive
         {
             // 按下后禁止旋转
             mIsRotate = false;
+            GamepadDir tempDir = GetGamepadDir(e.touchpadAxis);
+            SDK_BaseController.ControllerHand tempHand = GetHandType(e);
+            if (tempHand == SDK_BaseController.ControllerHand.Left)
+            {
+                EventManager.Instance.DispatchEvent(LogicEventType.PressLeftTouchpad, new EventDataEx<GamepadDir>(tempDir));
+            }
+            else if (tempHand == SDK_BaseController.ControllerHand.Right)
+            {
+                EventManager.Instance.DispatchEvent(LogicEventType.PressRightTouchpad, new EventDataEx<GamepadDir>(tempDir));
+            }
         }
 
         public void OnTouchpadReleased(object sender, ControllerInteractionEventArgs e)
@@ -358,6 +368,17 @@ namespace Vive
         {
             mIsRotate = true;
             mRotateAngle = e.touchpadAngle;
+
+            GamepadDir tempDir = GetGamepadDir(e.touchpadAxis);
+            SDK_BaseController.ControllerHand tempHand = GetHandType(e);
+            if (tempHand == SDK_BaseController.ControllerHand.Left)
+            {
+                EventManager.Instance.DispatchEvent(LogicEventType.StartTouchLeftTouchpad, new EventDataEx<GamepadDir>(tempDir));
+            }
+            else if (tempHand == SDK_BaseController.ControllerHand.Right)
+            {
+                EventManager.Instance.DispatchEvent(LogicEventType.StartTouchRightTouchpad, new EventDataEx<GamepadDir>(tempDir));
+            }
         }
 
         public void OnTouchpadTouchEnd(object sender, ControllerInteractionEventArgs e)
@@ -419,6 +440,49 @@ namespace Vive
 
             Quaternion tempQ = Quaternion.Euler(tempTrans.eulerAngles);
             mTeleport.ForceTeleport(tempTrans.position, tempQ);
+        }
+
+        // 可用角度划分圆盘按键数量
+        // 这个函数输入两个二维向量会返回一个夹角 180 到 -180  
+        private float VectorAngle(Vector2 from, Vector2 to)
+        {
+            float angle;
+            Vector3 cross = Vector3.Cross(from, to);
+            angle = Vector2.Angle(from, to);
+            return cross.z > 0 ? -angle : angle;
+        }
+
+        private GamepadDir GetGamepadDir(Vector2 target)
+        {
+            // 例子：圆盘分成上下左右  
+            float jiaodu = VectorAngle(Vector2.right, target);
+            //Debuger.Log(jiaodu.ToString());
+            //下  
+            if (jiaodu > 45 && jiaodu < 135)
+            {
+                Debuger.Log("下");
+                return GamepadDir.Down;
+            }
+            //上  
+            if (jiaodu < -45 && jiaodu > -135)
+            {
+                Debuger.Log("上");
+                return GamepadDir.Up;
+            }
+            //左  
+            if ((jiaodu < 180 && jiaodu > 135) || (jiaodu < -135 && jiaodu > -180))
+            {
+                Debuger.Log("左");
+                return GamepadDir.Left;
+            }
+            //右  
+            if ((jiaodu > 0 && jiaodu < 45) || (jiaodu > -45 && jiaodu < 0))
+            {
+                Debuger.Log("右");
+                return GamepadDir.Right;
+            }
+            Debuger.Log("其他方向");
+            return GamepadDir.Other;
         }
     }
 }
