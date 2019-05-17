@@ -9,8 +9,5 @@ EditorBuildSettings:
     path: Assets/Framework/Unity/Template/Init/Scenes/InitScene.unity
     guid: 12d7ce14b1ee68d4bb02f18c047e4595
   - enabled: 1
-    path: Assets/Demo/Scene1.unity
-    guid: 7258cc84f4d3e0a4299f05b33ed183a2
-  - enabled: 1
-    path: Assets/Demo/Scene2.unity
-    guid: ef1b9f048437e884baf179379c80c0ff
+    path: Assets/TestProject/test2.unity
+    guid: 570ec08618678694db651f32cf8334fe

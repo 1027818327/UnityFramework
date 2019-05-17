@@ -1,0 +1,13 @@
+ManifestFileVersion: 0
+CRC: 771380849
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: blue.ab
+      Dependencies: {}
+    Info_1:
+      Name: green.ab
+      Dependencies: {}
+    Info_2:
+      Name: red.ab
+      Dependencies: {}
