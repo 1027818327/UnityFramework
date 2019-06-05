@@ -282,7 +282,15 @@ namespace Assets.Demo2
         [ContextMenu("创建房间")]
         public void RequestCreate()
         {
-            roomModule.RequestCreate(OnCreateRoomSuccess, OnCreateRoomFail);
+            var tempRoomModule = roomModule as WebRoomModule;
+            if (tempRoomModule != null)
+            {
+                tempRoomModule.RequestCreate(1, OnCreateRoomSuccess, OnCreateRoomFail);
+            }
+            else
+            {
+                roomModule.RequestCreate(OnCreateRoomSuccess, OnCreateRoomFail);
+            }
         }
 
         [ContextMenu("加入房间")]

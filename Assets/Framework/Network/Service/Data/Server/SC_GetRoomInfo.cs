@@ -49,6 +49,8 @@ namespace Framework.Network
         /// 玩家列表
         /// </summary>
         public SC_Player[] room_info;
+
+        public int course;
     }
 
     public class SC_GetRoomInfo : MessageBase

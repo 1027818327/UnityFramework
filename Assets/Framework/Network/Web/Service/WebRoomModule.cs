@@ -12,7 +12,6 @@
 
 using Framework.Debugger;
 using Framework.Http;
-using Framework.Unity.UI;
 using System;
 using System.Collections.Generic;
 
@@ -75,6 +74,97 @@ namespace Framework.Network.Web
             string sign = PlayerManager.GetInstance().Sign;
             tempDic.Add("user_id", id);
             tempDic.Add("sign", sign);
+
+            Room tempRoom = PlayerManager.GetInstance().Room;
+            if (tempRoom != null)
+            {
+                tempDic.Add("room_id", tempRoom.RoomId.ToString());
+            }
+            else
+            {
+                tempDic.Add("room_id", "0");
+            }
+
+            Action<string> tempA = delegate (string result)
+            {
+                Debuger.Log("服务端返回创建房间结果");
+                Debuger.Log(result);
+                SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
+                string tempS = tempNode["success"];
+                bool tempB = Convert.ToBoolean(tempS);
+                if (tempB)
+                {
+                    string tempRoomId = tempNode["text"]["id"];
+                    int tempRoomIdInt = Convert.ToInt32(tempRoomId);
+                    PlayerManager.GetInstance().Room = new Room(tempRoomIdInt, PlayerManager.GetInstance().Player);
+                    SimpleJSON.JSONArray tempRoomArray = tempNode["text"]["room_info"] as SimpleJSON.JSONArray;
+
+                    foreach (SimpleJSON.JSONNode element in tempRoomArray)
+                    {
+                        string userId = element["user_id"];
+                        string userName = element["name"];
+                        string roleId = element["role_id"];
+                        Player tempP = new Player(userId, userName);
+                        tempP.RoleId = Convert.ToInt32(roleId);
+
+                        PlayerManager.GetInstance().Room.Enter(tempP);
+                    }
+                }
+
+                if (tempB)
+                {
+                    if (onSuccess != null)
+                    {
+                        ResponseBase rb = new ResponseBase();
+                        rb.tips = "创建房间成功";
+                        rb.result = result;
+                        onSuccess.Invoke(rb);
+                    }
+                }
+                else
+                {
+                    if (onFail != null)
+                    {
+                        ResponseBase rb = new ResponseBase();
+                        rb.tips = tempNode["text"];
+                        rb.result = result;
+                        onFail.Invoke(rb);
+                    }
+                }
+            };
+
+            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.createRoomUrl, tempDic, tempA);
+            if (!tempConnect)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "网络异常";
+                    onFail.Invoke(rb);
+                }
+            }
+        }
+
+        public void RequestCreate(int course, Action<ResponseBase> onSuccess, Action<ResponseBase> onFail)
+        {
+            if (IsLogin() == false)
+            {
+                if (onFail != null)
+                {
+                    ResponseBase rb = new ResponseBase();
+                    rb.tips = "请先登陆";
+                    onFail.Invoke(rb);
+                }
+                return;
+            }
+
+
+            Dictionary<string, string> tempDic = new Dictionary<string, string>();
+            string id = PlayerManager.GetInstance().GetPlayerId();
+            string sign = PlayerManager.GetInstance().Sign;
+            tempDic.Add("user_id", id);
+            tempDic.Add("sign", sign);
+            tempDic.Add("course", course.ToString());
 
             Room tempRoom = PlayerManager.GetInstance().Room;
             if (tempRoom != null)

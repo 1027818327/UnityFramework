@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace Framework.Network
 {
-    public class Room
+    public partial class Room
     {
         #region Fields
         private int mRoomId;
