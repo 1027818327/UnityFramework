@@ -73,9 +73,11 @@ namespace TestProject
         #endregion
 
         #region Protected & Public Methods
-        public void LoadFinish(AssetBundleLoadAssetOperation varOp)
+        public void LoadFinish(AssetBundleLoadOperation varOp)
         {
-            GameObject prefab = varOp.GetAsset<GameObject>();
+            AssetBundleLoadAssetOperation tempOp = varOp as AssetBundleLoadAssetOperation;
+
+            GameObject prefab = tempOp.GetAsset<GameObject>();
             if (prefab != null)
                 GameObject.Instantiate(prefab);
         }

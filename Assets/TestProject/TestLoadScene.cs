@@ -6,25 +6,25 @@
  * -----------------------------------------------------------
  *		描述: 
  *      创建者：陈伟超
- *      创建时间: 2019/05/17 13:47:44
+ *      创建时间: 2019/06/21 09:05:55
  *  
  */
 #endregion
 
 
 using AssetBundles;
+using Framework.Unity.AssetBundles;
 using Framework.Unity.Procedure;
-using UnityEngine;
+using Framework.Unity.UI;
+using UnityEngine.SceneManagement;
 
-namespace Framework.Unity.AssetBundles
+namespace TestProject
 {
-    /// <summary>
-    /// 本地AB流程
-    /// </summary>
-    public class LocalABProcedure : AbstractLoadProcedure
+    public class TestLoadScene : AbstractLoadProcedure
     {
         #region Fields
-
+        public string sceneAssetBundle;
+        public string sceneName;
         #endregion
 
         #region Properties
@@ -64,27 +64,21 @@ namespace Framework.Unity.AssetBundles
         #endregion
 
         #region Private Methods
-
+        private void LoadFinish(AssetBundleLoadOperation varO)
+        {
+            ProcedureEnd();
+        }
         #endregion
 
         #region Protected & Public Methods
-        protected void LoadMainfestFinish(AssetBundleLoadOperation operation)
-        {
-            Debug.Log("本地AssetBundle流程结束");
-            ProcedureEnd();
-        }
-
         public override void ProcedureBegin()
         {
-            string tempUrl = System.IO.Path.Combine(System.Environment.CurrentDirectory, Utility.AssetBundlesOutputPath);
-            AssetBundleManager.SetSourceAssetBundleURL(tempUrl);
+            LoadQueue.GetInstance().AddSceneTask(sceneAssetBundle, sceneName, false, LoadFinish);
+        }
 
-            LoadTask tempLt = new LoadTask
-            {
-                mLoadFinish = LoadMainfestFinish,
-                mAbLoadOperation = AssetBundleManager.Initialize()
-            };
-            LoadQueue.GetInstance().AddTask(tempLt);
+        public void LoadScene()
+        {
+            //SceneManager.LoadSceneAsync(sceneName);
         }
 
         #endregion

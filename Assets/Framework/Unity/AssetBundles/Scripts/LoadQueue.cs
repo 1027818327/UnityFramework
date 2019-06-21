@@ -24,8 +24,8 @@ namespace Framework.Unity.AssetBundles
         public string mAssetBundleName;
         public string mAssetName;
         public System.Type mType;
-        public AssetBundleLoadAssetOperation mAbLoadAssetOperation;
-        public System.Action<AssetBundleLoadAssetOperation> mLoadFinish;
+        public AssetBundleLoadOperation mAbLoadOperation;
+        public System.Action<AssetBundleLoadOperation> mLoadFinish;
     }
 
     public class LoadQueue : Singleton<LoadQueue>
@@ -83,14 +83,14 @@ namespace Framework.Unity.AssetBundles
                 {
                     var tempLoadTask = mLoadTasks[0];
 
-                    if (tempLoadTask.mAbLoadAssetOperation == null && tempLoadTask.mAssetBundleName != null)
+                    if (tempLoadTask.mAbLoadOperation == null && tempLoadTask.mAssetBundleName != null)
                     {
-                        tempLoadTask.mAbLoadAssetOperation = AssetBundleManager.LoadAssetAsync(tempLoadTask.mAssetBundleName, tempLoadTask.mAssetName, tempLoadTask.mType);
+                        tempLoadTask.mAbLoadOperation = AssetBundleManager.LoadAssetAsync(tempLoadTask.mAssetBundleName, tempLoadTask.mAssetName, tempLoadTask.mType);
                     }
-                    yield return tempLoadTask.mAbLoadAssetOperation;
+                    yield return tempLoadTask.mAbLoadOperation;
                     if (tempLoadTask.mLoadFinish != null)
                     {
-                        tempLoadTask.mLoadFinish.Invoke(tempLoadTask.mAbLoadAssetOperation);
+                        tempLoadTask.mLoadFinish.Invoke(tempLoadTask.mAbLoadOperation);
                     }
                     lock (mLoadTasks)
                     {
@@ -101,12 +101,12 @@ namespace Framework.Unity.AssetBundles
             }
         }
 
-        protected void AddManifestTask(System.Action<AssetBundleLoadAssetOperation> loadFinish = null)
+        protected void AddManifestTask(System.Action<AssetBundleLoadOperation> loadFinish = null)
         {
             LoadTask tempLt = new LoadTask
             {
                 mLoadFinish = loadFinish,
-                mAbLoadAssetOperation = AssetBundleManager.Initialize()
+                mAbLoadOperation = AssetBundleManager.Initialize()
             };
             AddTask(tempLt);
         }
@@ -117,7 +117,7 @@ namespace Framework.Unity.AssetBundles
             //AddManifestTask(null);
         }
 
-        public void AddTask(string assetBundleName, string assetName, System.Type type, System.Action<AssetBundleLoadAssetOperation> loadFinish = null)
+        public void AddTask(string assetBundleName, string assetName, System.Type type, System.Action<AssetBundleLoadOperation> loadFinish = null)
         {
             LoadTask tempLt = new LoadTask
             {
@@ -135,6 +135,18 @@ namespace Framework.Unity.AssetBundles
             {
                 mLoadTasks.Add(varTask);
             }
+        }
+
+        public void AddSceneTask(string assetBundleName, string assetName, bool isAdditive, System.Action<AssetBundleLoadOperation> loadFinish = null)
+        {
+            LoadTask tempLt = new LoadTask
+            {
+                mAssetBundleName = assetBundleName,
+                mAssetName = assetName,
+                mLoadFinish = loadFinish,
+            };
+            tempLt.mAbLoadOperation = AssetBundleManager.LoadLevelAsync(assetBundleName, assetName, isAdditive);
+            AddTask(tempLt);
         }
 
         public void RemoveTask(LoadTask varTask)
