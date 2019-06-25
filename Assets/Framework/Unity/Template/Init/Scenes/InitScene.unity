@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -637,48 +637,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &937870223
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036299746329646, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 13b7714ff04d0ca44bbc747c4b988d51, type: 2}
-  m_IsPrefabParent: 0
 --- !u!114 &982985134 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114634502741258850, guid: 278e02bc13bc14a498c8915cff2ed0a4,
@@ -757,12 +715,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1085920337}
---- !u!114 &1316031517 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114382820907588084, guid: 13b7714ff04d0ca44bbc747c4b988d51,
-    type: 2}
-  m_PrefabInternal: {fileID: 937870223}
-  m_Script: {fileID: 11500000, guid: 929d55e9b4010a64ebc9d4a4a3037233, type: 3}
 --- !u!1001 &1529802858
 Prefab:
   m_ObjectHideFlags: 0
@@ -956,7 +908,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1957645067}
   - component: {fileID: 1957645068}
-  - component: {fileID: 1957645069}
   m_Layer: 0
   m_Name: Logic
   m_TagString: Untagged
@@ -991,14 +942,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mLoadProcedures:
   - {fileID: 982985134}
-  - {fileID: 1316031517}
-  - {fileID: 1957645069}
   initLoading: {fileID: 502006707}
   mEndEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1957645069}
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 1957645068}
+        m_MethodName: JumpNextScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1010,17 +959,3 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &1957645069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1957645066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0c8cc4517dfd2440ba2d569f5923ee4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mAwakeExcuteBegin: 0
-  sceneAssetBundle: testscene.ab
-  sceneName: AssetBundleScene
