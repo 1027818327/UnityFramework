@@ -297,7 +297,7 @@
             <param name="request"></param>
             <param name="parameters">参数</param>
         </member>
-        <member name="M:Framework.Http.HttpUtils.SetHeaders(System.Net.HttpWebRequest,System.Collections.Generic.IDictionary{System.Net.HttpRequestHeader,System.String})">
+        <member name="M:Framework.Http.HttpUtils.SetHeaders(System.Net.HttpWebRequest,System.Collections.Generic.IDictionary{System.Object,System.String})">
             <summary>
             设置HTTP头部
             </summary>
