@@ -14,6 +14,7 @@ using Framework.Debugger;
 using Framework.Http;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Framework.Network.Web
 {
@@ -153,7 +154,9 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(url, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(url);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)

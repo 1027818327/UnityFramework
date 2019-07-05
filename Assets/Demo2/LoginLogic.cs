@@ -19,6 +19,7 @@ using Framework.Network.Web;
 using Framework.Unity.UI;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -276,7 +277,9 @@ namespace Assets.Demo2
             tempDic.Add("phone", phone);
 
             HttpUtils tempUtils = new HttpUtils();
-            tempUtils.SendPostAnsyc("http://truck.kmax-arvr.com/truck.php/port/User/add_student", tempDic, ResponseRegist);
+            HttpWebRequest tempRequest = tempUtils.CreateHttpRequest("http://truck.kmax-arvr.com/truck.php/port/User/add_student");
+            tempUtils.SetParams(tempRequest, tempDic);
+            tempUtils.SendRequestAnsyc(tempRequest, ResponseRegist);
         }
 
         [ContextMenu("创建房间")]

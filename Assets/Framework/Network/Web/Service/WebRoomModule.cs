@@ -14,6 +14,7 @@ using Framework.Debugger;
 using Framework.Http;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Framework.Network.Web
 {
@@ -133,7 +134,9 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.createRoomUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.createRoomUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -224,7 +227,9 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.createRoomUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.createRoomUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -295,7 +300,9 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.joinRoomUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.joinRoomUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -355,7 +362,9 @@ namespace Framework.Network.Web
                 }
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.getRoomListUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.getRoomListUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -411,7 +420,9 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.getRoomInfoUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.getRoomInfoUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -465,7 +476,9 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.leaveRoomUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.leaveRoomUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -529,7 +542,9 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.dissolveRoomUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.dissolveRoomUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
@@ -593,7 +608,9 @@ namespace Framework.Network.Web
                 Debuger.Log(result);
             };
 
-            bool tempConnect = mHttp.SendPostAnsyc(mRoomUrl.startFightUrl, tempDic, tempA);
+            HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.startFightUrl);
+            mHttp.SetParams(tempRequest, tempDic);
+            bool tempConnect = mHttp.SendRequestAnsyc(tempRequest, tempA);
             if (!tempConnect)
             {
                 if (onFail != null)
