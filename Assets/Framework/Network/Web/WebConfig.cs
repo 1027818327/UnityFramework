@@ -28,10 +28,6 @@ namespace Framework.Network.Web
         public static string ConnectAddress = ServerAddress;
         #endregion
 
-        #region 网络事件常量
-        public const string WebSocketOpen = "WebSocket Open";
-        #endregion
-
         #endregion
 
         #region Properties

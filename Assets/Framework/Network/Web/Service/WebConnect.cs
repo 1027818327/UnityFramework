@@ -12,6 +12,7 @@
 
 
 using Framework.Event;
+using System;
 
 namespace Framework.Network.Web
 {
@@ -51,14 +52,14 @@ namespace Framework.Network.Web
             return true;
         }
 
-        public void AddConnectListener(OnNotificationDelegate varDelegate)
+        public void AddConnectListener(Action<bool> varAction)
         {
-            EventManager.GetInstance().AddEventListener(WebConfig.WebSocketOpen, varDelegate);
+            WebMgr.SrvConn.mConnectAction += varAction;
         }
 
-        public void RemoveConnectListener(OnNotificationDelegate varDelegate)
+        public void RemoveConnectListener(Action<bool> varAction)
         {
-            EventManager.GetInstance().RemoveEventListener(WebConfig.WebSocketOpen, varDelegate);
+            WebMgr.SrvConn.mConnectAction -= varAction;
         }
         #endregion
     }

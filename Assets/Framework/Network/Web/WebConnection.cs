@@ -1,7 +1,6 @@
 ﻿using BestHTTP;
 using BestHTTP.WebSocket;
 using Framework.Debugger;
-using Framework.Event;
 using Framework.Unity.UI;
 using System;
 using System.Timers;
@@ -17,7 +16,30 @@ namespace Framework.Network.Web
         WebSocket webSocket;
 
         private string mLastAddress;
+
+        #region 重连变量
         private Timer mReconnectTimer;
+        /// <summary>
+        /// 是否需要重连
+        /// </summary>
+        private bool mNeedReconnect;
+
+        /// <summary>
+        /// 重连间隔时间，单位是毫秒
+        /// </summary>
+        private const double ReconnectInterval = 1000;
+
+        /// <summary>
+        /// 参数表示是否之前异常断开，然后连接上
+        /// </summary>
+        public Action<bool> mConnectAction;
+
+        /// <summary>
+        /// 参数表示网络异常断开的原因
+        /// </summary>
+        public Action<string> mDisconnectAction;
+
+        #endregion
 
         //消息分发
         public MsgDistribution msgDist = new MsgDistribution();
@@ -41,7 +63,7 @@ namespace Framework.Network.Web
 
             if (webSocket != null && webSocket.IsOpen)
             {
-                Close();
+                AutoClose();
             }
 
             // Create the WebSocket instance
@@ -69,6 +91,11 @@ namespace Framework.Network.Web
         }
 
         public void Close()
+        {
+            mNeedReconnect = false;
+        }
+
+        protected void AutoClose()
         {
             if (webSocket != null)
             {
@@ -140,7 +167,11 @@ namespace Framework.Network.Web
         void OnOpen(WebSocket ws)
         {
             Debuger.Log("WebSocket Open");
-            EventManager.GetInstance().DispatchEvent(WebConfig.WebSocketOpen);
+            if (mConnectAction != null)
+            {
+                mConnectAction(mNeedReconnect);
+            }
+            mNeedReconnect = false;
         }
 
         /// <summary>
@@ -185,44 +216,36 @@ namespace Framework.Network.Web
 #endif
 
             Debuger.LogError(string.Format("An error occured: {0}", (ex != null ? ex.Message : "Unknown Error " + errorMsg)));
-            Close();
+            AutoClose();
             webSocket = null;
             if (ex != null)
             {
+                mNeedReconnect = true;
+
                 if (ex.Message.StartsWith("向一个无法连接的网络尝试了一个套接字操作"))
                 {
                     // 直接将网络适配器关掉后发生
                     Debuger.LogError("网络关闭");
-
-                    UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
-                    tempData.Title = "提示";
-                    tempData.Content = "网络关闭";
-                    tempData.Style = UIMsgBox.Style.OK;
-                    tempData.mBtnTexts = new string[1] { "重连" };
-                    tempData.CloseAction = delegate (UIMsgBox.Result result)
+                    if (mDisconnectAction != null)
                     {
-                        StartReconnect();
-                    };
-                    UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
-                    UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
-
-                    //StartReconnect();
+                        mDisconnectAction("网络关闭");
+                    }
                 }
                 else if (ex.Message.StartsWith("Connection timed out"))
                 {
                     Debuger.LogError("连接超时");
-
-                    UIMsgBox.UIMsgBoxArgs tempData = new UIMsgBox.UIMsgBoxArgs();
-                    tempData.Title = "提示";
-                    tempData.Content = "连接超时";
-                    tempData.Style = UIMsgBox.Style.OK;
-                    tempData.mBtnTexts = new string[1] { "重连" };
-                    tempData.CloseAction = delegate (UIMsgBox.Result result)
+                    if (mDisconnectAction != null)
                     {
-                        StartReconnect();
-                    };
-                    UIEventArgs<UIMsgBox.UIMsgBoxArgs> tempArgs2 = new UIEventArgs<UIMsgBox.UIMsgBoxArgs>(tempData);
-                    UIManager.GetInstance().ShowUI(UIPath.MsgBox, tempArgs2);
+                        mDisconnectAction("连接超时");
+                    }
+                }
+                else
+                {
+                    Debuger.LogError("网络异常");
+                    if (mDisconnectAction != null)
+                    {
+                        mDisconnectAction("网络异常");
+                    }
                 }
             }
         }
@@ -237,7 +260,7 @@ namespace Framework.Network.Web
                 mReconnectTimer = new Timer();
                 mReconnectTimer.Elapsed += new ElapsedEventHandler(OnReconnect);
                 /// 每隔1秒重连1次
-                mReconnectTimer.Interval = 1000;
+                mReconnectTimer.Interval = ReconnectInterval;
             }
             mReconnectTimer.Enabled = true;
         }

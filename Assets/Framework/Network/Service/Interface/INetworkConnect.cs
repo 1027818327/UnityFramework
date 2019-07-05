@@ -10,7 +10,7 @@
  */
 #endregion
 
-using Framework.Event;
+using System;
 
 namespace Framework.Network
 {
@@ -37,9 +37,10 @@ namespace Framework.Network
         /// <returns></returns>
         bool IsConnect();
 
-        void AddConnectListener(OnNotificationDelegate varDelegate);
+        void AddConnectListener(Action<bool> varAction);
 
-        void RemoveConnectListener(OnNotificationDelegate varDelegate);
+        void RemoveConnectListener(Action<bool> varAction);
+
         #endregion
     }
 }
