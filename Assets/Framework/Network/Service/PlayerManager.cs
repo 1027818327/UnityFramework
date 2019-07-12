@@ -34,7 +34,7 @@ namespace Framework.Network
         private ILoginModule loginModule;
         private IRoomModule roomModule;
         private INetworkConnect networkConnect;
-
+        private IReconnectModule reconnectModule;
 
         #endregion
 
@@ -101,6 +101,18 @@ namespace Framework.Network
             set
             {
                 networkConnect = value;
+            }
+        }
+
+        public IReconnectModule ReconnectModule
+        {
+            get
+            {
+                return reconnectModule;
+            }
+            set
+            {
+                reconnectModule = value;
             }
         }
 
