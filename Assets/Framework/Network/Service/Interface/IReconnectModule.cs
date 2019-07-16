@@ -23,6 +23,8 @@ namespace Framework.Network
 
         #region Protected & Public Methods
         void RequestRestore();
+
+        void RequestRestore(Action success, Action fail);
         #endregion
     }
 }

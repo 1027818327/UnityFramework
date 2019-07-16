@@ -86,6 +86,11 @@ namespace Framework.Network.Web
 
         public void RequestRestore()
         {
+            RequestRestore(null, null);
+        }
+
+        public void RequestRestore(Action success, Action fail) 
+        {
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
 
             string id = PlayerManager.GetInstance().GetPlayerId();
@@ -96,12 +101,15 @@ namespace Framework.Network.Web
             tempDic.Add("room_id", roomId);
             tempDic.Add("sign", sign);
 
-            Debuger.LogFormat("签名={0}", sign);
-
             Action<string> tempA = delegate (string result)
             {
                 Debuger.Log("服务端返回重连结果");
                 Debuger.Log(result);
+
+                if (success != null)
+                {
+                    success();
+                }
 
                 if (RestoreAction != null)
                 {
@@ -115,7 +123,14 @@ namespace Framework.Network.Web
             }
             HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mReconnectUrl);
             mHttp.SetParams(tempRequest, tempDic);
-            mHttp.SendRequestAnsyc(tempRequest, tempA);
+            bool tempB = mHttp.SendRequestAnsyc(tempRequest, tempA);
+            if (!tempB)
+            {
+                if (fail != null)
+                {
+                    fail();
+                }
+            }
         }
         #endregion
     }
