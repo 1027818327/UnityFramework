@@ -613,6 +613,21 @@ namespace Framework.Network.Web
             {
                 Debuger.Log("服务端返回开始战斗结果");
                 Debuger.Log(result);
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    return;
+                }
+
+                if (onFail != null)
+                {
+                    SimpleJSON.JSONNode tempNode = SimpleJSON.JSON.Parse(result);
+                    ResponseBase rb = new ResponseBase();
+                    rb.result = result;
+                    rb.tips = tempNode["text"];
+                    rb.stateCode = tempNode["status"].AsInt;
+                    onFail.Invoke(rb);
+                }
             };
 
             HttpWebRequest tempRequest = mHttp.CreateHttpRequest(mRoomUrl.startFightUrl);
