@@ -94,6 +94,11 @@ namespace Framework.Network.Web
             mNeedReconnect = false;
         }
 
+        public void CloseDirect()
+        {
+            AutoClose();
+        }
+
         protected void AutoClose()
         {
             if (webSocket != null)

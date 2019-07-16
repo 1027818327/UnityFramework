@@ -129,6 +129,12 @@ namespace Framework.Network.Web
                             }
                             PlayerManager.GetInstance().Room.Enter(tempP);
                         }
+
+                        /*
+                        int tempStart = tempNode["room"]["is_start"].AsInt;
+                        // 房间开始
+                        PlayerManager.GetInstance().Room.Begin = tempStart == 1;
+                        */
                     }
                 }
 

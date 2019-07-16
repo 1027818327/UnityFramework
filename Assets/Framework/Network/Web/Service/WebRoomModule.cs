@@ -193,15 +193,22 @@ namespace Framework.Network.Web
                     PlayerManager.GetInstance().Room = new Room(tempRoomIdInt, PlayerManager.GetInstance().Player);
                     SimpleJSON.JSONArray tempRoomArray = tempNode["text"]["room_info"] as SimpleJSON.JSONArray;
 
-                    foreach (SimpleJSON.JSONNode element in tempRoomArray)
+                    if (tempRoomArray != null)
                     {
-                        string userId = element["user_id"];
-                        string userName = element["name"];
-                        string roleId = element["role_id"];
-                        Player tempP = new Player(userId, userName);
-                        tempP.RoleId = Convert.ToInt32(roleId);
+                        foreach (SimpleJSON.JSONNode element in tempRoomArray)
+                        {
+                            string userId = element["user_id"];
+                            string userName = element["name"];
+                            string roleId = element["role_id"];
+                            Player tempP = new Player(userId, userName);
+                            tempP.RoleId = Convert.ToInt32(roleId);
 
-                        PlayerManager.GetInstance().Room.Enter(tempP);
+                            PlayerManager.GetInstance().Room.Enter(tempP);
+                        }
+                    }
+                    else
+                    {
+                        Debuger.LogError("房间信息是空");
                     }
                 }
 

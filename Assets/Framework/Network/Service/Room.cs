@@ -38,6 +38,16 @@ namespace Framework.Network
             }
         }
 
+        /*
+        /// <summary>
+        /// 房间是否开始
+        /// </summary>
+        public bool Begin
+        {
+            get; set;
+        }
+        */
+
         public List<Player> PlayerList
         {
             get

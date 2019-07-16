@@ -38,8 +38,13 @@ namespace Framework.Network.Web
         {
             if (needReconnect)
             {
+                /*
                 INetworkConnect tempNC = PlayerManager.GetInstance().NetworkConnect;
                 tempNC.MessageHandle.AddOnceListener(ProtocolConst.CreateSession, ResponseCreateSession);
+                */
+
+                Debuger.Log("Send ReconnectPacket");
+                RequestRestore();
             }
         }
 
@@ -82,17 +87,16 @@ namespace Framework.Network.Web
         public void RequestRestore()
         {
             Dictionary<string, string> tempDic = new Dictionary<string, string>();
-            string protocolName = ProtocolConst.Reconnect;
+
             string id = PlayerManager.GetInstance().GetPlayerId();
             string roomId = PlayerManager.GetInstance().Room.RoomId.ToString();
-            string client_id = PlayerManager.GetInstance().Client_id;
             string sign = PlayerManager.GetInstance().Sign;
 
-            tempDic.Add("protocolName", protocolName);
             tempDic.Add("user_id", id);
             tempDic.Add("room_id", roomId);
-            tempDic.Add("client_id", client_id);
             tempDic.Add("sign", sign);
+
+            Debuger.LogFormat("签名={0}", sign);
 
             Action<string> tempA = delegate (string result)
             {

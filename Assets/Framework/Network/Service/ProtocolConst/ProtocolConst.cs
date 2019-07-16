@@ -22,7 +22,6 @@ namespace Framework.Network
         public const string DissolveRoom = "DissolveRoom";
         public const string StartFight = "StartFight";
         public const string CreateSession = "CreateSession";
-        public const string Reconnect = "Reconnect";
         #endregion
     }
 }

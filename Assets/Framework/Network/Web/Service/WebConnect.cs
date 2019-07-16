@@ -39,7 +39,7 @@ namespace Framework.Network.Web
 
         public void DisconnectServer()
         {
-            WebMgr.SrvConn.Close();
+            WebMgr.SrvConn.CloseDirect();
         }
 
         public bool IsConnect()
