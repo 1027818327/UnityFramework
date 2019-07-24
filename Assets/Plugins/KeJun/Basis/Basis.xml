@@ -485,6 +485,58 @@
             <param name="application">命令程序路径</param>
             <returns>执行结果</returns>
         </member>
+        <member name="T:Framework.Unity.Mouse.FollowMouse">
+            <summary>
+            物体跟随鼠标
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Mouse.FollowMouseMove">
+            <summary>
+            根据鼠标点击位置改变物体朝向
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.speed">
+            <summary>
+            运动速度
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.effect">
+            <summary>
+            点击特效
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.targetPosition">
+            <summary>
+            要移动到的位置
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.isMoving">
+            <summary>
+            鼠标左键状态
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Awake">
+            <summary>
+            Awake函数
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Update">
+            <summary>
+            Update is called once per frame
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.TriggerRaycastHit(UnityEngine.RaycastHit)">
+            <summary>
+            射线检测
+            </summary>
+            <param name="varHit"></param>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.LookAtTarget(UnityEngine.Vector3)">
+            <summary>
+            朝向目标
+            </summary>
+            <param name="hitPoint"></param>
+        </member>
         <member name="T:Framework.Unity.Procedure.AbstractLoadProcedure">
             <summary>
             抽象加载流程类
@@ -546,53 +598,6 @@
             <summary>
             重写销毁
             </summary>
-        </member>
-        <member name="T:Framework.Unity.Mouse.FollowMouseMove">
-            <summary>
-            根据鼠标点击位置改变物体朝向
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.speed">
-            <summary>
-            运动速度
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.effect">
-            <summary>
-            点击特效
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.targetPosition">
-            <summary>
-            要移动到的位置
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.isMoving">
-            <summary>
-            鼠标左键状态
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Awake">
-            <summary>
-            Awake函数
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Update">
-            <summary>
-            Update is called once per frame
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.TriggerRaycastHit(UnityEngine.RaycastHit)">
-            <summary>
-            射线检测
-            </summary>
-            <param name="varHit"></param>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.LookAtTarget(UnityEngine.Vector3)">
-            <summary>
-            朝向目标
-            </summary>
-            <param name="hitPoint"></param>
         </member>
         <member name="M:Framework.Unity.MultiLanguage.IMultiLanguage.LoadLanguage(Framework.Unity.MultiLanguage.LanguageType)">
             <summary>
