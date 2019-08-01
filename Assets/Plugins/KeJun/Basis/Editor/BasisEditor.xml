@@ -519,7 +519,7 @@
               重写当前线程的 CurrentUICulture 属性。
             </summary>
         </member>
-        <!-- 对于成员“P:BasisEditor.Properties.Resources._81_C__Script_NewBehaviourScript_cs”忽略有格式错误的 XML 注释 -->
+        <!-- Badly formed XML comment ignored for member "P:BasisEditor.Properties.Resources._81_C__Script_NewBehaviourScript_cs" -->
         <member name="P:BasisEditor.Properties.Resources.Administrator_cmd">
              <summary>
                查找类似 echo off
@@ -541,6 +541,11 @@
             </summary>
         </member>
         <member name="P:BasisEditor.Properties.Resources.RarBuildPackage">
+            <summary>
+              查找 System.Byte[] 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:BasisEditor.Properties.Resources.RarBuildPackage5_3">
             <summary>
               查找 System.Byte[] 类型的本地化资源。
             </summary>
