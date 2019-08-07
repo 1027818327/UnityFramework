@@ -73,6 +73,11 @@ namespace Framework.Unity.AssetBundles
             LoadQueue.GetInstance().AddSceneTask(sceneAssetBundle, sceneName, false, LoadFinish);
         }
 
+        public void LoadScene()
+        {
+
+        }
+
         #endregion
     }
 }

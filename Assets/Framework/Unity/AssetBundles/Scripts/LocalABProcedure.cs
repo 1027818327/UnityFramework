@@ -76,7 +76,7 @@ namespace Framework.Unity.AssetBundles
 
         public override void ProcedureBegin()
         {
-            string tempUrl = System.IO.Path.Combine(System.Environment.CurrentDirectory, Utility.AssetBundlesOutputPath);
+            string tempUrl = System.IO.Path.Combine(Application.streamingAssetsPath, "AssetBundleRes");
             AssetBundleManager.SetSourceAssetBundleURL(tempUrl);
 
             LoadTask tempLt = new LoadTask

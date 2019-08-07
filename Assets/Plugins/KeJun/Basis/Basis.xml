@@ -273,57 +273,64 @@
             
             </summary>
         </member>
-        <member name="M:Framework.Http.HttpUtils.SendPost(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String@)">
+        <member name="M:Framework.Http.HttpUtils.CreateHttpRequest(System.String,System.String)">
             <summary>
-            同步发送http post请求
+            创建HTTP请求
             </summary>
             <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
+            <param name="method">默认是POST请求</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.CreateHttpRequest(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
+            <summary>
+            创建HTTP请求（注意：默认是GET请求，如果设置成GET请求，调用此方法后请不要再调用SetParams方法）
+            </summary>
+            <param name="url">地址</param>
+            <param name="parameters">请求所携带的参数</param>
+            <param name="method">默认是GET请求</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetParams(System.Net.HttpWebRequest,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            设置HTTP请求携带的参数
+            </summary>
+            <param name="request"></param>
+            <param name="parameters">参数</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetHeaders(System.Net.HttpWebRequest,System.Collections.Generic.IDictionary{System.Object,System.String})">
+            <summary>
+            设置HTTP头部
+            </summary>
+            <param name="request"></param>
+            <param name="headers">受限制的标头有Accept，Connection，Content-Length，Content-Type，Date，Expect，Host，If-Modified-Since, Range, Referer, Transfer-Encoding, User-Agent, Proxy-Connection， 这些标头必须设置属性来更改</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetBody(System.Net.HttpWebRequest,System.String)">
+            <summary>
+            设置Body
+            </summary>
+            <param name="request"></param>
+            <param name="data">字符串数据</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetBody(System.Net.HttpWebRequest,System.Byte[])">
+            <summary>
+            设置Body
+            </summary>
+            <param name="request"></param>
+            <param name="array">字节数据</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SendRequest(System.Net.HttpWebRequest,System.String@)">
+            <summary>
+            同步发送http请求
+            </summary>
+            <param name="request">网络请求</param>
             <param name="varResult">接收到的数据</param>
             <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
         </member>
-        <member name="M:Framework.Http.HttpUtils.SendGet(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String@)">
+        <member name="M:Framework.Http.HttpUtils.SendRequestAnsyc(System.Net.HttpWebRequest,System.Action{System.String})">
             <summary>
-            同步发送http get请求
+            异步发送http请求
             </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="varResult">接收到的数据</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
-        </member>
-        <member name="M:Framework.Http.HttpUtils.SendPostHeader(System.String,System.Collections.Generic.IDictionary{System.Object,System.String},System.String@)">
-            <summary>
-            同步发送http post header请求
-            </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="varResult">接收到的数据</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
-        </member>
-        <member name="M:Framework.Http.HttpUtils.SendPostAnsyc(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Action{System.String})">
-            <summary>
-            异步发送post请求
-            </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="callback">回调函数</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
-        </member>
-        <member name="M:Framework.Http.HttpUtils.SendGetAnsyc(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Action{System.String})">
-            <summary>
-            异步发送get请求
-            </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="callback">回调函数</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
-        </member>
-        <member name="M:Framework.Http.HttpUtils.SendPostHeaderAnsyc(System.String,System.Collections.Generic.IDictionary{System.Object,System.String},System.Action{System.String})">
-            <summary>
-            异步发送http post header请求
-            </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
+            <param name="request">网络请求</param>
             <param name="callback">回调函数</param>
             <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
         </member>
@@ -478,6 +485,58 @@
             <param name="application">命令程序路径</param>
             <returns>执行结果</returns>
         </member>
+        <member name="T:Framework.Unity.Mouse.FollowMouse">
+            <summary>
+            物体跟随鼠标
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Mouse.FollowMouseMove">
+            <summary>
+            根据鼠标点击位置改变物体朝向
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.speed">
+            <summary>
+            运动速度
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.effect">
+            <summary>
+            点击特效
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.targetPosition">
+            <summary>
+            要移动到的位置
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.isMoving">
+            <summary>
+            鼠标左键状态
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Awake">
+            <summary>
+            Awake函数
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Update">
+            <summary>
+            Update is called once per frame
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.TriggerRaycastHit(UnityEngine.RaycastHit)">
+            <summary>
+            射线检测
+            </summary>
+            <param name="varHit"></param>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.LookAtTarget(UnityEngine.Vector3)">
+            <summary>
+            朝向目标
+            </summary>
+            <param name="hitPoint"></param>
+        </member>
         <member name="T:Framework.Unity.Procedure.AbstractLoadProcedure">
             <summary>
             抽象加载流程类
@@ -539,53 +598,6 @@
             <summary>
             重写销毁
             </summary>
-        </member>
-        <member name="T:Framework.Unity.Mouse.FollowMouseMove">
-            <summary>
-            根据鼠标点击位置改变物体朝向
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.speed">
-            <summary>
-            运动速度
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.effect">
-            <summary>
-            点击特效
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.targetPosition">
-            <summary>
-            要移动到的位置
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.isMoving">
-            <summary>
-            鼠标左键状态
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Awake">
-            <summary>
-            Awake函数
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Update">
-            <summary>
-            Update is called once per frame
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.TriggerRaycastHit(UnityEngine.RaycastHit)">
-            <summary>
-            射线检测
-            </summary>
-            <param name="varHit"></param>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.LookAtTarget(UnityEngine.Vector3)">
-            <summary>
-            朝向目标
-            </summary>
-            <param name="hitPoint"></param>
         </member>
         <member name="M:Framework.Unity.MultiLanguage.IMultiLanguage.LoadLanguage(Framework.Unity.MultiLanguage.LanguageType)">
             <summary>
