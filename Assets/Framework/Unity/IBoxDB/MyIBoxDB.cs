@@ -18,7 +18,7 @@ public class MyIBoxDB
     {
         if (db == null)
         {
-            DB.Root(Application.persistentDataPath);//数据库存储路径
+            DB.Root(Application.streamingAssetsPath);//数据库存储路径
             db = new DB(1);//数据库地址，或者说ID                     
             db.GetConfig().EnsureTable<BaseObject>(TABLE_BED_SCENE, "ObjectName(20)");//先建表后使用,并且表的主键为ObjectName，长度20
         }

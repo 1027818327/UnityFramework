@@ -9,7 +9,7 @@ public class Test : MonoBehaviour
     void Start()
     {
         //TestUsingAutoBox();
-        TestUsingBox();
+        //TestUsingBox();
 
         ShowResult();
     }
