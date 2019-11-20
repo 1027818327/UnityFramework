@@ -96,6 +96,15 @@ namespace Framework.Unity.AssetBundles
             }
         }
 
+        /// <summary>
+        /// 移除未使用的AssetBundleName
+        /// </summary>
+        [MenuItem("Tools/AssetBundles/Remove Unused AssetBundles")]
+        static void RemoveUnusedAssetBundles()
+        {
+            AssetDatabase.RemoveUnusedAssetBundleNames();
+        }
+
         [MenuItem("Tools/AssetBundles/SetAssetBundlesName")]
         static void SetAssetBundlesName()
         {
@@ -106,6 +115,8 @@ namespace Framework.Unity.AssetBundles
 
             //设置指定路径下所有需要打包的assetbundlename
             SetAssetBundlesName(AssetDir);
+
+            AssetDatabase.RemoveUnusedAssetBundleNames();
         }
 
         /// <summary>
@@ -140,10 +151,21 @@ namespace Framework.Unity.AssetBundles
             string importerPath = "Assets" + assetPath.Substring(Application.dataPath.Length);  //这个路径必须是以Assets开始的路径
             AssetImporter assetImporter = AssetImporter.GetAtPath(importerPath);  //得到Asset
 
+            string tempBuildPath = assetPath.Remove(0, AssetDir.Length);
+            Debug.Log(tempBuildPath);
+            if (tempBuildPath.Contains("None"))
+            {
+                assetImporter.assetBundleName = string.Empty;
+                assetImporter.assetBundleVariant = string.Empty;
+                return;
+            }
+
             string tempName = assetPath.Substring(AssetDir.Length + 1);
             string tempAssetBundleName = tempName.Remove(tempName.LastIndexOf("."));
             assetImporter.assetBundleName = tempAssetBundleName.ToLower();    //最终设置assetBundleName
             assetImporter.assetBundleVariant = "ab";
+
+
 
             /*
             string tempName = assetPath.Substring(assetPath.LastIndexOf(@"\") + 1);
