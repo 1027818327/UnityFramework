@@ -334,6 +334,18 @@
             <param name="callback">回调函数</param>
             <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
         </member>
+        <member name="T:Framework.IO.DirectoryUtils">
+            <summary>
+            文件夹帮助类
+            </summary>
+        </member>
+        <member name="M:Framework.IO.DirectoryUtils.DeleteDir(System.String)">
+            <summary>
+            删除文件夹和内部文件
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
         <member name="T:Framework.IO.FileUtils">
             <summary>
             文件帮助类
@@ -360,6 +372,37 @@
             </summary>
             <param name="varArray">文件字节数组</param>
             <returns>文件hash值</returns>
+        </member>
+        <member name="T:Framework.IO.PermissionUtils">
+            <summary>
+            权限辅助类
+            </summary>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.AddSecurityControll2File(System.String)">
+            <summary>
+            为文件添加users，everyone用户组的完全控制权限
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.AddSecurityControll2Folder(System.String)">
+             <summary>
+            为文件夹添加users，everyone用户组的完全控制权限
+             </summary>
+             <param name="dirPath"></param>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.RemovePermissions(System.String,System.String)">
+            <summary>
+            为文件夹移除某个用户的权限
+            </summary>
+            <param name="dirName"></param>
+            <param name="username"></param>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.OnlyKeepEveryonePermissionsWithWriteNotAllowed(System.String)">
+            <summary>
+            项目中用，文件夹只保留everyone权限，其中允许用户读，但不允许写
+            by the way,代码结果是给文件夹一个特殊权限，点进去高级看，会发现这个特殊权限的子项和写入权限的子项是一样的
+            </summary>
+            <param name="dirName"></param>
         </member>
         <member name="T:Framework.Pattern.Singleton`1">
             <summary>
@@ -484,6 +527,154 @@
             <param name="argument">命令参数</param>
             <param name="application">命令程序路径</param>
             <returns>执行结果</returns>
+        </member>
+        <member name="T:Framework.IReference">
+            <summary>
+            引用接口。
+            </summary>
+        </member>
+        <member name="M:Framework.IReference.Clear">
+            <summary>
+            清理引用。
+            </summary>
+        </member>
+        <member name="T:Framework.ReferencePool">
+            <summary>
+            引用池。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePool.EnableStrictCheck">
+            <summary>
+            获取或设置是否开启强制检查。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePool.Count">
+            <summary>
+            获取引用池的数量。
+            </summary>
+        </member>
+        <member name="M:Framework.ReferencePool.GetAllReferencePoolInfos">
+            <summary>
+            获取所有引用池的信息。
+            </summary>
+            <returns>所有引用池的信息。</returns>
+        </member>
+        <member name="M:Framework.ReferencePool.ClearAll">
+            <summary>
+            清除所有引用池。
+            </summary>
+        </member>
+        <member name="M:Framework.ReferencePool.Acquire``1">
+            <summary>
+            从引用池获取引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+            <returns>引用。</returns>
+        </member>
+        <member name="M:Framework.ReferencePool.Acquire(System.Type)">
+            <summary>
+            从引用池获取引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+            <returns>引用。</returns>
+        </member>
+        <member name="M:Framework.ReferencePool.Release(Framework.IReference)">
+            <summary>
+            将引用归还引用池。
+            </summary>
+            <param name="reference">引用。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Add``1(System.Int32)">
+            <summary>
+            向引用池中追加指定数量的引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+            <param name="count">追加数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Add(System.Type,System.Int32)">
+            <summary>
+            向引用池中追加指定数量的引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+            <param name="count">追加数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Remove``1(System.Int32)">
+            <summary>
+            从引用池中移除指定数量的引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+            <param name="count">移除数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Remove(System.Type,System.Int32)">
+            <summary>
+            从引用池中移除指定数量的引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+            <param name="count">移除数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.RemoveAll``1">
+            <summary>
+            从引用池中移除所有的引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+        </member>
+        <member name="M:Framework.ReferencePool.RemoveAll(System.Type)">
+            <summary>
+            从引用池中移除所有的引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+        </member>
+        <member name="T:Framework.ReferencePoolInfo">
+            <summary>
+            引用池信息。
+            </summary>
+        </member>
+        <member name="M:Framework.ReferencePoolInfo.#ctor(System.Type,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            初始化引用池信息的新实例。
+            </summary>
+            <param name="type">引用池类型。</param>
+            <param name="unusedReferenceCount">未使用引用数量。</param>
+            <param name="usingReferenceCount">正在使用引用数量。</param>
+            <param name="acquireReferenceCount">获取引用数量。</param>
+            <param name="releaseReferenceCount">归还引用数量。</param>
+            <param name="addReferenceCount">增加引用数量。</param>
+            <param name="removeReferenceCount">移除引用数量。</param>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.Type">
+            <summary>
+            获取引用池类型。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.UnusedReferenceCount">
+            <summary>
+            获取未使用引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.UsingReferenceCount">
+            <summary>
+            获取正在使用引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.AcquireReferenceCount">
+            <summary>
+            获取获取引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.ReleaseReferenceCount">
+            <summary>
+            获取归还引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.AddReferenceCount">
+            <summary>
+            获取增加引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.RemoveReferenceCount">
+            <summary>
+            获取移除引用数量。
+            </summary>
         </member>
         <member name="T:Framework.Unity.Mouse.FollowMouse">
             <summary>
@@ -3770,6 +3961,25 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Url.UrlUtils">
+            <summary>
+            Url工具类
+            </summary>
+        </member>
+        <member name="M:Framework.Url.UrlUtils.UrlEncode(System.String)">
+            <summary>
+            编码
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Url.UrlUtils.UrlDecode(System.String)">
+            <summary>
+            解码
+            </summary>
+            <param name="str"></param>
             <returns></returns>
         </member>
         <member name="T:Framework.Version.SoftVersion">
