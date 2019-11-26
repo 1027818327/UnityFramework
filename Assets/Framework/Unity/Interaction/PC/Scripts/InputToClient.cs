@@ -317,12 +317,15 @@ namespace Framework.Unity.Interaction
 
         private void OnRaycashIsOpen(EventData varData)
         {
-            var pContext = varData as EventDataEx<SEventCameraShake>;
+            var pContext = varData as EventDataEx<SEventRayCash>;
             if (pContext == null)
             {
                 return;
             }
-            transform.parent.gameObject.AddComponent<CameraShake>();        //相机抖动
+            //开启或关闭射线
+            SEventRayCash rayCash = pContext.GetData();
+
+            _isAllowRayCash = rayCash.Open;
         }
 
         private void OnRaycashChange(EventData varData)
