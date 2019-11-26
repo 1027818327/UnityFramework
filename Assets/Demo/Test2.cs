@@ -41,8 +41,8 @@ namespace Assets.Demo
         //
         void Start()
         {
-            //Load();
-            TestLoading();
+            Load();
+            //TestLoading();
         }
         //    
         //    void Update() 

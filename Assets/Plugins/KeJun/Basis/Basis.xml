@@ -4,6 +4,133 @@
         <name>Basis</name>
     </assembly>
     <members>
+        <member name="T:Framework.Event.DGlobalEvent">
+            <summary>
+            全局事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_LOADER_FAIL">
+            <summary>
+            加载器加载模块失败
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_STATE_CHANGE">
+            <summary>
+            状态变化
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_EXIT_GAME_STATE">
+            <summary>
+            退出游戏状态
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_FINISH">
+            <summary>
+            场景加载完成
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_START">
+            <summary>
+            场景加载开始
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_PROGRESS">
+            <summary>
+            场景加载进度
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_TIPS">
+            <summary>
+            场景加载小提示信息
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_OP_PRESS">
+            <summary>
+            事件系统按下
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_HERO_MOVE">
+            <summary>
+            主角移动
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_HERO_OPERATE_STATE">
+            <summary>
+            主角操作状态
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_HERO_BLINK_STATE">
+            <summary>
+            主角是否允许闪现事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_TOUCHPAD_CONTROLLER">
+            <summary>
+            触摸板上操作事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_CAMERA_SHAKE">
+            <summary>
+            相机抖动事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_AID_SCENE_LOAD">
+            <summary>
+            辅助场景加载事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_CAMERA_POSE">
+            <summary>
+            获取相机姿态事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_RAYCASH_ISOPEN">
+            <summary>
+            开启或关闭射线检测
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_OBJ_MOVETO_DOMINANT">
+            <summary>
+            物体移动到惯用手上
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_OBJ_HIDEFROM_DOMINANT">
+            <summary>
+            物体在惯用手上隐藏
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_RAYCASH_CHANGE">
+            <summary>
+            改变射线长度
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Framework.Event.SEventHeroMove" -->
+        <member name="T:Framework.Event.TouchType">
+            <summary>
+            触摸板接触类型
+            </summary>
+        </member>
+        <member name="T:Framework.Event.SEventCameraShake">
+            <summary>
+            相机抖动事件
+            </summary>
+        </member>
+        <member name="T:Framework.Event.SEventCameraPose">
+            <summary>
+            相机姿态事件
+            </summary>
+        </member>
+        <member name="T:Framework.Event.SEventRayCash">
+            <summary>
+            开启或关闭射线检测事件
+            </summary>
+        </member>
+        <member name="M:Framework.Event.cmd_Base.ReSet">
+            <summary>
+            重置数据（如果结构体对象会回收，结构对象中Object数据需要重置为null）
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Framework.Event.Dispatcher`1">
             <summary>
             泛型事件管理接口
@@ -674,6 +801,88 @@
         <member name="P:Framework.ReferencePoolInfo.RemoveReferenceCount">
             <summary>
             获取移除引用数量。
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Interaction.IEventCallback">
+            <summary>
+            unity与外部设备交互接口
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Interaction.IEventCallback.OnRayEventMessage(Framework.Unity.Interaction.RayEventType,Framework.Unity.Interaction.RayEventCallBackParameter)">
+            <summary>
+            射线触发事件
+            </summary>
+            <param name="type"></param>
+            <param name="param"></param>
+        </member>
+        <member name="T:Framework.Unity.Interaction.RayEventType">
+            <summary>
+            射线事件类型
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventEnter">
+            <summary>
+            射线进入
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventExit">
+            <summary>
+            射线退出
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventHover">
+            <summary>
+            射线经过
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventPress">
+            <summary>
+            手柄按下
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventRelease">
+            <summary>
+            手柄按下释放
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDragStart">
+            <summary>
+            手柄拖拽事件开始
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDrag">
+            <summary>
+            手柄拖拽中
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDragEnd">
+            <summary>
+            手柄拖拽事件结束
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDrop">
+            <summary>
+            手柄拖放事件，在EventDragEnd事件之后
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Interaction.RayEventCallBackParameter">
+            <summary>
+            接口IEventcallback的事件参数
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventCallBackParameter.CurrentPoint">
+            <summary>
+            当前射线指到物体上的位置
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventCallBackParameter.Detaly">
+            <summary>
+            当前点位置相对上一帧的偏移量
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventCallBackParameter.isLeftHand">
+            <summary>
+            是否是左手
             </summary>
         </member>
         <member name="T:Framework.Unity.Mouse.FollowMouse">
@@ -1353,6 +1562,46 @@
             设置物体的位置，欧拉角，角度
             </summary>
             <param name="varTrans"></param>
+        </member>
+        <member name="T:Framework.Unity.Render.LookToCamera">
+            <summary>
+            视角朝向主相机类
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.GlobalQualitySetting.m_mainCamera">
+            <summary>
+            主摄像机
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.GlobalQualitySetting.m_mainLight">
+            <summary>
+            主光源
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.SEventRayInfo.length">
+            <summary>
+            射线长度
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.EnvironmentBase.m_sceneCamera">
+            <summary>
+            主摄像机
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.EnvironmentBase.m_mainLight">
+            <summary>
+            主光源
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.EnvironmentBase.m_canBlink">
+            <summary>
+            是否可以传送
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Render.EnvironmentBase.LoadCurrentEnvironment">
+            <summary>
+            设置环境
+            </summary>
         </member>
         <member name="T:Framework.Unity.ResourcesMgr">
             <summary>
@@ -2093,7 +2342,7 @@
             <summary>
             回收对象
             </summary>
-            <param name="obj"></param>
+            <param name="obj">只能是被克隆的物体</param>
         </member>
         <member name="M:Framework.Unity.Tools.BufferPool.Clear">
             <summary>
