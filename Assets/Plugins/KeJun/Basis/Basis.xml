@@ -89,6 +89,11 @@
             开启或关闭射线检测
             </summary>
         </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_STOP_HERO_MOVE">
+            <summary>
+            停止主角移动
+            </summary>
+        </member>
         <member name="F:Framework.Event.DGlobalEvent.EVENT_OBJ_MOVETO_DOMINANT">
             <summary>
             物体移动到惯用手上
