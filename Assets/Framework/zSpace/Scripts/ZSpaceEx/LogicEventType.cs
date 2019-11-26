@@ -2,6 +2,6 @@
 {
     public partial class LogicEventType
     {
-        public const uint PenWholeGrab = 1;  // 整体抓
+        public const uint PenWholeGrab = 11000;  // 整体抓
     }
 }

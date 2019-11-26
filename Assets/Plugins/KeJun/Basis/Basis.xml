@@ -4,6 +4,138 @@
         <name>Basis</name>
     </assembly>
     <members>
+        <member name="T:Framework.Event.DGlobalEvent">
+            <summary>
+            全局事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_LOADER_FAIL">
+            <summary>
+            加载器加载模块失败
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_STATE_CHANGE">
+            <summary>
+            状态变化
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_EXIT_GAME_STATE">
+            <summary>
+            退出游戏状态
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_FINISH">
+            <summary>
+            场景加载完成
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_START">
+            <summary>
+            场景加载开始
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_PROGRESS">
+            <summary>
+            场景加载进度
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_SCENE_LOAD_TIPS">
+            <summary>
+            场景加载小提示信息
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_OP_PRESS">
+            <summary>
+            事件系统按下
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_HERO_MOVE">
+            <summary>
+            主角移动
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_HERO_OPERATE_STATE">
+            <summary>
+            主角操作状态
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_HERO_BLINK_STATE">
+            <summary>
+            主角是否允许闪现事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_TOUCHPAD_CONTROLLER">
+            <summary>
+            触摸板上操作事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_CAMERA_SHAKE">
+            <summary>
+            相机抖动事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_AID_SCENE_LOAD">
+            <summary>
+            辅助场景加载事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_CAMERA_POSE">
+            <summary>
+            获取相机姿态事件
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_RAYCASH_ISOPEN">
+            <summary>
+            开启或关闭射线检测
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_STOP_HERO_MOVE">
+            <summary>
+            停止主角移动
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_OBJ_MOVETO_DOMINANT">
+            <summary>
+            物体移动到惯用手上
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_OBJ_HIDEFROM_DOMINANT">
+            <summary>
+            物体在惯用手上隐藏
+            </summary>
+        </member>
+        <member name="F:Framework.Event.DGlobalEvent.EVENT_RAYCASH_CHANGE">
+            <summary>
+            改变射线长度
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Framework.Event.SEventHeroMove" -->
+        <member name="T:Framework.Event.TouchType">
+            <summary>
+            触摸板接触类型
+            </summary>
+        </member>
+        <member name="T:Framework.Event.SEventCameraShake">
+            <summary>
+            相机抖动事件
+            </summary>
+        </member>
+        <member name="T:Framework.Event.SEventCameraPose">
+            <summary>
+            相机姿态事件
+            </summary>
+        </member>
+        <member name="T:Framework.Event.SEventRayCash">
+            <summary>
+            开启或关闭射线检测事件
+            </summary>
+        </member>
+        <member name="M:Framework.Event.cmd_Base.ReSet">
+            <summary>
+            重置数据（如果结构体对象会回收，结构对象中Object数据需要重置为null）
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Framework.Event.Dispatcher`1">
             <summary>
             泛型事件管理接口
@@ -273,59 +405,78 @@
             
             </summary>
         </member>
-        <member name="M:Framework.Http.HttpUtils.SendPost(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String@)">
+        <member name="M:Framework.Http.HttpUtils.CreateHttpRequest(System.String,System.String)">
             <summary>
-            同步发送http post请求
+            创建HTTP请求
             </summary>
             <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
+            <param name="method">默认是POST请求</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.CreateHttpRequest(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
+            <summary>
+            创建HTTP请求（注意：默认是GET请求，如果设置成GET请求，调用此方法后请不要再调用SetParams方法）
+            </summary>
+            <param name="url">地址</param>
+            <param name="parameters">请求所携带的参数</param>
+            <param name="method">默认是GET请求</param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetParams(System.Net.HttpWebRequest,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            设置HTTP请求携带的参数
+            </summary>
+            <param name="request"></param>
+            <param name="parameters">参数</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetHeaders(System.Net.HttpWebRequest,System.Collections.Generic.IDictionary{System.Object,System.String})">
+            <summary>
+            设置HTTP头部
+            </summary>
+            <param name="request"></param>
+            <param name="headers">受限制的标头有Accept，Connection，Content-Length，Content-Type，Date，Expect，Host，If-Modified-Since, Range, Referer, Transfer-Encoding, User-Agent, Proxy-Connection， 这些标头必须设置属性来更改</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetBody(System.Net.HttpWebRequest,System.String)">
+            <summary>
+            设置Body
+            </summary>
+            <param name="request"></param>
+            <param name="data">字符串数据</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SetBody(System.Net.HttpWebRequest,System.Byte[])">
+            <summary>
+            设置Body
+            </summary>
+            <param name="request"></param>
+            <param name="array">字节数据</param>
+        </member>
+        <member name="M:Framework.Http.HttpUtils.SendRequest(System.Net.HttpWebRequest,System.String@)">
+            <summary>
+            同步发送http请求
+            </summary>
+            <param name="request">网络请求</param>
             <param name="varResult">接收到的数据</param>
             <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
         </member>
-        <member name="M:Framework.Http.HttpUtils.SendGet(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String@)">
+        <member name="M:Framework.Http.HttpUtils.SendRequestAnsyc(System.Net.HttpWebRequest,System.Action{System.String})">
             <summary>
-            同步发送http get请求
+            异步发送http请求
             </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="varResult">接收到的数据</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
-        </member>
-        <member name="M:Framework.Http.HttpUtils.SendPostHeader(System.String,System.Collections.Generic.IDictionary{System.Object,System.String},System.String@)">
-            <summary>
-            同步发送http post header请求
-            </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="varResult">接收到的数据</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
-        </member>
-        <member name="M:Framework.Http.HttpUtils.SendPostAnsyc(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Action{System.String})">
-            <summary>
-            异步发送post请求
-            </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
+            <param name="request">网络请求</param>
             <param name="callback">回调函数</param>
             <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
         </member>
-        <member name="M:Framework.Http.HttpUtils.SendGetAnsyc(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Action{System.String})">
+        <member name="T:Framework.IO.DirectoryUtils">
             <summary>
-            异步发送get请求
+            文件夹帮助类
             </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="callback">回调函数</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
         </member>
-        <member name="M:Framework.Http.HttpUtils.SendPostHeaderAnsyc(System.String,System.Collections.Generic.IDictionary{System.Object,System.String},System.Action{System.String})">
+        <member name="M:Framework.IO.DirectoryUtils.DeleteDir(System.String)">
             <summary>
-            异步发送http post header请求
+            删除文件夹和内部文件
             </summary>
-            <param name="url">地址</param>
-            <param name="parameters">查询参数集合</param>
-            <param name="callback">回调函数</param>
-            <returns>返回false表示网络异常，true表示成功发送并接收数据</returns>
+            <param name="path"></param>
+            <returns></returns>
         </member>
         <member name="T:Framework.IO.FileUtils">
             <summary>
@@ -353,6 +504,37 @@
             </summary>
             <param name="varArray">文件字节数组</param>
             <returns>文件hash值</returns>
+        </member>
+        <member name="T:Framework.IO.PermissionUtils">
+            <summary>
+            权限辅助类
+            </summary>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.AddSecurityControll2File(System.String)">
+            <summary>
+            为文件添加users，everyone用户组的完全控制权限
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.AddSecurityControll2Folder(System.String)">
+             <summary>
+            为文件夹添加users，everyone用户组的完全控制权限
+             </summary>
+             <param name="dirPath"></param>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.RemovePermissions(System.String,System.String)">
+            <summary>
+            为文件夹移除某个用户的权限
+            </summary>
+            <param name="dirName"></param>
+            <param name="username"></param>
+        </member>
+        <member name="M:Framework.IO.PermissionUtils.OnlyKeepEveryonePermissionsWithWriteNotAllowed(System.String)">
+            <summary>
+            项目中用，文件夹只保留everyone权限，其中允许用户读，但不允许写
+            by the way,代码结果是给文件夹一个特殊权限，点进去高级看，会发现这个特殊权限的子项和写入权限的子项是一样的
+            </summary>
+            <param name="dirName"></param>
         </member>
         <member name="T:Framework.Pattern.Singleton`1">
             <summary>
@@ -478,6 +660,288 @@
             <param name="application">命令程序路径</param>
             <returns>执行结果</returns>
         </member>
+        <member name="T:Framework.IReference">
+            <summary>
+            引用接口。
+            </summary>
+        </member>
+        <member name="M:Framework.IReference.Clear">
+            <summary>
+            清理引用。
+            </summary>
+        </member>
+        <member name="T:Framework.ReferencePool">
+            <summary>
+            引用池。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePool.EnableStrictCheck">
+            <summary>
+            获取或设置是否开启强制检查。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePool.Count">
+            <summary>
+            获取引用池的数量。
+            </summary>
+        </member>
+        <member name="M:Framework.ReferencePool.GetAllReferencePoolInfos">
+            <summary>
+            获取所有引用池的信息。
+            </summary>
+            <returns>所有引用池的信息。</returns>
+        </member>
+        <member name="M:Framework.ReferencePool.ClearAll">
+            <summary>
+            清除所有引用池。
+            </summary>
+        </member>
+        <member name="M:Framework.ReferencePool.Acquire``1">
+            <summary>
+            从引用池获取引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+            <returns>引用。</returns>
+        </member>
+        <member name="M:Framework.ReferencePool.Acquire(System.Type)">
+            <summary>
+            从引用池获取引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+            <returns>引用。</returns>
+        </member>
+        <member name="M:Framework.ReferencePool.Release(Framework.IReference)">
+            <summary>
+            将引用归还引用池。
+            </summary>
+            <param name="reference">引用。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Add``1(System.Int32)">
+            <summary>
+            向引用池中追加指定数量的引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+            <param name="count">追加数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Add(System.Type,System.Int32)">
+            <summary>
+            向引用池中追加指定数量的引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+            <param name="count">追加数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Remove``1(System.Int32)">
+            <summary>
+            从引用池中移除指定数量的引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+            <param name="count">移除数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.Remove(System.Type,System.Int32)">
+            <summary>
+            从引用池中移除指定数量的引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+            <param name="count">移除数量。</param>
+        </member>
+        <member name="M:Framework.ReferencePool.RemoveAll``1">
+            <summary>
+            从引用池中移除所有的引用。
+            </summary>
+            <typeparam name="T">引用类型。</typeparam>
+        </member>
+        <member name="M:Framework.ReferencePool.RemoveAll(System.Type)">
+            <summary>
+            从引用池中移除所有的引用。
+            </summary>
+            <param name="referenceType">引用类型。</param>
+        </member>
+        <member name="T:Framework.ReferencePoolInfo">
+            <summary>
+            引用池信息。
+            </summary>
+        </member>
+        <member name="M:Framework.ReferencePoolInfo.#ctor(System.Type,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            初始化引用池信息的新实例。
+            </summary>
+            <param name="type">引用池类型。</param>
+            <param name="unusedReferenceCount">未使用引用数量。</param>
+            <param name="usingReferenceCount">正在使用引用数量。</param>
+            <param name="acquireReferenceCount">获取引用数量。</param>
+            <param name="releaseReferenceCount">归还引用数量。</param>
+            <param name="addReferenceCount">增加引用数量。</param>
+            <param name="removeReferenceCount">移除引用数量。</param>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.Type">
+            <summary>
+            获取引用池类型。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.UnusedReferenceCount">
+            <summary>
+            获取未使用引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.UsingReferenceCount">
+            <summary>
+            获取正在使用引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.AcquireReferenceCount">
+            <summary>
+            获取获取引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.ReleaseReferenceCount">
+            <summary>
+            获取归还引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.AddReferenceCount">
+            <summary>
+            获取增加引用数量。
+            </summary>
+        </member>
+        <member name="P:Framework.ReferencePoolInfo.RemoveReferenceCount">
+            <summary>
+            获取移除引用数量。
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Interaction.IEventCallback">
+            <summary>
+            unity与外部设备交互接口
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Interaction.IEventCallback.OnRayEventMessage(Framework.Unity.Interaction.RayEventType,Framework.Unity.Interaction.RayEventCallBackParameter)">
+            <summary>
+            射线触发事件
+            </summary>
+            <param name="type"></param>
+            <param name="param"></param>
+        </member>
+        <member name="T:Framework.Unity.Interaction.RayEventType">
+            <summary>
+            射线事件类型
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventEnter">
+            <summary>
+            射线进入
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventExit">
+            <summary>
+            射线退出
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventHover">
+            <summary>
+            射线经过
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventPress">
+            <summary>
+            手柄按下
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventRelease">
+            <summary>
+            手柄按下释放
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDragStart">
+            <summary>
+            手柄拖拽事件开始
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDrag">
+            <summary>
+            手柄拖拽中
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDragEnd">
+            <summary>
+            手柄拖拽事件结束
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventType.EventDrop">
+            <summary>
+            手柄拖放事件，在EventDragEnd事件之后
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Interaction.RayEventCallBackParameter">
+            <summary>
+            接口IEventcallback的事件参数
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventCallBackParameter.CurrentPoint">
+            <summary>
+            当前射线指到物体上的位置
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventCallBackParameter.Detaly">
+            <summary>
+            当前点位置相对上一帧的偏移量
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Interaction.RayEventCallBackParameter.isLeftHand">
+            <summary>
+            是否是左手
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Mouse.FollowMouse">
+            <summary>
+            物体跟随鼠标
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.Mouse.FollowMouseMove">
+            <summary>
+            根据鼠标点击位置改变物体朝向
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.speed">
+            <summary>
+            运动速度
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.effect">
+            <summary>
+            点击特效
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.targetPosition">
+            <summary>
+            要移动到的位置
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Mouse.FollowMouseMove.isMoving">
+            <summary>
+            鼠标左键状态
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Awake">
+            <summary>
+            Awake函数
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Update">
+            <summary>
+            Update is called once per frame
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.TriggerRaycastHit(UnityEngine.RaycastHit)">
+            <summary>
+            射线检测
+            </summary>
+            <param name="varHit"></param>
+        </member>
+        <member name="M:Framework.Unity.Mouse.FollowMouseMove.LookAtTarget(UnityEngine.Vector3)">
+            <summary>
+            朝向目标
+            </summary>
+            <param name="hitPoint"></param>
+        </member>
         <member name="T:Framework.Unity.Procedure.AbstractLoadProcedure">
             <summary>
             抽象加载流程类
@@ -539,53 +1003,6 @@
             <summary>
             重写销毁
             </summary>
-        </member>
-        <member name="T:Framework.Unity.Mouse.FollowMouseMove">
-            <summary>
-            根据鼠标点击位置改变物体朝向
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.speed">
-            <summary>
-            运动速度
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.effect">
-            <summary>
-            点击特效
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.targetPosition">
-            <summary>
-            要移动到的位置
-            </summary>
-        </member>
-        <member name="F:Framework.Unity.Mouse.FollowMouseMove.isMoving">
-            <summary>
-            鼠标左键状态
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Awake">
-            <summary>
-            Awake函数
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.Update">
-            <summary>
-            Update is called once per frame
-            </summary>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.TriggerRaycastHit(UnityEngine.RaycastHit)">
-            <summary>
-            射线检测
-            </summary>
-            <param name="varHit"></param>
-        </member>
-        <member name="M:Framework.Unity.Mouse.FollowMouseMove.LookAtTarget(UnityEngine.Vector3)">
-            <summary>
-            朝向目标
-            </summary>
-            <param name="hitPoint"></param>
         </member>
         <member name="M:Framework.Unity.MultiLanguage.IMultiLanguage.LoadLanguage(Framework.Unity.MultiLanguage.LanguageType)">
             <summary>
@@ -1150,6 +1567,46 @@
             设置物体的位置，欧拉角，角度
             </summary>
             <param name="varTrans"></param>
+        </member>
+        <member name="T:Framework.Unity.Render.LookToCamera">
+            <summary>
+            视角朝向主相机类
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.GlobalQualitySetting.m_mainCamera">
+            <summary>
+            主摄像机
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.GlobalQualitySetting.m_mainLight">
+            <summary>
+            主光源
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.SEventRayInfo.length">
+            <summary>
+            射线长度
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.EnvironmentBase.m_sceneCamera">
+            <summary>
+            主摄像机
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.EnvironmentBase.m_mainLight">
+            <summary>
+            主光源
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.Render.EnvironmentBase.m_canBlink">
+            <summary>
+            是否可以传送
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.Render.EnvironmentBase.LoadCurrentEnvironment">
+            <summary>
+            设置环境
+            </summary>
         </member>
         <member name="T:Framework.Unity.ResourcesMgr">
             <summary>
@@ -1890,7 +2347,7 @@
             <summary>
             回收对象
             </summary>
-            <param name="obj"></param>
+            <param name="obj">只能是被克隆的物体</param>
         </member>
         <member name="M:Framework.Unity.Tools.BufferPool.Clear">
             <summary>
@@ -2542,6 +2999,113 @@
             基类OnPointerClick方法重写
             </summary>
             <param name="eventData"></param>
+        </member>
+        <member name="T:Framework.Unity.UGUI_Expand.UIImageMirror">
+            <summary>
+            对UI图形进行镜像处理
+            Image - Sample顶点顺序
+            ------
+            |1 /2|
+            |0/ 3|
+            ------
+            </summary>
+        </member>
+        <member name="T:Framework.Unity.UGUI_Expand.UIImageMirror.MirrorDir">
+            <summary>
+            镜像方向
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UGUI_Expand.UIImageMirror.MirrorDir.Horizontal">
+            <summary>
+            水平镜像
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UGUI_Expand.UIImageMirror.MirrorDir.Vertical">
+            <summary>
+            垂直镜像
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UGUI_Expand.UIImageMirror.MirrorDir.Quater">
+            <summary>
+            四方镜像（先水平，后垂直）
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UGUI_Expand.UIImageMirror.AxisX">
+            <summary>
+            水平轴
+            </summary>
+        </member>
+        <member name="F:Framework.Unity.UGUI_Expand.UIImageMirror.AxisY">
+            <summary>
+            竖直轴
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.UIImageMirror.ModifyMesh(UnityEngine.UI.VertexHelper)">
+            <summary>
+            重写方法
+            </summary>
+            <param name="vh"></param>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.UIImageMirror.SimpleMirrorHor(UnityEngine.UI.VertexHelper,System.Single)">
+            <summary>
+            Simple模式的水平镜像
+            顶点布局：
+            -----------
+            |1 /2| \ 5|
+            |0/ 3|  \4|
+            -----------
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.UIImageMirror.SimpleMirrorVer(UnityEngine.UI.VertexHelper,System.Single)">
+            <summary>
+            Simple模式的垂直镜像
+            顶点布局：
+            ------
+            |4\ 5|
+            |  \ |
+            ------
+            |1 /2|
+            |0/ 3|
+            ------
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.UIImageMirror.SimpleMirrorQuat(UnityEngine.UI.VertexHelper,UnityEngine.Vector2)">
+            <summary>
+            Simple模式的四方镜像
+            顶点布局：
+            -----------
+            |6 /7| \ 8|
+            | /  |  \ |
+            -----------
+            |1 /2| \ 5|
+            |0/ 3|  \4|
+            -----------
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.UIImageMirror.AddMirrorVert(UnityEngine.UI.VertexHelper,System.Int32,System.Int32,System.Single)">
+            <summary>
+            添加单个镜像顶点
+            </summary>
+            <param name="vh"></param>
+            <param name="srcVertIdx">镜像源顶点的索引值ֵ</param>
+            <param name="axis">轴向：0-X轴；1-Y轴</param>
+            <param name="doubleCenter">Rect.center轴向分量的两倍值ֵ</param>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.UIImageMirror.ShrinkVert(UnityEngine.UI.VertexHelper,UnityEngine.Rect)">
+            <summary>
+            收缩顶点坐标
+            根据镜像类型，将原始顶点坐标向“起始点(左/下)”收缩
+            </summary>
+        </member>
+        <member name="P:Framework.Unity.UGUI_Expand.UIImageMirror.RectTrans">
+            <summary>
+            RectTransform
+            </summary>
+        </member>
+        <member name="M:Framework.Unity.UGUI_Expand.UIImageMirror.SetNativeSize">
+            <summary>
+            设置图片原始大小
+            </summary>
         </member>
         <member name="T:Framework.Unity.UGUI_Expand.Window">
             <summary>
@@ -3651,6 +4215,25 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Framework.Url.UrlUtils">
+            <summary>
+            Url工具类
+            </summary>
+        </member>
+        <member name="M:Framework.Url.UrlUtils.UrlEncode(System.String)">
+            <summary>
+            编码
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Framework.Url.UrlUtils.UrlDecode(System.String)">
+            <summary>
+            解码
+            </summary>
+            <param name="str"></param>
             <returns></returns>
         </member>
         <member name="T:Framework.Version.SoftVersion">
