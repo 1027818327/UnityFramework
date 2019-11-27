@@ -7,11 +7,12 @@
 /// </remarks>
 
 using Framework.Event;
+using Framework.Unity.Interaction;
 using Framework.Unity.Render;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Framework.Unity.Interaction
+namespace Framework.Interaction
 {
     public class InputToClient : MonoBehaviour
     {

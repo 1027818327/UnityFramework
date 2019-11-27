@@ -1,15 +1,15 @@
 ﻿using DG.Tweening;
 using Framework.Event;
+using Framework.Unity.Interaction;
 using Framework.Unity.Render;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using zSpace.Core;
 using zSpace.SimsCommon;
 using ZSpaceEx;
 
-namespace Framework.Unity.Interaction
+namespace Framework.Interaction
 {
     public class ZSpaceToClient : MonoBehaviour, IPenEvent
     {
