@@ -1,12 +1,15 @@
-﻿using Framework.Event;
-using Framework.Unity.Interaction;
+﻿using DG.Tweening;
+using Framework.Event;
 using Framework.Unity.Render;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using zSpace.Core;
+using zSpace.SimsCommon;
+using ZSpaceEx;
 
-namespace ZSpaceEx
+namespace Framework.Unity.Interaction
 {
     public class ZSpaceToClient : MonoBehaviour, IPenEvent
     {
@@ -14,7 +17,7 @@ namespace ZSpaceEx
 
         public List<Material> endBallMaterials;
 
-        public zSpace.SimsCommon.SampleStylusBeamRaycaster mStylusBeamRaycaster;
+        public SampleStylusBeamRaycaster mStylusBeamRaycaster;
 
         public Camera m_mainCamera;
         private ZCore.Pose mCurPose;
@@ -25,8 +28,7 @@ namespace ZSpaceEx
         private ZCore.Pose mPressPos; // 笔按下的当前世界坐标系位置
                                       //是否可以传送
         private bool _canBlink = true;
-        //是否是模拟器
-        private bool m_isSim = true;
+
         //是否开始射线检测
         private bool _isAllowRayCash = true;
         //是否允许操作
@@ -69,7 +71,7 @@ namespace ZSpaceEx
 
             if (mStylusBeamRaycaster == null)
             {
-                mStylusBeamRaycaster = GetComponentInChildren<zSpace.SimsCommon.SampleStylusBeamRaycaster>();
+                mStylusBeamRaycaster = GetComponentInChildren<SampleStylusBeamRaycaster>();
             }
             //线段初始化
             LineInit();
@@ -87,7 +89,10 @@ namespace ZSpaceEx
             //发送相机姿态事件
             SEventCameraPose pose = new SEventCameraPose();
             pose.HeadCamera = CameraUtils.MainCam.transform;
-            tempEventEngine.UintDispatcher.DispatchEvent(DGlobalEvent.EVENT_CAMERA_POSE, new EventDataEx<SEventCameraPose>(pose));
+            if (tempEventEngine != null)
+            {
+                tempEventEngine.UintDispatcher.DispatchEvent(DGlobalEvent.EVENT_CAMERA_POSE, new EventDataEx<SEventCameraPose>(pose));
+            }
         }
 
         private void OnDestroy()
@@ -181,17 +186,6 @@ namespace ZSpaceEx
             _initialGrabOffset = Quaternion.Inverse(hitObject.transform.rotation) * (hitObject.transform.position - inputEndPosition);
             _initialGrabRotation = Quaternion.Inverse(inputRotation) * hitObject.transform.rotation;
             _initialGrabDistance = hitDistance;
-        }
-
-        private void BeginWholeGrab()
-        {
-            /*var tempData = note as EventDataEx<GameObject>;
-            if (tempData == null)
-            {
-                return;
-            }*/
-            GameObject tempObj = _hoverGameobject;// tempData.GetData();
-            BeginGrab(tempObj, mHit.distance, mCurPose.Position, mCurPose.Rotation);
         }
 
         private void UpdateGrab(Vector3 inputPosition, Quaternion inputRotation)
@@ -315,12 +309,9 @@ namespace ZSpaceEx
             }
             if (_hoverGameobject == null || !_hoverGameobject.gameObject.activeSelf)
             {
-                //if (!m_isSim)
-                {
-                    SEventOPPress opPress = new SEventOPPress();
-                    opPress.nPressObj = null;
-                    GlobalEventManager.GetInstance().UintDispatcher.DispatchEvent(DGlobalEvent.EVENT_OP_PRESS, new EventDataEx<SEventOPPress>(opPress));
-                }
+                SEventOPPress opPress = new SEventOPPress();
+                opPress.nPressObj = null;
+                GlobalEventManager.GetInstance().UintDispatcher.DispatchEvent(DGlobalEvent.EVENT_OP_PRESS, new EventDataEx<SEventOPPress>(opPress));
             }
             else
             {
@@ -346,7 +337,7 @@ namespace ZSpaceEx
         /// </summary>
         public void OnPenGrabObjBegin()
         {
-
+            _stylusState = StylusState.Grab;
         }
         /// <summary>
         /// 笔抓物体结束
@@ -430,7 +421,14 @@ namespace ZSpaceEx
 
             if (heroMove.bAnimation)
             {
-                //TweenPosition.Tween<TweenPosition>(transform.parent.gameObject, transform.parent.position, heroMove.vTragetPos, heroMove.fAnimationDuration);
+                var tempTween = transform.parent.DOMove(heroMove.vTragetPos, heroMove.fAnimationDuration);
+                tempTween.onComplete += delegate ()
+                {
+                    if (heroMove.CallBack != null)
+                    {
+                        heroMove.CallBack();
+                    }
+                }; 
             }
             else
             {
@@ -445,8 +443,7 @@ namespace ZSpaceEx
 
         private void OnHeroStopMove(EventData varData)
         {
-            //if (m_tweenPosition != null)
-            //    m_tweenPosition.Stop();
+            transform.parent.DOKill();
         }
 
         private void OnHeroOperateState(EventData varData)
@@ -495,7 +492,7 @@ namespace ZSpaceEx
 
         private void ControlRayLength(SEventRayInfo info)
         {
-            //mRayLength = info.length;
+            mStylusBeamRaycaster.HelperLength = info.length;
         }
     }
 }
